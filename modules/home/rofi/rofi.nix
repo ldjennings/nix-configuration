@@ -28,7 +28,7 @@
       theme = let
         inherit (config.lib.formats.rasi) mkLiteral;
         TRANSPARENT = mkLiteral "transparent";
-        EM0 = mkLiteral "0em";
+        # EM0 = mkLiteral "0em";
       in {
         "*" = {
           # bg                        = mkLiteral "#${config.stylix.base16Scheme.base0F}";
