@@ -1,13 +1,13 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     audacity
-    discord
-    nodejs
-    obs-studio
+    legcord
     vscode-fhs
     firefox
     kicad
     hyprpicker
     direnv
+    nil
+    alejandra
   ];
 }

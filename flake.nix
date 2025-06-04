@@ -18,7 +18,11 @@
     host = "minifridge";
     profile = "intel";
     username = "liam";
+
+    # forAllSystems = nixpkgs.lib.genAttrs system;
   in {
+    formatter = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+
     nixosConfigurations = {
       amd = nixpkgs.lib.nixosSystem {
         inherit system;

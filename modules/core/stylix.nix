@@ -20,7 +20,7 @@ in {
       base07 = "f7f7fb"; #f7f7fb
       base08 = "ea51b2"; #ea51b2
       base09 = "b45bcf"; #b45bcf
-      base0A = "00f769"; #00f769
+      base0A = "FFFFFF"; #FFFFFF
       base0B = "ebff87"; #ebff87
       base0C = "a1efe4"; #a1efe4
       base0D = "62d6e8"; #62d6e8
@@ -40,12 +40,12 @@ in {
         name = "JetBrains Mono";
       };
       sansSerif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.noto-fonts;
+        name = "noto";
       };
       serif = {
-        package = pkgs.montserrat;
-        name = "Montserrat";
+        package = pkgs.noto-fonts;
+        name = "noto";
       };
       sizes = {
         applications = 12;
