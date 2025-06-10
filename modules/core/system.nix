@@ -1,4 +1,4 @@
-{host, ...}: let
+{pkgs, host, ...}: let
   inherit (import ../../hosts/${host}/variables.nix) consoleKeyMap;
 in {
   nix = {
@@ -25,6 +25,16 @@ in {
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+  i18n.inputMethod = {
+     type = "fcitx5";
+     enable = true;
+     fcitx5.waylandFrontend = true;
+     fcitx5.addons = with pkgs; [
+       fcitx5-gtk             # alternatively, kdePackages.fcitx5-qt
+       fcitx5-chinese-addons  # table input method support
+       fcitx5-nord            # a color theme
+    ];
   };
   environment.variables = {
     ZANEYOS_VERSION = "2.3";

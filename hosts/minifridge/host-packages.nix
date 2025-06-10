@@ -10,5 +10,6 @@
     nil
     alejandra
     obsidian
+    inkscape
   ];
 }

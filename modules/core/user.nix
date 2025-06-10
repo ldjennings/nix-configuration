@@ -21,6 +21,32 @@ in {
         homeDirectory = "/home/${username}";
         stateVersion = "23.11";
       };
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "text/html"                   = "firefox.desktop";
+          "text/plain"                  = "neovim.desktop";
+          "application/pdf"             = "firefox.desktop";
+
+          "inode/directory"             = "kitty.desktop";
+
+
+          "image/jpeg"                  = "gimp.desktop";
+          "image/png"                   = "gimp.desktop";
+          "image/svg+xml"               = "org.inkscape.Inkscape.desktop";
+
+
+          "x-scheme-handler/http"       = "firefox.desktop";
+          "x-scheme-handler/https"      = "firefox.desktop";
+          "x-scheme-handler/about"      = "firefox.desktop";
+          "x-scheme-handler/unknown"    = "firefox.desktop";
+
+          "video/mp4"                   = "mpv.desktop";
+          "audio/mpeg"                  = "mpv.desktop";
+          "audio/mp3"                   = "mpv.desktop";
+          "audio/wav"                   = "mpv.desktop";
+        };
+      };
     };
   };
   users.mutableUsers = true;
