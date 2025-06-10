@@ -61,7 +61,7 @@
           spacing                   = mkLiteral "0em";
           padding                   = mkLiteral "0em";
           orientation               = mkLiteral "vertical";
-          children                  = map mkLiteral ["inputbar" "listbox"];
+          children                  = map mkLiteral ["inputbar" "message" "listbox"];
           background-color          = TRANSPARENT;
           background-image          = mkLiteral ''url("~/Pictures/Wallpapers/astronaut_jellyfish.jpg", height)'';
         };
@@ -189,6 +189,13 @@
         };
         "message" = {
           background-color          = mkLiteral "transparent";
+          spacing                   = mkLiteral "0.5em";
+          padding                   = mkLiteral "1em";
+
+          size           = mkLiteral "2em";             # Allow height to grow
+          # white-space      = mkLiteral "pre-wrap";         # Wrap long lines
+          # overflow         = mkLiteral "visible";          # Ensure content isn't clipped
+          # display          = mkLiteral "block";  
         };
         "error-message" = {
           # padding = mkLiteral "15px";

@@ -9,5 +9,6 @@
     direnv
     nil
     alejandra
+    obsidian
   ];
 }
