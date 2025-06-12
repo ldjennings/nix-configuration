@@ -8,6 +8,7 @@
     hyprpicker
     # direnv
     nil
+    nautilus
     alejandra
     obsidian
     inkscape
