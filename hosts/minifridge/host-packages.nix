@@ -6,7 +6,7 @@
     firefox
     kicad
     hyprpicker
-    direnv
+    # direnv
     nil
     alejandra
     obsidian

@@ -48,7 +48,7 @@ in {
         name = "noto";
       };
       sizes = {
-        applications = 12;
+        applications = 10;
         terminal = 15;
         desktop = 11;
         popups = 12;

@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./zshrc-personal.nix
+    ./direnv.nix
   ];
 
   programs.zsh = {
