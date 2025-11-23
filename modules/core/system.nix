@@ -41,5 +41,5 @@ in {
     ZANEYOS = "true";
   };
   # console.keyMap = "${consoleKeyMap}";
-  system.stateVersion = "23.11"; # Do not change!
+  system.stateVersion = "25.05"; # Do not change!
 }

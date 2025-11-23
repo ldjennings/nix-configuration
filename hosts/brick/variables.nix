@@ -1,7 +1,7 @@
 {
   # Git Configuration ( For Pulling Software Repos )
   gitUsername = "ldjennings";
-  gitEmail = "jenningsliamd@gmail.com";
+  gitEmail = "ldjennings@github.com";
 
   # Hyprland Settings
   # ex: extraMonitorSettings = "monitor = Virtual-1,1920x1080@60,auto,1";
