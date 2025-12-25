@@ -1,26 +1,27 @@
 { config, pkgs, ... }:
-let 
+let
 
-      inv-query = pkgs.writeScriptBin "inv-query"  ''
-          #!${pkgs.zsh}/bin/zsh
+  inv-query = pkgs.writeScriptBin "inv-query" ''
+    #!${pkgs.zsh}/bin/zsh
 
-          ([[ $1 = "-r" ]] && (${pkgs.curl}/bin/curl -H "Authorization: Token 6fd451d3a0576f941c43df42b1e016be048466fd" "http://collabserver.org:10003/api/part/.*" | ${pkgs.jq}/bin/jq -r '.[] | select(.IPN != "") | .IPN + "   " + .name' > ~/.cache/fsae/inv-new.txt) && mv ~/.cache/fsae/inv-new.txt ~/.cache/fsae/inv.txt && notify-send "Inventory Updated")& 
+    ([[ $1 = "-r" ]] && (${pkgs.curl}/bin/curl -H "Authorization: Token 6fd451d3a0576f941c43df42b1e016be048466fd" "http://collabserver.org:10003/api/part/.*" | ${pkgs.jq}/bin/jq -r '.[] | select(.IPN != "") | .IPN + "   " + .name' > ~/.cache/fsae/inv-new.txt) && mv ~/.cache/fsae/inv-new.txt ~/.cache/fsae/inv.txt && notify-send "Inventory Updated")& 
 
-          IPN=$(cat ~/.cache/fsae/inv.txt | rofi -dmenu -i -matching-negate-char '\0' | sed 's/ .*//')
-          
-          [[ ! -z "$IPN" ]] && firefox http://collabserver.org:10003/part/$IPN/
-      '';
+    IPN=$(cat ~/.cache/fsae/inv.txt | rofi -dmenu -i -matching-negate-char '\0' | sed 's/ .*//')
 
-      ki-open = pkgs.writeScriptBin "ki-open"  ''
-          #!${pkgs.zsh}/bin/zsh
+    [[ ! -z "$IPN" ]] && firefox http://collabserver.org:10003/part/$IPN/
+  '';
 
-          PROJECT=$(tree ~/projects -fi | grep .kicad_pro | sed 's/\.\///' | rofi -dmenu -i -matching-negate-char '\0')
+  ki-open = pkgs.writeScriptBin "ki-open" ''
+    #!${pkgs.zsh}/bin/zsh
 
-          [[ ! -z "$PROJECT" ]] && kicad $PROJECT
+    PROJECT=$(tree ~/projects -fi | grep .kicad_pro | sed 's/\.\///' | rofi -dmenu -i -matching-negate-char '\0')
 
-      '';
+    [[ ! -z "$PROJECT" ]] && kicad $PROJECT
 
-in {
+  '';
+
+in
+{
   home.packages = [
     inv-query
     ki-open
@@ -41,5 +42,5 @@ in {
       terminal = false;
       type = "Application";
     };
-  }; 
+  };
 }

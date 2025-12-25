@@ -2,12 +2,14 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
 
-programs.neovim = {
-  defaultEditor = true;
-  viAlias = true;
-  vimAlias = true;
-};
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
 
 }

@@ -1,4 +1,5 @@
-{profile, ...}: {
+{ profile, ... }:
+{
   # Services to start
   services = {
     libinput.enable = true; # Input Handling
@@ -10,10 +11,7 @@
     gnome.gnome-keyring.enable = true;
 
     smartd = {
-      enable =
-        if profile == "vm"
-        then false
-        else true;
+      enable = if profile == "vm" then false else true;
       autodetect = true;
     };
     pipewire = {
@@ -37,11 +35,24 @@
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 20;
 
-       #Optional helps save long term battery health
-       START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+        #Optional helps save long term battery health
+        START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
+        STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
 
       };
-};
+    };
+
+    # Suspend first then hibernate when closing the lid
+    logind.lidSwitch = "suspend-then-hibernate";
+    # Hibernate on power button pressed
+    # logind.powerKey = "hibernate";
+    logind.powerKey = "suspend";
+    logind.powerKeyLongPress = "poweroff";
+
   };
+
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=5m
+    SuspendState=mem
+  '';
 }

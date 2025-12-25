@@ -1,4 +1,7 @@
-{username, ...}: {
+{ username, ... }:
+{
+  services.hyprsunset.enable = true;
+
   programs.hyprlock = {
     enable = true;
     settings = {

@@ -2,10 +2,11 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   programs = {
     firefox.enable = false; # Firefox is not installed by default
-    hyprland.enable = true; #someone forgot to set this so desktop file is created
+    hyprland.enable = true; # someone forgot to set this so desktop file is created
     dconf.enable = true;
     seahorse.enable = true;
     fuse.userAllowOther = true;
@@ -35,7 +36,7 @@
     file-roller # Archive Manager
     gedit # Simple Graphical Text Editor
     gimp # Great Photo Editor
-    glxinfo #needed for inxi diag util
+    glxinfo # needed for inxi diag util
     greetd.tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
     hyprpicker # Color Picker
@@ -49,8 +50,8 @@
     mpv # Incredible Video Player
     ncdu # Disk Usage Analyzer With Ncurses Interface
     nixfmt-rfc-style # Nix Formatter
-    nwg-displays #configure monitor configs via GUI
-    onefetch #provides zsaneyos build info on current system
+    nwg-displays # configure monitor configs via GUI
+    onefetch # provides zsaneyos build info on current system
     pavucontrol # For Editing Audio Levels & Devices
     pciutils # Collection Of Tools For Inspecting PCI Devices
     picard # For Changing Music Metadata & Getting Cover Art

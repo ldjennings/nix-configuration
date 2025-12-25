@@ -1,10 +1,11 @@
-{host, ...}: let
-  inherit
-    (import ../../../hosts/${host}/variables.nix)
+{ host, ... }:
+let
+  inherit (import ../../../hosts/${host}/variables.nix)
     browser
     terminal
     ;
-in {
+in
+{
   wayland.windowManager.hyprland.settings = {
     bind = [
       "$modifier,Return,exec,${terminal}"
@@ -13,7 +14,7 @@ in {
       "$modifier SHIFT,W,exec,web-search"
       "$modifier ALT,W,exec,wallsetter"
       "$modifier SHIFT,N,exec,swaync-client -rs"
-      "$modifier,W,exec,${browser}"
+      "$modifier,B,exec,${browser}"
       "$modifier,O,exec,obsidian"
       "$modifier,Y,exec,kitty -e yazi"
       "$modifier,E,exec,emopicker9000"
@@ -91,8 +92,9 @@ in {
       ",XF86AudioPause, exec, playerctl play-pause"
       ",XF86AudioNext, exec, playerctl next"
       ",XF86AudioPrev, exec, playerctl previous"
-      ",XF86MonBrightnessDown,exec,brightnessctl set 5%-"
-      ",XF86MonBrightnessUp,exec,brightnessctl set +5%"
+      ",XF86MonBrightnessDown,exec,brightnessctl --exponent=2.2 set 5%-"
+      ",XF86MonBrightnessUp,exec,brightnessctl --exponent=2.2 set +5%"
+      ",XF86AudioMedia  ,exec,code /home/liam/nix-configuration --new-window"
     ];
 
     bindm = [

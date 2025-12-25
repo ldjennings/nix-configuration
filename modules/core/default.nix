@@ -1,4 +1,5 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   imports = [
     ./boot.nix
     ./flatpak.nix
@@ -9,6 +10,7 @@
     ./network.nix
     ./nfs.nix
     ./nh.nix
+    ./nvim.nix
     ./packages.nix
     ./printing.nix
     ./security.nix

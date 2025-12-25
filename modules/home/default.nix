@@ -1,6 +1,8 @@
-{host, ...}: let
+{ host, ... }:
+let
   inherit (import ../../hosts/${host}/variables.nix) waybarChoice;
-in {
+in
+{
   imports = [
     ./amfora.nix
     ./bash.nix
@@ -21,7 +23,7 @@ in {
     ./hyprland
     ./kitty.nix
     ./lazygit.nix
-    ./nvf.nix
+    # ./nvf.nix
     ./rofi
     ./qt.nix
     ./scripts

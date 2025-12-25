@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     audacity
     legcord
@@ -12,5 +13,14 @@
     alejandra
     obsidian
     inkscape
+    qucs-s
+    freecad
+    vlc
+    kdePackages.kdenlive
+    libreoffice
+    lutris
+    mullvad
+    qbittorrent
+    zoom-us
   ];
 }

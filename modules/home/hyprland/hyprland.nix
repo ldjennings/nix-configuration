@@ -3,15 +3,16 @@
   config,
   pkgs,
   ...
-}: let
-  inherit
-    (import ../../../hosts/${host}/variables.nix)
+}:
+let
+  inherit (import ../../../hosts/${host}/variables.nix)
     extraMonitorSettings
     keyboardLayout
     consoleKeyMap
     stylixImage
     ;
-in {
+in
+{
   home.packages = with pkgs; [
     swww
     grim
@@ -40,7 +41,7 @@ in {
     systemd = {
       enable = true;
       enableXdgAutostart = true;
-      variables = ["--all"];
+      variables = [ "--all" ];
     };
     xwayland = {
       enable = true;
@@ -110,7 +111,7 @@ in {
         disable_splash_rendering = true;
         enable_swallow = false;
         vfr = true; # Variable Frame Rate
-        vrr = 2; #Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
+        vrr = 2; # Variable Refresh Rate  Might need to set to 0 for NVIDIA/AQ_DRM_DEVICES
         # Screen flashing to black momentarily or going black when app is fullscreen
         # Try setting vrr to 0
 
@@ -170,7 +171,9 @@ in {
 
     extraConfig = "
       monitor=,preferred,auto,auto
-      ${extraMonitorSettings}
+      ${
+            extraMonitorSettings
+          }
       # To enable blur on waybar uncomment the line below
       # Thanks to SchotjeChrisman
       #layerrule = blur,waybar

@@ -13,67 +13,72 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = {nixpkgs, ...} @ inputs: let
-    system = "x86_64-linux";
-    host = "brick";
-    profile = "intel";
-    username = "liam";
+  outputs =
+    { nixpkgs, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      host = "brick";
+      profile = "brick";
+      username = "liam";
+      # forAllSystems = nixpkgs.lib.genAttrs system;
+    in
+    {
+      formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
 
-    # forAllSystems = nixpkgs.lib.genAttrs system;
-  in {
-    formatter = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-
-    nixosConfigurations = {
-      amd = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-          inherit host;
-          inherit profile;
+      nixosConfigurations = {
+        amd = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit username;
+            inherit host;
+            inherit profile;
+          };
+          modules = [ ./profiles/amd ];
         };
-        modules = [./profiles/amd];
-      };
-      nvidia = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-          inherit host;
-          inherit profile;
+        nvidia = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit username;
+            inherit host;
+            inherit profile;
+          };
+          modules = [ ./profiles/nvidia ];
         };
-        modules = [./profiles/nvidia];
-      };
-      nvidia-laptop = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-          inherit host;
-          inherit profile;
+        nvidia-laptop = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit username;
+            inherit host;
+            inherit profile;
+          };
+          modules = [ ./profiles/nvidia-laptop ];
         };
-        modules = [./profiles/nvidia-laptop];
-      };
-      intel = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-          inherit host;
-          inherit profile;
+        brick = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit username;
+            inherit host;
+            inherit profile;
+          };
+          modules = [
+            ./profiles/intel
+            inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
+          ];
         };
-        modules = [./profiles/intel inputs.nixos-hardware.nixosModules.framework-12th-gen-intel];
-      };
-      vm = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          inherit username;
-          inherit host;
-          inherit profile;
+        vm = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            inherit username;
+            inherit host;
+            inherit profile;
+          };
+          modules = [ ./profiles/vm ];
         };
-        modules = [./profiles/vm];
       };
     };
-  };
 }

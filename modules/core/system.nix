@@ -1,6 +1,12 @@
-{pkgs, host, ...}: let
+{
+  pkgs,
+  host,
+  ...
+}:
+let
   inherit (import ../../hosts/${host}/variables.nix) consoleKeyMap;
-in {
+in
+{
   nix = {
     settings = {
       download-buffer-size = 250000000;
@@ -9,8 +15,8 @@ in {
         "nix-command"
         "flakes"
       ];
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
   };
   time.timeZone = "America/Los_Angeles";
@@ -27,13 +33,13 @@ in {
     LC_TIME = "en_US.UTF-8";
   };
   i18n.inputMethod = {
-     type = "fcitx5";
-     enable = true;
-     fcitx5.waylandFrontend = true;
-     fcitx5.addons = with pkgs; [
-       fcitx5-gtk             # alternatively, kdePackages.fcitx5-qt
-       fcitx5-chinese-addons  # table input method support
-       fcitx5-nord            # a color theme
+    type = "fcitx5";
+    enable = true;
+    fcitx5.waylandFrontend = true;
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk # alternatively, kdePackages.fcitx5-qt
+      fcitx5-chinese-addons # table input method support
+      fcitx5-nord # a color theme
     ];
   };
   environment.variables = {
