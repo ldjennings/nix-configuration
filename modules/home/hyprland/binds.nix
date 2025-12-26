@@ -92,8 +92,8 @@ in
       ",XF86AudioPause, exec, playerctl play-pause"
       ",XF86AudioNext, exec, playerctl next"
       ",XF86AudioPrev, exec, playerctl previous"
-      ",XF86MonBrightnessDown,exec,brightnessctl --exponent=2.2 set 5%-"
-      ",XF86MonBrightnessUp,exec,brightnessctl --exponent=2.2 set +5%"
+      ",XF86MonBrightnessDown,exec,brightness-gamma down"
+      ",XF86MonBrightnessUp,exec,brightness-gamma up"
       ",XF86AudioMedia  ,exec,code /home/liam/nix-configuration --new-window"
     ];
 
