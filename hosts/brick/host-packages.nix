@@ -19,7 +19,7 @@
     kdePackages.kdenlive
     libreoffice
     lutris
-    mullvad
+    # mullvad
     qbittorrent
     zoom-us
   ];

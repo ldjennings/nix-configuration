@@ -7,6 +7,7 @@
     ./greetd.nix
     ./hardware.nix
     ./keyd.nix
+    ./mullvad.nix
     ./network.nix
     ./nfs.nix
     ./nh.nix
