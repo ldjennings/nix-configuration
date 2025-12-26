@@ -94,7 +94,8 @@ in
       ",XF86AudioPrev, exec, playerctl previous"
       ",XF86MonBrightnessDown,exec,brightness-gamma down"
       ",XF86MonBrightnessUp,exec,brightness-gamma up"
-      ",XF86AudioMedia  ,exec,code /home/liam/nix-configuration --new-window"
+      ",XF86AudioMedia,exec,code /home/liam/nix-configuration --new-window"
+      ",Print,exec,toggle-light-filter"
     ];
 
     bindm = [

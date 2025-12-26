@@ -63,5 +63,27 @@ EOF
           ;;
       esac
     '')
+
+    (pkgs.writeShellScriptBin "toggle-light-filter" ''
+      set -euo pipefail
+
+      BASE_TEMPERATURE=6000
+      FILTER_TEMPERATURE=2500
+
+      CURRENT_TEMPERATURE=$(${pkgs.hyprland}/bin/hyprctl hyprsunset temperature)
+
+      if [ "$CURRENT_TEMPERATURE" -le "$FILTER_TEMPERATURE" ]; then
+          TARGET="$BASE_TEMPERATURE"
+      else
+          TARGET="$FILTER_TEMPERATURE"
+      fi
+
+      ${pkgs.hyprland}/bin/hyprctl hyprsunset temperature "$TARGET"
+
+      ${pkgs.libnotify}/bin/notify-send "Night Light" "Temperature set to ''${TARGET}K"
+
+
+
+    '')
   ];
 }
