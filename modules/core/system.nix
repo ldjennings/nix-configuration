@@ -41,7 +41,21 @@ in
       fcitx5-chinese-addons # table input method support
       fcitx5-nord # a color theme
     ];
+
+    fcitx5.settings.inputMethod = {
+      GroupOrder."0" = "Default";
+      "Groups/0" = {
+        Name = "Default";
+        "Default Layout" = "us";
+        DefaultIM = "pinyin";
+      };
+      "Groups/0/Items/0".Name = "keyboard-us";
+      "Groups/0/Items/1".Name = "pinyin";
+    };
   };
+  services.xserver.desktopManager.runXdgAutostartIfNone = true;
+
+
   environment.variables = {
     ZANEYOS_VERSION = "2.3";
     ZANEYOS = "true";
