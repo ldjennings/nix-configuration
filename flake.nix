@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nvf.url = "github:notashelf/nvf";
+    # nvf.url = "github:notashelf/nvf";
     stylix.url = "github:danth/stylix/release-25.05";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
