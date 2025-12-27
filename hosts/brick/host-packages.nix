@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     audacity
+    calibre
     legcord
     vscode-fhs
     firefox
