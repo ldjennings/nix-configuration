@@ -5,9 +5,9 @@ in
 {
   programs.git = {
     enable = true;
-    userName = "${gitUsername}";
-    userEmail = "${gitEmail}";
-    extraConfig = {
+    settings = {
+      user.email = "${gitEmail}";
+      user.name = "${gitUsername}";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
     };

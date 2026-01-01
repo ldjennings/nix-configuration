@@ -43,11 +43,12 @@
     };
 
     # Suspend first then hibernate when closing the lid
-    logind.lidSwitch = "suspend-then-hibernate";
-    # Hibernate on power button pressed
-    # logind.powerKey = "hibernate";
-    logind.powerKey = "suspend";
-    logind.powerKeyLongPress = "poweroff";
+    logind.settings.Login = {
+      HandleLidSwitch = "suspend-then-hibernate";
+      HandlePowerKey = "suspend";
+      HandlePowerKeyLongPress = "poweroff";
+    };
+
 
   };
 
