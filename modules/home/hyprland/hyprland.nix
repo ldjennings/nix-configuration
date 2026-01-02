@@ -53,7 +53,7 @@ in
         "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "systemctl --user start hyprpolkitagent"
-        "killall -q swww;sleep .5 && swww init"
+        "killall -q swww;sleep .5 && swww-daemon &"
         "killall -q waybar;sleep .5 && waybar"
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
@@ -82,15 +82,17 @@ in
       };
 
       gestures = {
-        workspace_swipe = 1;
-        workspace_swipe_fingers = 3;
         workspace_swipe_distance = 500;
-        workspace_swipe_invert = 1;
+        workspace_swipe_invert = true;
         workspace_swipe_min_speed_to_force = 30;
         workspace_swipe_cancel_ratio = 0.5;
-        workspace_swipe_create_new = 1;
-        workspace_swipe_forever = 1;
+        workspace_swipe_create_new = true;
+        workspace_swipe_forever = true;
       };
+      gesture = [
+        "3, horizontal, workspace"
+      ];
+
 
       general = {
         "$modifier" = "SUPER";
@@ -158,9 +160,10 @@ in
       };
 
       render = {
-        explicit_sync = 1; # Change to 1 to disable
-        explicit_sync_kms = 1;
+        # explicit_sync = 1; # Change to 1 to disable
+        # explicit_sync_kms = 1;
         direct_scanout = 0;
+        new_render_scheduling = true;
       };
 
       master = {
