@@ -30,6 +30,13 @@ in
         homeDirectory = "/home/${username}";
         stateVersion = "25.05";
       };
+      xresources.properties = {
+        "Nsxiv.window.background" = "#0d0e15";
+        "Nsxiv.window.foreground" = "#e9e9f4";
+
+        "Nsxiv.bar.background" = "#0d0e15";
+        "Nsxiv.bar.foreground" = "#e9e9f4";
+      };
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {
@@ -39,8 +46,20 @@ in
 
           "inode/directory" = "kitty.desktop";
 
-          "image/jpeg" = "gimp.desktop";
-          "image/png" = "gimp.desktop";
+
+          "image/bmp"  = "nsxiv.desktop";
+          "image/gif"= "nsxiv.desktop";
+          "image/jpeg"= "nsxiv.desktop";
+          "image/jpg"= "nsxiv.desktop";
+          "image/png"= "nsxiv.desktop";
+          "image/tiff"= "nsxiv.desktop";
+          "image/webp"= "nsxiv.desktop";
+          "image/x-bmp"= "nsxiv.desktop";
+          "image/x-portable-anymap"= "nsxiv.desktop";
+          "image/x-portable-bitmap"= "nsxiv.desktop";
+          "image/x-portable-graymap"= "nsxiv.desktop";
+          "image/x-tga"= "nsxiv.desktop";
+          "image/x-xpixmap"= "nsxiv.desktop";
           "image/svg+xml" = "org.inkscape.Inkscape.desktop";
 
           "x-scheme-handler/http" = "firefox.desktop";

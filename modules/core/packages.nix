@@ -60,6 +60,7 @@
     rhythmbox
     ripgrep # Improved Grep
     socat # Needed For Screenshots
+    nsxiv
     unrar # Tool For Handling .rar Files
     unzip # Tool For Handling .zip Files
     usbutils # Good Tools For USB Devices
