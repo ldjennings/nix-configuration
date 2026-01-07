@@ -60,17 +60,17 @@ in
           "image/x-portable-graymap"= "nsxiv.desktop";
           "image/x-tga"= "nsxiv.desktop";
           "image/x-xpixmap"= "nsxiv.desktop";
-          "image/svg+xml" = "org.inkscape.Inkscape.desktop";
+          "image/svg+xml" = "nsxiv.desktop";
 
           "x-scheme-handler/http" = "firefox.desktop";
           "x-scheme-handler/https" = "firefox.desktop";
           "x-scheme-handler/about" = "firefox.desktop";
           "x-scheme-handler/unknown" = "firefox.desktop";
 
-          "video/mp4" = "mpv.desktop";
-          "audio/mpeg" = "mpv.desktop";
-          "audio/mp3" = "mpv.desktop";
-          "audio/wav" = "mpv.desktop";
+          "video/mp4" = "vlc.desktop";
+          "audio/mpeg" = "vlc.desktop";
+          "audio/mp3" = "vlc.desktop";
+          "audio/wav" = "vlc.desktop";
         };
       };
     };
