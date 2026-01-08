@@ -13,7 +13,15 @@
       #export EDITOR="nvim"
       #export VISUAL="nvim"
 
-      #alias c="clear"
+      alias c="clear"
+       
+      # git aliases
+      alias gc='git commit'
+      alias gs='git status -sb'
+      alias gap='git add -p'
+      alias gd='git diff'
+      alias gds='git diff --staged'
+      alias gl='git log --oneline --decorate --graph'
      
 
   '';
