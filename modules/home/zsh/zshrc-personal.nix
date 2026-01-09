@@ -14,9 +14,9 @@
       #export VISUAL="nvim"
 
       alias c="clear"
-       
+
       # git aliases
-      alias gc='git commit'
+      alias gc='git commit -v'
       alias gs='git status -sb'
       alias gap='git add -p'
       alias gd='git diff'
