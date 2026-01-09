@@ -16,7 +16,7 @@
       alias c="clear"
 
       # git aliases
-      alias gc='git commit -v'
+      alias gc='git commit'
       alias gs='git status -sb'
       alias gap='git add -p'
       alias gd='git diff'
