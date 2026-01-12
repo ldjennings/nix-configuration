@@ -76,9 +76,9 @@ in
       ];
     };
 
-    extraConfig = "
-      monitor=,preferred,auto,auto
-      ${extraMonitorSettings}
-    ";
+    # extraConfig = "
+    #   monitor=,preferred,auto,auto
+    #   ${extraMonitorSettings}
+    # ";
   };
 }

@@ -6,7 +6,17 @@
   # Hyprland Settings
   # ex: extraMonitorSettings = "monitor = Virtual-1,1920x1080@60,auto,1";
   # ex: extraMonitorSettings = "monitor = HDMI-A-1,1920x1080@60,auto,1";
-  extraMonitorSettings = "monitor = eDP-1,2256x1504@59.99900, auto,1";
+  # extraMonitorSettings ="monitor = eDP-1,2256x1504@59.99900, auto,1.5";
+  # extraMonitorSettings = [
+  #   "monitor = eDP-1,2256x1504@59.99900, auto,1.5"
+  #   "monitor = DP-7,1920x1080@60.00000, auto, .5"
+  #   ];
+    extraMonitorSettings =''
+      monitor = eDP-1,2256x1504@59.99900, auto,1.175
+      monitor = DP-7,1920x1080@60.00000, auto,auto
+    '';
+
+
 
   # Waybar Settings
   clock24h = false;
