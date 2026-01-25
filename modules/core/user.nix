@@ -41,7 +41,7 @@ in
         enable = true;
         defaultApplications = {
           "text/html" = "firefox.desktop";
-          "text/plain" = "neovim.desktop";
+          "text/plain" = "org.gnome.gedit.desktop";
           "application/pdf" = "firefox.desktop";
 
           "inode/directory" = "kitty.desktop";
