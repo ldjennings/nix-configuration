@@ -68,7 +68,7 @@
       set -euo pipefail
 
       BASE_TEMPERATURE=6000
-      FILTER_TEMPERATURE=2500
+      FILTER_TEMPERATURE=1500
 
       CURRENT_TEMPERATURE=$(${pkgs.hyprland}/bin/hyprctl hyprsunset temperature)
 
