@@ -2,7 +2,7 @@
 {
   imports = [
     ./boot.nix
-    ./flatpak.nix
+    # ./flatpak.nix
     ./fonts.nix
     ./greetd.nix
     ./hardware.nix
@@ -25,6 +25,7 @@
     ./user.nix
     ./virtualisation.nix
     ./xserver.nix
+    ./xdg-portal.nix
     inputs.stylix.nixosModules.stylix
   ];
 }
