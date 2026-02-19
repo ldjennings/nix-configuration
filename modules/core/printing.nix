@@ -1,4 +1,4 @@
-{ host, ... }:
+{ host, pkgs, ... }:
 let
   inherit (import ../../hosts/${host}/variables.nix) printEnable;
 in
@@ -8,6 +8,7 @@ in
       enable = printEnable;
       drivers = [
         # pkgs.hplipWithPlugin
+        pkgs.postscript-lexmark
       ];
     };
     avahi = {

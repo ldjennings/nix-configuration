@@ -11,6 +11,11 @@
     stylix.url = "github:danth/stylix/release-25.11";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -23,7 +28,13 @@
       # forAllSystems = nixpkgs.lib.genAttrs system;
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+      treefmt = {
+        projectRootFile = "./flake.nix";
+        programs = {
+          alejandra.enable = true;
+          prettier.enable = true;
+        };
+      };
 
       nixosConfigurations = {
         amd = nixpkgs.lib.nixosSystem {
