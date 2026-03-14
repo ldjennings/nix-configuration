@@ -3,6 +3,9 @@
   self,
   ...
 }: {
+
+  systems = [ "x86_64-linux" ];
+
   flake.nixosConfigurations.brick = inputs.nixpkgs.lib.nixosSystem {
 
     system = "x86_64-linux";
@@ -13,7 +16,7 @@
       profile = "brick";
     };
     modules = [
-      ../../
+      "${self}/profiles/intel"
       self.nixosModules.hostBrick
       inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
       
