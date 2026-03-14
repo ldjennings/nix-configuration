@@ -15,31 +15,6 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
   };
-
-  outputs =
-    { nixpkgs, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      host = "brick";
-      profile = "brick";
-      username = "liam";
-      # forAllSystems = nixpkgs.lib.genAttrs system;
-    in
-    {
-      nixosConfigurations = {
-        brick = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit username;
-            inherit host;
-            inherit profile;
-          };
-          modules = [
-            ./profiles/intel
-            inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
-          ];
-        };
-      };
-    };
+  
+  outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./newModules);
 }
