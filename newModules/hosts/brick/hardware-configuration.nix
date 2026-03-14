@@ -1,0 +1,58 @@
+{
+  flake.nixosModules.hostBrick = {
+    config,
+    lib,
+    pkgs,
+    modulesPath,
+    ...
+  }: {
+    
+    imports = [
+      (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+    # kernel parameters
+    boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+    boot.initrd.kernelModules = [ ];
+    boot.kernelModules = [ "kvm-intel" ];
+    boot.extraModulePackages = [ ];    
+    boot.kernelParams = [ "resume_offset=63565824" "mem_sleep_default=deep" ]; # for hibernation
+
+    # filesystem info
+    fileSystems."/" = {
+      device = "/dev/disk/by-uuid/df06cd17-15d4-4959-8614-1fc9e854b4f2";
+      fsType = "ext4";
+    };
+
+    fileSystems."/boot" = {
+      device = "/dev/disk/by-uuid/566A-7E3C";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
+
+    # swap/hibernation management
+    boot.resumeDevice = "/dev/disk/by-uuid/df06cd17-15d4-4959-8614-1fc9e854b4f2";
+
+    swapDevices = [
+      {
+        device = "/var/lib/swapfile";
+        size = 24 * 1024; # 24GB in MB
+      }
+    ];
+
+    # fundamental networking information/other auto generated details:
+
+    # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+    # (the default) this is the recommended approach. When using systemd-networkd it's
+    # still possible to use this option, but it's recommended to use it in conjunction
+    # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+    networking.useDHCP = lib.mkDefault true;
+    # networking.interfaces.wlp166s0.useDHCP = lib.mkDefault true;
+
+    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+}
