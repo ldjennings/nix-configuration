@@ -18,5 +18,18 @@
     pam.services.swaylock = {
       text = ''auth include login '';
     };
+
+    # sudoers rules to allow scripts to change the LED color without root access
+    sudo.extraRules = [
+      {
+        users = [ "liam" ];
+        commands = [
+          { command = "${pkgs.fw-ectool}/bin/ectool led power red";   options = [ "NOPASSWD" ]; }
+          { command = "${pkgs.fw-ectool}/bin/ectool led power white"; options = [ "NOPASSWD" ]; }
+          { command = "${pkgs.fw-ectool}/bin/ectool led power amber"; options = [ "NOPASSWD" ]; }
+          { command = "${pkgs.fw-ectool}/bin/ectool led power off";   options = [ "NOPASSWD" ]; }
+        ];
+      }
+    ];
   };
 }
