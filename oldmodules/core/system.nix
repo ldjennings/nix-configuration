@@ -56,10 +56,7 @@ in
   services.xserver.desktopManager.runXdgAutostartIfNone = true;
 
 
-  environment.variables = {
-    ZANEYOS_VERSION = "2.3";
-    ZANEYOS = "true";
-  };
+
   # console.keyMap = "${consoleKeyMap}";
   system.stateVersion = "25.05"; # Do not change!
 }
