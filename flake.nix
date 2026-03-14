@@ -12,10 +12,13 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # treefmt-nix = {
+    #   url = "github:numtide/treefmt-nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
   };
 
   outputs =
@@ -28,45 +31,7 @@
       # forAllSystems = nixpkgs.lib.genAttrs system;
     in
     {
-      treefmt = {
-        projectRootFile = "./flake.nix";
-        programs = {
-          alejandra.enable = true;
-          prettier.enable = true;
-        };
-      };
-
       nixosConfigurations = {
-        amd = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit username;
-            inherit host;
-            inherit profile;
-          };
-          modules = [ ./profiles/amd ];
-        };
-        nvidia = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit username;
-            inherit host;
-            inherit profile;
-          };
-          modules = [ ./profiles/nvidia ];
-        };
-        nvidia-laptop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit username;
-            inherit host;
-            inherit profile;
-          };
-          modules = [ ./profiles/nvidia-laptop ];
-        };
         brick = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -79,16 +44,6 @@
             ./profiles/intel
             inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
           ];
-        };
-        vm = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            inherit username;
-            inherit host;
-            inherit profile;
-          };
-          modules = [ ./profiles/vm ];
         };
       };
     };
