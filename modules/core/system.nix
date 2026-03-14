@@ -9,8 +9,17 @@ in
 {
   nix = {
     settings = {
+      # see https://jackson.dev/post/nix-reasonable-defaults/
+
+      connect-timeout = 5;
+      min-free = 128000000;
+      max-free = 1000000000;
+      fallback = true;
+
+      
       download-buffer-size = 250000000;
       auto-optimise-store = true;
+      warn-dirty = false;
       experimental-features = [
         "nix-command"
         "flakes"
