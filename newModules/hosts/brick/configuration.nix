@@ -23,10 +23,12 @@
   };
 
   flake.nixosModules.hostBrick = {pkgs, config, ...}: {
-    imports = [
-      self.nixosModules.appImageSupport
-      self.nixosModules.networking
-      self.nixosModules.virtualization
+    imports = with self.nixosModules; [
+      appImageSupport
+      networking
+      virtualization
+      gpuIntel
+      printing
     ];
     boot = {
       consoleLogLevel = 3;
@@ -58,6 +60,7 @@
 
     # audio enhancements from nixos-hardware: https://github.com/NixOS/nixos-hardware/blob/master/framework/13-inch/common/audio.nix
     # replaces "builtin analog stereo" with "framework speakers"
+    # note that the previous device (analog stereo) should be at 100% before applying this change
     hardware.framework.laptop13.audioEnhancement = {
       enable = true;
       rawDeviceName = "alsa_output.pci-0000_00_1f.3.analog-stereo";

@@ -132,7 +132,7 @@ in
       decoration = {
         rounding = 10;
         blur = {
-          enabled = true;
+          enabled = false;
           size = 5;
           passes = 3;
           ignore_opacity = false;

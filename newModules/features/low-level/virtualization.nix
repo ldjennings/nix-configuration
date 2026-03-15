@@ -32,8 +32,8 @@
       virt-manager.enable = false;
     };
 
-    environment.systemPackages = with pkgs; [
-      # virt-viewer  # GUI for viewing/interacting with running VMs
-    ];
+    # environment.systemPackages = with pkgs; [
+    #   virt-viewer  # GUI for viewing/interacting with running VMs
+    # ];
   };
 }

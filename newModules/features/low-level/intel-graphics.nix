@@ -26,31 +26,14 @@
 
     hardware.graphics = {
       enable = true;
-
-      # 32-bit support needed for Steam/Proton/Wine
       enable32Bit = true;
 
       extraPackages = with pkgs; [
-        # VA-API driver for hardware video decode/encode (iHD, 12th gen and newer)
-        intel-media-driver
-
-        # Quick Sync Video runtime -- hardware encode/decode for OBS, ffmpeg etc.
-        vpl-gpu-rt
-
-        # OpenCL and Level Zero compute support
-        intel-compute-runtime
-
-        # Vulkan support
-        vulkan-loader
-        vulkan-intel
+        intel-media-driver    # VA-API (iHD)
+        vpl-gpu-rt            # Quick Sync Video
+        intel-compute-runtime # OpenCL
       ];
-
-      # 32-bit versions for Steam/Proton
-      extraPackages32 = with pkgs.pkgsi686Linux; [
-        intel-media-driver
-        vulkan-loader
-      ];
-    };
+};
 
 
     # Load i915 early in boot for smoother display initialisation

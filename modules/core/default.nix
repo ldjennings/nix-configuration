@@ -12,7 +12,7 @@
     ./nh.nix
     ./nvim.nix
     ./packages.nix
-    ./printing.nix
+    # ./printing.nix
     ./security.nix
     ./services.nix
     # ./starfish.nix
