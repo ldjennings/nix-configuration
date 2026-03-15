@@ -10,7 +10,7 @@ in
     ./bat.nix
     ./btop.nix
     ./cava.nix
-    ./easyeffects
+    # ./easyeffects
     ./emoji.nix
     ./eza.nix
     ./fastfetch
