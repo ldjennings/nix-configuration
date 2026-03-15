@@ -34,6 +34,8 @@
       ];
 
       nix.settings = {
+        # see https://jackson.dev/post/nix-reasonable-defaults/
+        
         # Fail faster on unresponsive substituters
         connect-timeout = 5;
 

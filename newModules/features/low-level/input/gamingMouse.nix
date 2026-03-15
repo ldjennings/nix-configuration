@@ -10,6 +10,16 @@
     # ratbagd daemon -- communicates with gaming mice
     services.ratbagd.enable = true;
 
+    # shoving this here for now, not really needed since its all disabled
+    # hardware = {
+    #   # Enable flashing QMK-compatible keyboards
+    #   keyboard.qmk.enable = false;
+
+    #   # Logitech wireless receiver -- disabled in favour of ratbagd
+    #   logitech.wireless.enable = false;
+    #   logitech.wireless.enableGraphical = false;
+    # };
+
     environment.systemPackages = with pkgs; [
       piper  # GUI for configuring gaming mice
     ];

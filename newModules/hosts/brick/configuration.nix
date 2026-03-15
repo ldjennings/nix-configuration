@@ -32,6 +32,8 @@
       layout
       gamingMouse
       pinyinInput
+      nixConfiguration
+      locale
     ];
     boot = {
       consoleLogLevel = 3;
@@ -56,29 +58,17 @@
 
     boot.plymouth.enable = true;
 
-    networking.hostName = "brick";
+    network-config.hostName = "brick";
+    nix-config.flakeDirectory = "/home/liam/nix-configuration";
 
     # auto mounting of usbs
     services.udisks2.enable = true;
 
-    # audio enhancements from nixos-hardware: https://github.com/NixOS/nixos-hardware/blob/master/framework/13-inch/common/audio.nix
-    # replaces "builtin analog stereo" with "framework speakers"
-    # note that the previous device (analog stereo) should be at 100% before applying this change
-    hardware.framework.laptop13.audioEnhancement = {
-      enable = true;
-      rawDeviceName = "alsa_output.pci-0000_00_1f.3.analog-stereo";
-      
-      # Hides the raw speaker device to avoid volume conflicts (default: true)
-      hideRawDevice = true;
-    };
 
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      pulse.enable = true;
-    };
 
     # TODO: move this to desktop once I make that file  
     services.xserver.enable = false;
+
+    system.stateVersion = "25.05"; # Do not change!
   };
 }

@@ -2,14 +2,14 @@
 {
   imports = [
     # ./flatpak.nix
-    ./fonts.nix
-    ./greetd.nix
-    ./hardware.nix
+    # ./fonts.nix
+    # ./greetd.nix
+    # ./hardware.nix
     # ./keyd.nix
     ./mullvad.nix
     # ./network.nix
     ./nfs.nix
-    ./nh.nix
+    # ./nh.nix
     ./nvim.nix
     ./packages.nix
     # ./printing.nix
@@ -19,7 +19,7 @@
     ./steam.nix
     ./stylix.nix
     ./syncthing.nix
-    ./system.nix
+    # ./system.nix
     ./thunar.nix
     ./user.nix
     # ./virtualisation.nix
