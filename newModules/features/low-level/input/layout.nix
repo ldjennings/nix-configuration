@@ -2,7 +2,7 @@
 # Remaps capslock to delete, capslock+ctrl to capslock,
 # and sets Colemak as the default keyboard layout via XKB.
 {
-  flake.nixosModules.remapping = { ... }: {
+  flake.nixosModules.layout = { ... }: {
     # Capslock remapping at the kernel level via keyd
     services.keyd = {
       enable = true;
@@ -23,5 +23,8 @@
       layout = "us";
       variant = "colemak";
     };
+
+    # Colemak layout for TTY/console
+    console.useXkbConfig = true; 
   };
 }
