@@ -19,6 +19,11 @@
         # Exposes a Docker-compatible socket at /run/podman/podman.sock
         # allowing tools that target the Docker daemon to work transparently
         dockerSocket.enable = true;
+
+        # Enables DNS resolution between containers on the same Podman network.
+        defaultNetwork.settings = {
+          dns_enabled = true;
+        };
       };
     };
 
