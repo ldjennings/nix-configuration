@@ -1,14 +1,13 @@
 { inputs, ... }:
 {
   imports = [
-    ./boot.nix
     # ./flatpak.nix
     ./fonts.nix
     ./greetd.nix
     ./hardware.nix
     ./keyd.nix
     ./mullvad.nix
-    ./network.nix
+    # ./network.nix
     ./nfs.nix
     ./nh.nix
     ./nvim.nix
@@ -23,7 +22,7 @@
     ./system.nix
     ./thunar.nix
     ./user.nix
-    ./virtualisation.nix
+    # ./virtualisation.nix
     ./xserver.nix
     ./xdg-portal.nix
     inputs.stylix.nixosModules.stylix
