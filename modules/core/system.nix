@@ -3,9 +3,7 @@
   host,
   ...
 }:
-let
-  inherit (import ../../hosts/${host}/variables.nix) consoleKeyMap;
-in
+
 {
   nix = {
     settings = {
@@ -41,30 +39,9 @@ in
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-  i18n.inputMethod = {
-    type = "fcitx5";
-    enable = true;
-    fcitx5.waylandFrontend = true;
-    fcitx5.addons = with pkgs; [
-      fcitx5-gtk # alternatively, kdePackages.fcitx5-qt
-      qt6Packages.fcitx5-chinese-addons # table input method support
-      fcitx5-nord # a color theme
-    ];
-
-    fcitx5.settings.inputMethod = {
-      GroupOrder."0" = "Default";
-      "Groups/0" = {
-        Name = "Default";
-        "Default Layout" = "us";
-        DefaultIM = "pinyin";
-      };
-      "Groups/0/Items/0".Name = "keyboard-us";
-      "Groups/0/Items/1".Name = "pinyin";
-    };
-  };
-  services.xserver.desktopManager.runXdgAutostartIfNone = true;
 
 
 
-  system.stateVersion = "25.05"; # Do not chnge!
+
+  system.stateVersion = "25.05"; # Do not change!
 }

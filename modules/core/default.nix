@@ -23,7 +23,6 @@
     ./thunar.nix
     ./user.nix
     # ./virtualisation.nix
-    ./xserver.nix
     ./xdg-portal.nix
     inputs.stylix.nixosModules.stylix
   ];

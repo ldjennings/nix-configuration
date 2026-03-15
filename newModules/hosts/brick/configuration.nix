@@ -29,6 +29,9 @@
       virtualization
       gpuIntel
       printing
+      layout
+      gamingMouse
+      pinyinInput
     ];
     boot = {
       consoleLogLevel = 3;
@@ -74,6 +77,8 @@
       alsa.enable = true;
       pulse.enable = true;
     };
-      
+
+    # TODO: move this to desktop once I make that file  
+    services.xserver.enable = false;
   };
 }
