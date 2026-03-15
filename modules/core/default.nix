@@ -6,15 +6,15 @@
     # ./greetd.nix
     # ./hardware.nix
     # ./keyd.nix
-    ./mullvad.nix
+    # ./mullvad.nix
     # ./network.nix
-    ./nfs.nix
+    # ./nfs.nix
     # ./nh.nix
     ./nvim.nix
     ./packages.nix
     # ./printing.nix
     ./security.nix
-    ./services.nix
+    # ./services.nix
     # ./starfish.nix
     ./steam.nix
     ./stylix.nix

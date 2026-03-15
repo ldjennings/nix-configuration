@@ -26,5 +26,9 @@
 
     # Colemak layout for TTY/console
     console.useXkbConfig = true; 
+
+    # throwing this in here because I'm lazy
+    # TODO: rename this file to mouse and keyboard input or something
+    services.libinput.enable = true;
   };
 }

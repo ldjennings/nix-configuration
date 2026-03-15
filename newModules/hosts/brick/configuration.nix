@@ -61,8 +61,6 @@
     network-config.hostName = "brick";
     nix-config.flakeDirectory = "/home/liam/nix-configuration";
 
-    # auto mounting of usbs
-    services.udisks2.enable = true;
 
 
 

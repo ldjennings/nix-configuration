@@ -11,6 +11,7 @@
     services.ratbagd.enable = true;
 
     # shoving this here for now, not really needed since its all disabled
+    # TODO: rename this to periphreals or something
     # hardware = {
     #   # Enable flashing QMK-compatible keyboards
     #   keyboard.qmk.enable = false;
