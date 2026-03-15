@@ -7,9 +7,9 @@
 #   Add self.nixosModules.nix to your host's modules list,
 #   then set the flake directory in your host module:
 #
-#   nix-config.flakeDirectory = "/home/${username}/nix-configuration";
+#   nix-config.flakeDirectory = "/home/liam/nix-configuration";
 {
-  flake.nixosModules.nix = { config, lib, pkgs, username, ... }: {
+  flake.nixosModules.nixConfiguration = { config, lib, pkgs, username, ... }: {
     options.nix-config = {
       flakeDirectory = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
@@ -25,8 +25,10 @@
           assertion = config.nix-config.flakeDirectory != null;
           message = ''
             nix-config.flakeDirectory is not set.
-            Add the following to your host module:
-              nix-config.flakeDirectory = "/home/${username}/nix-configuration";
+            As an example, add the following to 
+            your host module where 
+            nixosModules.nixConfiguration is imported:
+              nix-config.flakeDirectory = "/home/liam/nix-configuration";
           '';
         }
       ];
