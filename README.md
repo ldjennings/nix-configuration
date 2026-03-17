@@ -1,5 +1,5 @@
 ## Host Configuration Options
-
+TODO: change this import stuff, its not correct anymore
 Modules in this flake that require per-host values (such as `host.username`,
 `host.hostname`, and `host.flakeDirectory`) declare their dependencies by
 importing `flake/modules/host-config.nix` directly. This file defines the
