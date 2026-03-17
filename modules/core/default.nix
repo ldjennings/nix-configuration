@@ -13,17 +13,17 @@
     ./nvim.nix
     ./packages.nix
     # ./printing.nix
-    ./security.nix
+    # ./security.nix
     # ./services.nix
     # ./starfish.nix
-    ./steam.nix
+    # ./steam.nix
     ./stylix.nix
     ./syncthing.nix
     # ./system.nix
     ./thunar.nix
     ./user.nix
     # ./virtualisation.nix
-    ./xdg-portal.nix
+    # ./xdg-portal.nix
     inputs.stylix.nixosModules.stylix
   ];
 }

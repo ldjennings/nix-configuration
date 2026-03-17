@@ -32,7 +32,8 @@
     cliphist # Clipboard manager using rofi menu
     cmatrix # Matrix Movie Effect In Terminal
     cowsay # Great Fun Terminal Program
-    docker-compose # Allows Controlling Docker From A Single File
+    # should be installed through virtualization.nix
+    # docker-compose # Allows Controlling Docker From A Single File
     duf # Utility For Viewing Disk Usage In Terminal
     eza # Beautiful ls Replacement
     ffmpeg # Terminal Video / Audio Editing

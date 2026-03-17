@@ -1,41 +1,20 @@
 # Flake-parts module exposing a NixOS module for network configuration.
-# Includes NetworkManager, firewall rules, and the NetworkManager system 
+# Includes NetworkManager, firewall rules, and the NetworkManager system
 # tray applet.
 #
 # Usage:
-#   Add self.nixosModules.networking to your host's modules list,
-#   then set the hostname in your host module:
+#   Add self.nixosModules.networking to your host's modules list.
+#   Requires host.hostname to be set in your host module:
 #
-#   network-config.hostName = "brick";
+#   host.hostname = "brick";
 { ... }: {
-  flake.nixosModules.networking = { config, lib, pkgs, ... }: {
-    options.network-config = {
-      hostName = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "The hostname for this machine.";
-        example = "brick";
-      };
-    };
+  flake.nixosModules.networking = { config, lib, pkgs, self, ... }: {
+    # imports = [ self.nixosModules.hostConfig ];
+    # imports = [ "${self}/custom-nix-code/host-config.nix" ];
 
     config = {
-      assertions = [
-        {
-          assertion = config.network-config.hostName != null;
-          message = ''
-            network-config.hostName is not set.
-            As an example, add the following to 
-            your host module where 
-            nixosModules.networking is imported:
-              network-config.hostName = "brick";
-          '';
-        }
-      ];
-
       networking = {
-        hostName = lib.mkIf
-          (config.network-config.hostName != null)
-          config.network-config.hostName;
+        hostName = config.host.hostname;
 
         # Enable NetworkManager for managing wifi/ethernet connections
         networkmanager.enable = true;

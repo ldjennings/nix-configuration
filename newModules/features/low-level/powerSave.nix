@@ -3,7 +3,7 @@
 # for Intel thermal management.
 # Note: power-profiles-daemon conflicts with TLP -- do not enable both.
 { ... }: {
-  flake.nixosModules.power = { ... }: {
+  flake.nixosModules.powerSave = { ... }: {
     # Intel thermal management -- prevents throttling
     services.thermald.enable = true;
 

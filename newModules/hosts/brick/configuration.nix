@@ -17,23 +17,36 @@
     };
     modules = [
       "${self}/profiles/intel"
+      self.nixosModules.hostConfig  # always first -- defines host.* options
       self.nixosModules.hostBrick
       inputs.nixos-hardware.nixosModules.framework-12th-gen-intel  
     ];
   };
 
   flake.nixosModules.hostBrick = {pkgs, config, ...}: {
+    # TODO: rename all of these so that they match the filenames
     imports = with self.nixosModules; [
       appImageSupport
-      networking
-      virtualization
+      bluetooth
+      fonts
+      gaming
+      greetd
       gpuIntel
+      locale
+      mullvad
+      networking
+      nfs
+      nixConfiguration
+      pipewire
+      powerSave      
       printing
+      security
+      storage
+      virtualization
+
       layout
       gamingMouse
       pinyinInput
-      nixConfiguration
-      locale
     ];
     boot = {
       consoleLogLevel = 3;
@@ -58,15 +71,28 @@
 
     boot.plymouth.enable = true;
 
-    network-config.hostName = "brick";
-    nix-config.flakeDirectory = "/home/liam/nix-configuration";
+    # network-config.hostName = "brick";
+    # nix-config.flakeDirectory = "/home/liam/nix-configuration";
+    # greetd-config.loginUser = "liam";
+    host ={
+      username = "liam";
+      flakeDirectory = "/home/liam/nix-configuration";
+      hostname = "brick";
+    };
 
 
 
 
     # TODO: move this to desktop once I make that file  
     services.xserver.enable = false;
+    # TODO: make this a part of hyprland/niri module probably
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+      configPackages = [ pkgs.hyprland ];
+    };
 
     system.stateVersion = "25.05"; # Do not change!
   };
 }
+

@@ -21,7 +21,7 @@
         enable = true;
 
         # Open firewall ports for Steam Remote Play
-        remotePlay.openFirewall = true;
+        # remotePlay.openFirewall = true;
 
         # Keep dedicated server ports closed unless needed
         dedicatedServer.openFirewall = false;
@@ -39,7 +39,7 @@
 
     environment.systemPackages = with pkgs; [
       lutris          # multi-platform game launcher (GOG, Battle.net, etc.)
-      heroic          # GOG and Epic Games launcher
+      # heroic          # GOG and Epic Games launcher
       bottles         # Wine prefix management GUI
       steam-run       # run games/apps in Steam's runtime environment
       # prismlauncher   # Minecraft launcher with mod support

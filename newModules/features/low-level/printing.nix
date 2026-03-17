@@ -50,11 +50,13 @@
     };
 
     # SANE -- scanner support for all-in-one devices
-    sane = {
+    hardware.sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
-      disabledDefaultBackends = [ "escl" ];
+      disabledDefaultBackends = [ "escl" ]; # cargo culted from zaneyos, not sure if needed
     };
+
+
 
     # Scanning/printing frontend
     environment.systemPackages = with pkgs; [
