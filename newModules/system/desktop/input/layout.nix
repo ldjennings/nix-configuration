@@ -24,8 +24,8 @@
       variant = "colemak";
     };
 
-    # Colemak layout for TTY/console
-    console.useXkbConfig = true; 
+    # # Colemak layout for TTY/console
+    # console.useXkbConfig = true; 
 
     # throwing this in here because I'm lazy
     # TODO: rename this file to mouse and keyboard input or something

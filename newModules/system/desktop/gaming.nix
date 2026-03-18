@@ -45,5 +45,11 @@
       # prismlauncher   # Minecraft launcher with mod support
       mangohud        # performance overlay for games (FPS, CPU, GPU usage)
     ];
+
+    # raises maximum number of memory map instances a process can have, intended to be used with games
+    # cargo culted from zaneyos
+    boot.kernel.sysctl = {
+      "vm.max_map_count" = 2147483642;
+    };
   };
 }
