@@ -24,36 +24,44 @@
   };
 
   flake.nixosModules.hostBrick = {pkgs, config, ...}: {
-    # TODO: rename all of these so that they match the filenames
     imports = with self.nixosModules; [
-      stylix
-
+      # core
       appImageSupport
-      bluetooth
+      defaultEditor
       fonts
-      gaming
-      greetd
-      gpuIntel
       locale
+      nixConfiguration
+      security
+
+      # desktop
+      gamingMouse
+      layout
+      pinyinInput
+
+      desktopPrograms
+      gaming
+      stylix
+      thunar
+
+      # hardware
+      intelGPU
+      mountServices
+      printing
+
+      # programs
+      cliUtils
+      desktopUtils
+      sysUtils
+
+      # services
+      bluetooth
+      greetd
       mullvad
       networking
       nfs
-      nixConfiguration
       pipewire
-      powerSave      
-      printing
-      security
-      storage
-      editors
-      thunar
+      powerSave
       virtualization
-
-      layout
-      gamingMouse
-      pinyinInput
-
-      desktop-utils
-      terminal-utils
     ];
     boot = {
       consoleLogLevel = 3;

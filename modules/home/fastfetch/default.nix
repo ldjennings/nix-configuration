@@ -13,10 +13,9 @@
 
       logo = {
         source = "nixos";
-
         padding = {
-          top = 2;
-          left = 2;
+          top = 1;
+          left = 1;
         };
       };
 

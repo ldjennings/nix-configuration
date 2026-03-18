@@ -1,6 +1,6 @@
 # Storage and filesystem services
 { ... }: {
-  flake.nixosModules.storage = { ... }: {
+  flake.nixosModules.mountServices = { ... }: {
     # Virtual filesystem -- network shares, MTP devices (phones), trash
     services.gvfs.enable = true;
 

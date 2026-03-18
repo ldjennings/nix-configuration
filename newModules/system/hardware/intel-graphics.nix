@@ -15,7 +15,7 @@
 
 # based on https://wiki.nixos.org/wiki/Intel_Graphics
 {
-  flake.nixosModules.gpuIntel =
+  flake.nixosModules.intelGPU =
   { config, lib, pkgs, ... }:
   {
     # Load modesetting driver and keep Xorg available for XWayland compatibility

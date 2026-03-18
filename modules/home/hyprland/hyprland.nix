@@ -9,7 +9,6 @@ let
     extraMonitorSettings
     keyboardLayout
     consoleKeyMap
-    stylixImage
     ;
 in
 {
@@ -58,7 +57,7 @@ in
         "killall -q swaync;sleep .5 && swaync"
         "nm-applet --indicator"
         "pypr &"
-        "sleep 1.5 && swww img ${stylixImage}"
+        "sleep 1.5 && swww img ../../../wallpapers/astronaut_jellyfish.jpg;"
         "[workspace special silent] obsidian"
       ];
 
