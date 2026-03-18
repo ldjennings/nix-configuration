@@ -10,6 +10,7 @@
       # e.g. hyprland, waybar, zsh, kitty, git, etc.
       tempPackages
       git
+      theming
     ];
 
     xresources.properties = {

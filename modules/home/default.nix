@@ -1,7 +1,7 @@
 { host, ... }:
-let
-  inherit (import ../../hosts/${host}/variables.nix) waybarChoice;
-in
+# let
+#   inherit (import ../../hosts/${host}/variables.nix) waybarChoice;
+# in
 {
   imports = [
     # ./amfora.nix
@@ -17,23 +17,24 @@ in
     ./formula.nix
     ./fzf.nix
     ./gh.nix
-    ./ghostty.nix
+    # ./ghostty.nix
     # ./git.nix
-    ./gtk.nix
+    # ./gtk.nix
     ./htop.nix
     ./hyprland
     ./kitty.nix
     ./lazygit.nix
     # ./nvf.nix
     ./rofi
-    ./qt.nix
+    # ./qt.nix
     ./scripts
     # ./starship.nix
-    ./stylix.nix
+    # ./stylix.nix
     ./swappy.nix
     ./swaync.nix
-    ./virtmanager.nix
-    waybarChoice
+    # ./virtmanager.nix
+    # waybarChoice
+    ../../modules/home/waybar/waybar-ddubs.nix
     # ./wezterm.nix
     ./wlogout
     ./xdg.nix

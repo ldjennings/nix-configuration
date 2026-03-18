@@ -16,7 +16,7 @@
       profile = "brick";
     };
     modules = [
-      "${self}/profiles/intel"
+      # "${self}/profiles/intel"
       self.nixosModules.hostConfig  # always first -- defines host.* options
       self.nixosModules.hostBrick
       self.nixosModules.brickUser

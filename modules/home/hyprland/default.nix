@@ -1,6 +1,7 @@
 { host, ... }:
 let
-  inherit (import ../../../hosts/${host}/variables.nix) animChoice;
+  # inherit (import ../../../hosts/${host}/variables.nix) animChoice;
+  animChoice = ../../../modules/home/hyprland/animations-dynamic.nix;
 in
 {
   imports = [
