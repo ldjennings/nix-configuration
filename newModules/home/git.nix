@@ -1,6 +1,8 @@
 # newModules/home/git.nix
 { ... }: {
   flake.modules.homeManager.git = { hostConfig, ... }: {
+      programs.gh.enable = true;
+
     programs.git = {
       enable = true;
       settings = {

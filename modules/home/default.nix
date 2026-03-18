@@ -7,23 +7,23 @@
     # ./amfora.nix
     ./bash.nix
     ./bashrc-personal.nix
-    ./bat.nix
-    ./btop.nix
+    # ./bat.nix
+    # ./btop.nix
     # ./cava.nix
     # ./easyeffects
     ./emoji.nix
-    ./eza.nix
-    ./fastfetch
+    # ./eza.nix
+    # ./fastfetch
     ./formula.nix
-    ./fzf.nix
+    # ./fzf.nix
     ./gh.nix
     # ./ghostty.nix
     # ./git.nix
     # ./gtk.nix
     ./htop.nix
     ./hyprland
-    ./kitty.nix
-    ./lazygit.nix
+    # ./kitty.nix
+    # ./lazygit.nix
     # ./nvf.nix
     ./rofi
     # ./qt.nix
