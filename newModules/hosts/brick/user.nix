@@ -7,10 +7,10 @@
     users.mutableUsers = true;
     users.users.${config.host.username} = {
       isNormalUser = true;
+      initialPassword = "nixos";
       description = config.host.gitUsername;
       extraGroups = [
         "adbusers"
-        "docker"
         "libvirtd"
         "lp"
         "networkmanager"
@@ -25,8 +25,9 @@
 
     home-manager = {
       useUserPackages = true;
-      useGlobalPkgs = false;
+      useGlobalPkgs = true;
       backupFileExtension = "backup";
+
       extraSpecialArgs = { 
         inherit inputs;
         # needs to be passed in as a module argument
@@ -36,9 +37,11 @@
         host = config.host.hostname;
         profile = "brick";
       };
+
       users."liam" = {
         imports = [ 
           self.modules.homeManager.brickHome 
+          # temporary, until I migrate everythin
           ./../../../modules/home 
         ];
         home = {

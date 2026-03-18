@@ -4,12 +4,12 @@ let
 in
 {
   imports = [
-    ./amfora.nix
+    # ./amfora.nix
     ./bash.nix
     ./bashrc-personal.nix
     ./bat.nix
     ./btop.nix
-    ./cava.nix
+    # ./cava.nix
     # ./easyeffects
     ./emoji.nix
     ./eza.nix
@@ -18,7 +18,7 @@ in
     ./fzf.nix
     ./gh.nix
     ./ghostty.nix
-    ./git.nix
+    # ./git.nix
     ./gtk.nix
     ./htop.nix
     ./hyprland
@@ -28,7 +28,7 @@ in
     ./rofi
     ./qt.nix
     ./scripts
-    ./starship.nix
+    # ./starship.nix
     ./stylix.nix
     ./swappy.nix
     ./swaync.nix

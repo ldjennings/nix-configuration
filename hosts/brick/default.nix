@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ./host-packages.nix
+    # ./host-packages.nix
   ];
 }

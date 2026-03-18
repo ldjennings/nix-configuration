@@ -3,10 +3,13 @@
 # Host-agnostic HM modules live in newModules/home/ and are imported below.
 { self, ... }: {
   flake.modules.homeManager.brickHome = { ... }: {
+    # nixpkgs.config.allowUnfree = true;
+
     imports = with self.modules.homeManager; [
       # shared HM modules will go here as you migrate them
       # e.g. hyprland, waybar, zsh, kitty, git, etc.
-      ./../../../modules/home 
+      tempPackages
+      git
     ];
 
     xresources.properties = {
@@ -14,6 +17,11 @@
       "Nsxiv.window.foreground" = "#e9e9f4";
       "Nsxiv.bar.background"    = "#0d0e15";
       "Nsxiv.bar.foreground"    = "#e9e9f4";
+    };
+
+    xdg.userDirs = {
+      enable = true;
+      createDirectories = true;
     };
 
     xdg.mimeApps = {
