@@ -1,26 +1,26 @@
-{ host, ... }:
+{ ... }:
 # let
 #   inherit (import ../../hosts/${host}/variables.nix) waybarChoice;
 # in
 {
   imports = [
     # ./amfora.nix
-    ./bash.nix
-    ./bashrc-personal.nix
+    # ./bash.nix
+    # ./bashrc-personal.nix
     # ./bat.nix
     # ./btop.nix
     # ./cava.nix
     # ./easyeffects
-    ./emoji.nix
+    # ./emoji.nix
     # ./eza.nix
     # ./fastfetch
-    ./formula.nix
+    # ./formula.nix
     # ./fzf.nix
-    ./gh.nix
+    # ./gh.nix
     # ./ghostty.nix
     # ./git.nix
     # ./gtk.nix
-    ./htop.nix
+    # ./htop.nix
     ./hyprland
     # ./kitty.nix
     # ./lazygit.nix
@@ -30,16 +30,16 @@
     ./scripts
     # ./starship.nix
     # ./stylix.nix
-    ./swappy.nix
+    # ./swappy.nix
     ./swaync.nix
     # ./virtmanager.nix
     # waybarChoice
     ../../modules/home/waybar/waybar-ddubs.nix
     # ./wezterm.nix
     ./wlogout
-    ./xdg.nix
-    ./yazi
-    ./zoxide.nix
-    ./zsh
+    # ./xdg.nix
+    # ./yazi
+    # ./zoxide.nix
+    # ./zshg
   ];
 }
