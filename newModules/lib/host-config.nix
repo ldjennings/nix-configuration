@@ -50,6 +50,23 @@
         description = "Path to the NixOS flake directory, used by nh for rebuilds.";
         example = "/home/liam/nix-configuration";
       };
+      gitUsername = requiredOption {
+        name = "host.gitUsername";
+        type = lib.types.str;
+        usedFor = "git commit author name and user account description";
+        suggestion = "\"Liam\"";
+        description = "Full name used for git commits and user account description.";
+        example = "Liam";
+      };
+
+      gitEmail = requiredOption {
+        name = "host.gitEmail";
+        type = lib.types.str;
+        usedFor = "git commit author email";
+        suggestion = "\"liam@example.com\"";
+        description = "Email address used for git commits.";
+        example = "liam@example.com";
+      };
     };
   };
 }

@@ -1,16 +1,15 @@
 {
-  host,
   config,
   pkgs,
   ...
 }:
-let
-  inherit (import ../../../hosts/${host}/variables.nix)
-    extraMonitorSettings
-    keyboardLayout
-    consoleKeyMap
-    ;
-in
+# let
+#   inherit (import ../../../hosts/${hostConfig.hostname}/variables.nix)
+#     extraMonitorSettings
+#     keyboardLayout
+#     consoleKeyMap
+#     ;
+# in
 {
   home.packages = with pkgs; [
     swww
@@ -174,9 +173,8 @@ in
 
     extraConfig = ''
       monitor=,preferred,auto,auto
-      ${
-      extraMonitorSettings
-      }
+      monitor = eDP-1,2256x1504@59.99900, auto,1.175
+      monitor = DP-7,1920x1080@60.00000, auto,auto
       # To enable blur on waybar uncomment the line below
       # Thanks to SchotjeChrisman
       #layerrule = blur,waybar

@@ -4,7 +4,7 @@
   ...
 }: {
 
-  systems = [ "x86_64-linux" ];
+  # systems = [ "x86_64-linux" ];
 
   flake.nixosConfigurations.brick = inputs.nixpkgs.lib.nixosSystem {
 
@@ -19,6 +19,7 @@
       "${self}/profiles/intel"
       self.nixosModules.hostConfig  # always first -- defines host.* options
       self.nixosModules.hostBrick
+      self.nixosModules.brickUser
       inputs.nixos-hardware.nixosModules.framework-12th-gen-intel  
     ];
   };
@@ -75,6 +76,8 @@
       username = "liam";
       flakeDirectory = "/home/liam/nix-configuration";
       hostname = "brick";
+      gitUsername = "Liam Jennings";
+      gitEmail = "72767491+ldjennings@users.noreply.github.com";
     };
 
     system.stateVersion = "25.05"; # Do not change!
