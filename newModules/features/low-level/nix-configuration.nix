@@ -1,17 +1,21 @@
 # Flake-parts module for Nix configuration.
 # Sets recommended defaults for performance and reliability,
-# enables flakes and nix-command, and configures nh for
-# convenient NixOS rebuilds with automatic store cleanup.
+# enables flakes and nix-command, configures nh for convenient
+# NixOS rebuilds, and provides Nix development tooling.
 #
 # Usage:
 #   Add self.nixosModules.nixConfiguration to your host's modules list.
 #   Requires host.flakeDirectory to be set in your host module:
 #
 #   host.flakeDirectory = "/home/liam/nix-configuration";
-{ ... }: {
-  flake.nixosModules.nixConfiguration = { config, lib, pkgs, self, ... }: {
-    # imports = [ self.nixosModules.hostConfig ];
-    # imports = [ "${self}/custom-nix-code/host-config.nix" ];
+{ inputs, ... }: {
+  flake.nixosModules.nixConfiguration = { config, lib, pkgs, ... }: {
+    imports = [
+      # pre-built nix-index database -- avoids slow local generation
+      inputs.nix-index-database.nixosModules.nix-index
+    ];
+
+    nixpkgs.config.allowUnfree = true;
 
     nix.settings = {
       # see https://jackson.dev/post/nix-reasonable-defaults/
@@ -51,9 +55,30 @@
       flake = config.host.flakeDirectory;
     };
 
+    # run unpatched dynamic binaries on NixOS
+    # useful for pre-built toolchains and embedded development
+    programs.nix-ld.enable = true;
+
+    # comma -- run any nixpkgs binary without installing it
+    # e.g. `, cowsay hello` runs cowsay from nixpkgs
+    programs.nix-index-database.comma.enable = true;
+
+    # direnv -- auto-load nix shells when entering project directories
+    programs.direnv = {
+      enable = true;
+      silent = false;
+      loadInNixShell = true;
+      nix-direnv.enable = true;
+    };
+
     environment.systemPackages = with pkgs; [
       nix-output-monitor # prettier nix build output
-      nvd                # diff tool for NixOS generations
+      nvd                # diff between NixOS generations
+      nixd               # Nix language server for editor support
+      statix             # Nix linter
+      alejandra          # Nix formatter
+      manix              # Nix documentation searcher
+      nix-inspect        # TUI for inspecting Nix store
     ];
   };
 }

@@ -42,6 +42,8 @@
       printing
       security
       storage
+      editors
+      thunar
       virtualization
 
       layout
