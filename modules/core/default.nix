@@ -11,19 +11,19 @@
     # ./nfs.nix
     # ./nh.nix
     # ./nvim.nix
-    ./packages.nix
+    # ./packages.nix
     # ./printing.nix
     # ./security.nix
     # ./services.nix
     # ./starfish.nix
     # ./steam.nix
-    ./stylix.nix
+    # ./stylix.nix
     # ./syncthing.nix
     # ./system.nix
     # ./thunar.nix
     ./user.nix
     # ./virtualisation.nix
     # ./xdg-portal.nix
-    inputs.stylix.nixosModules.stylix
+    # inputs.stylix.nixosModules.stylix
   ];
 }

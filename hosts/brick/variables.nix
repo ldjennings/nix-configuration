@@ -39,7 +39,7 @@
   printEnable = true;
 
   # Set Stylix Image
-  stylixImage = ../../wallpapers/astronaut_jellyfish.jpg;
+  # stylixImage = ../../wallpapers/astronaut_jellyfish.jpg;
 
   # Set Waybar
   #  Available Options:

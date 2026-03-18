@@ -12,10 +12,8 @@
       };
 
       logo = {
-        source = ./nixos.png;
-        type = "kitty-direct";
-        height = 10;
-        width = 20;
+        source = "nixos";
+
         padding = {
           top = 2;
           left = 2;
@@ -26,7 +24,7 @@
         "break"
         {
           type = "os";
-          key = "OS - ZaneyOS v2.3";
+          key = "liam's Crappy Config";
           keyColor = "31";
         }
         {

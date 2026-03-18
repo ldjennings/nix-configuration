@@ -26,6 +26,8 @@
   flake.nixosModules.hostBrick = {pkgs, config, ...}: {
     # TODO: rename all of these so that they match the filenames
     imports = with self.nixosModules; [
+      stylix
+
       appImageSupport
       bluetooth
       fonts
@@ -49,6 +51,9 @@
       layout
       gamingMouse
       pinyinInput
+
+      desktop-utils
+      terminal-utils
     ];
     boot = {
       consoleLogLevel = 3;
