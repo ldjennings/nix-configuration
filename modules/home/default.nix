@@ -36,7 +36,7 @@
     # waybarChoice
     # ../../modules/home/waybar/waybar-ddubs.nix
     # ./wezterm.nix
-    ./wlogout
+    # ./wlogout
     # ./xdg.nix
     # ./yazi
     # ./zoxide.nix

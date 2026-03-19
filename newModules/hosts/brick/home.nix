@@ -29,6 +29,7 @@
         swappy
         tempPackages
         theming
+        wlogout
         xdg
         yazi
         zsh
