@@ -34,7 +34,7 @@
     ./swaync.nix
     # ./virtmanager.nix
     # waybarChoice
-    ../../modules/home/waybar/waybar-ddubs.nix
+    # ../../modules/home/waybar/waybar-ddubs.nix
     # ./wezterm.nix
     ./wlogout
     # ./xdg.nix

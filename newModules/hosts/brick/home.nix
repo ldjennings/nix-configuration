@@ -22,6 +22,7 @@
         git
         helix
         htop
+        hyprland
         kitty
         lsp
         rofi
