@@ -9,6 +9,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     stylix.url = "github:danth/stylix/release-25.11";
+    tinted-schemes = {
+      url = "github:tinted-theming/schemes";
+      flake = false;
+    };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -19,7 +23,10 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    niri.url = "github:sodiboo/niri-flake";
   };
-  
-  outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./newModules);
+
+  outputs =
+    inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./newModules);
 }

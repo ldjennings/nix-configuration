@@ -64,6 +64,8 @@
       pipewire
       powerSave
       virtualization
+
+      niri
     ];
 
     boot = {

@@ -25,7 +25,7 @@
     # ./kitty.nix
     # ./lazygit.nix
     # ./nvf.nix
-    ./rofi
+    # ./rofi
     # ./qt.nix
     ./scripts
     # ./starship.nix

@@ -19,10 +19,10 @@
 
     # TODO: change this to something else when I switch from hyprland 
     services.xserver.enable = false;
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-      configPackages = [ pkgs.hyprland ];
-    };
+    # xdg.portal = {
+    #   enable = true;
+    #   extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    #   configPackages = [ pkgs.hyprland ];
+    # };
   };
 }
