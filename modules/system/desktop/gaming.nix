@@ -2,7 +2,7 @@
 # Includes Steam with Proton, Gamescope, GameMode, and various
 # launchers for GOG, Epic, and other game stores.
 _: {
-  flake.nixosModules.gaming = { pkgs, ... }: {
+  flake.nixosModules.gaming = {pkgs, ...}: {
     programs = {
       # GameMode -- temporarily boosts performance when games are running
       gamemode.enable = true;
@@ -12,7 +12,7 @@ _: {
         # capSysNice allows gamescope to renice processes for better performance
         capSysNice = true;
         args = [
-          "--rt"             # realtime scheduling
+          "--rt" # realtime scheduling
           "--expose-wayland" # expose Wayland display to games
         ];
       };
@@ -30,7 +30,7 @@ _: {
         gamescopeSession.enable = true;
 
         # Proton-GE -- community Proton build with broader game compatibility
-        extraCompatPackages = with pkgs; [ proton-ge-bin ];
+        extraCompatPackages = with pkgs; [proton-ge-bin];
 
         # Protontricks -- fix compatibility issues in specific Proton games
         protontricks.enable = true;
@@ -38,12 +38,12 @@ _: {
     };
 
     environment.systemPackages = with pkgs; [
-      lutris          # multi-platform game launcher (GOG, Battle.net, etc.)
+      lutris # multi-platform game launcher (GOG, Battle.net, etc.)
       # heroic          # GOG and Epic Games launcher
-      bottles         # Wine prefix management GUI
-      steam-run       # run games/apps in Steam's runtime environment
+      bottles # Wine prefix management GUI
+      steam-run # run games/apps in Steam's runtime environment
       # prismlauncher   # Minecraft launcher with mod support
-      mangohud        # performance overlay for games (FPS, CPU, GPU usage)
+      mangohud # performance overlay for games (FPS, CPU, GPU usage)
     ];
 
     # raises maximum number of memory map instances a process can have, intended to be used with games

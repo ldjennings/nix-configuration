@@ -1,6 +1,6 @@
 # newModules/home/bat.nix
 _: {
-  flake.modules.homeManager.bat = { pkgs, ... }: {
+  flake.modules.homeManager.bat = {pkgs, ...}: {
     programs.bat = {
       enable = true;
       config.pager = "less -FR";

@@ -6,7 +6,12 @@
 #
 #   host.username = "liam";
 _: {
-  flake.nixosModules.greetd = { config, lib, pkgs, ... }: {
+  flake.nixosModules.greetd = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: {
     # imports = [ self.nixosModules.hostConfig ];
     # imports = [ "${self}/custom-nix-code/host-config.nix" ];
 

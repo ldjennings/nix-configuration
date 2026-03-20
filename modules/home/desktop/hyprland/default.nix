@@ -1,16 +1,20 @@
 # newModules/home/desktop/hyprland/default.nix
 # Core Hyprland configuration -- input, layout, decorations, startup.
 _: {
-  flake.modules.homeManager.hyprland = { config, pkgs, ... }: {
+  flake.modules.homeManager.hyprland = {
+    config,
+    pkgs,
+    ...
+  }: {
     home.packages = with pkgs; [
-      swww               # wallpaper daemon
-      grim               # screenshot tool
-      slurp              # screen region selector
-      wl-clipboard       # Wayland clipboard
-      swappy             # screenshot annotation
-      ydotool            # input automation
-      hyprpolkitagent    # polkit authentication agent
-      hyprland-qtutils   # needed for ANR dialogs and banners
+      swww # wallpaper daemon
+      grim # screenshot tool
+      slurp # screen region selector
+      wl-clipboard # Wayland clipboard
+      swappy # screenshot annotation
+      ydotool # input automation
+      hyprpolkitagent # polkit authentication agent
+      hyprland-qtutils # needed for ANR dialogs and banners
     ];
 
     # Copy wallpapers and face icon into home directory
@@ -19,7 +23,7 @@ _: {
         source = ../../../../wallpapers;
         recursive = true;
       };
-      ".face.icon".source    = ./face.jpg;
+      ".face.icon".source = ./face.jpg;
       ".config/face.jpg".source = ./face.jpg;
     };
 
@@ -34,7 +38,7 @@ _: {
       systemd = {
         enable = true;
         enableXdgAutostart = true;
-        variables = [ "--all" ];
+        variables = ["--all"];
       };
       xwayland.enable = true;
 
@@ -70,7 +74,7 @@ _: {
         ];
 
         input = {
-          kb_layout  = "us";
+          kb_layout = "us";
           kb_variant = "colemak";
           numlock_by_default = true;
           repeat_delay = 300;
@@ -78,93 +82,93 @@ _: {
           float_switch_override_focus = 0;
           sensitivity = 0;
           touchpad = {
-            natural_scroll     = true;
+            natural_scroll = true;
             disable_while_typing = true;
-            scroll_factor      = 0.8;
+            scroll_factor = 0.8;
           };
         };
 
         gestures = {
-          workspace_swipe_distance        = 500;
-          workspace_swipe_invert          = true;
+          workspace_swipe_distance = 500;
+          workspace_swipe_invert = true;
           workspace_swipe_min_speed_to_force = 30;
-          workspace_swipe_cancel_ratio    = 0.5;
-          workspace_swipe_create_new      = true;
-          workspace_swipe_forever         = true;
+          workspace_swipe_cancel_ratio = 0.5;
+          workspace_swipe_create_new = true;
+          workspace_swipe_forever = true;
         };
 
-        gesture = [ "3, horizontal, workspace" ];
+        gesture = ["3, horizontal, workspace"];
 
         general = {
-          "$modifier"    = "SUPER";
-          layout         = "dwindle";
-          gaps_in        = 6;
-          gaps_out       = 8;
-          border_size    = 2;
+          "$modifier" = "SUPER";
+          layout = "dwindle";
+          gaps_in = 6;
+          gaps_out = 8;
+          border_size = 2;
           resize_on_border = true;
-          "col.active_border"   = "rgb(${config.lib.stylix.colors.base0D})";
+          "col.active_border" = "rgb(${config.lib.stylix.colors.base0D})";
           "col.inactive_border" = "rgb(${config.lib.stylix.colors.base03})";
         };
 
         misc = {
-          layers_hog_keyboard_focus  = true;
+          layers_hog_keyboard_focus = true;
           initial_workspace_tracking = 0;
-          mouse_move_enables_dpms    = true;
-          key_press_enables_dpms     = false;
-          disable_hyprland_logo      = true;
-          disable_splash_rendering   = true;
-          enable_swallow             = false;
-          vfr = true;  # variable frame rate -- saves power
-          vrr = 2;     # variable refresh rate -- set to 0 if screen flickers
-          enable_anr_dialog          = true;
-          anr_missed_pings           = 20;
+          mouse_move_enables_dpms = true;
+          key_press_enables_dpms = false;
+          disable_hyprland_logo = true;
+          disable_splash_rendering = true;
+          enable_swallow = false;
+          vfr = true; # variable frame rate -- saves power
+          vrr = 2; # variable refresh rate -- set to 0 if screen flickers
+          enable_anr_dialog = true;
+          anr_missed_pings = 20;
         };
 
         dwindle = {
-          pseudotile     = true;
+          pseudotile = true;
           preserve_split = true;
-          force_split    = 2;
+          force_split = 2;
         };
 
         decoration = {
           rounding = 10;
           blur = {
-            enabled          = false;
-            size             = 5;
-            passes           = 3;
-            ignore_opacity   = false;
+            enabled = false;
+            size = 5;
+            passes = 3;
+            ignore_opacity = false;
             new_optimizations = true;
           };
           shadow = {
-            enabled     = true;
-            range       = 4;
+            enabled = true;
+            range = 4;
             render_power = 3;
-            color       = "rgba(1a1a1aee)";
+            color = "rgba(1a1a1aee)";
           };
         };
 
         ecosystem = {
-          no_donation_nag  = true;
-          no_update_news   = false;
+          no_donation_nag = true;
+          no_update_news = false;
         };
 
         cursor = {
-          sync_gsettings_theme  = true;
-          no_hardware_cursors   = 2;
-          enable_hyprcursor     = false;
+          sync_gsettings_theme = true;
+          no_hardware_cursors = 2;
+          enable_hyprcursor = false;
           warp_on_change_workspace = 2;
-          no_warps              = true;
+          no_warps = true;
         };
 
         render = {
-          direct_scanout        = 0;
+          direct_scanout = 0;
           new_render_scheduling = true;
         };
 
         master = {
           new_status = "master";
           new_on_top = 1;
-          mfact      = 0.5;
+          mfact = 0.5;
         };
       };
 

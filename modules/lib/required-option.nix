@@ -13,8 +13,15 @@
 #       example = "some-value";
 #     };
 #   }
-{ lib, ... }: {
-  flake.lib.requiredOption = { name, type, usedFor, suggestion, description, example }:
+{lib, ...}: {
+  flake.lib.requiredOption = {
+    name,
+    type,
+    usedFor,
+    suggestion,
+    description,
+    example,
+  }:
     lib.mkOption {
       inherit type description example;
       default = throw ''

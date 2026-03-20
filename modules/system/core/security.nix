@@ -15,8 +15,13 @@
 #   - hardened kernel skipped (breaks Flatpak, browsers, containers)
 #   - hardened_malloc skipped (breaks Firefox)
 _: {
-  flake.nixosModules.security = { config, lib, pkgs, username, ... }: {
-
+  flake.nixosModules.security = {
+    config,
+    lib,
+    pkgs,
+    username,
+    ...
+  }: {
     # -------------------------------------------------------------------------
     # Kernel security settings
     # -------------------------------------------------------------------------
@@ -59,23 +64,37 @@ _: {
       # allows scripting LED color changes for battery/status indication
       sudo.extraRules = [
         {
-          users = [ "${username}" ];
+          users = ["${username}"];
           commands = [
-            { command = "${pkgs.fw-ectool}/bin/ectool led power red";   options = [ "NOPASSWD" ]; }
-            { command = "${pkgs.fw-ectool}/bin/ectool led power white"; options = [ "NOPASSWD" ]; }
-            { command = "${pkgs.fw-ectool}/bin/ectool led power amber"; options = [ "NOPASSWD" ]; }
-            { command = "${pkgs.fw-ectool}/bin/ectool led power off";   options = [ "NOPASSWD" ]; }
+            {
+              command = "${pkgs.fw-ectool}/bin/ectool led power red";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.fw-ectool}/bin/ectool led power white";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.fw-ectool}/bin/ectool led power amber";
+              options = ["NOPASSWD"];
+            }
+            {
+              command = "${pkgs.fw-ectool}/bin/ectool led power off";
+              options = ["NOPASSWD"];
+            }
           ];
         }
       ];
 
       # Disable coredumps -- prevents sensitive data leakage from crash dumps
-      pam.loginLimits = [{
-        domain = "*";
-        type = "-";
-        item = "core";
-        value = "0";
-      }];
+      pam.loginLimits = [
+        {
+          domain = "*";
+          type = "-";
+          item = "core";
+          value = "0";
+        }
+      ];
     };
 
     # Disable coredump handling in systemd
@@ -176,23 +195,23 @@ _: {
     # -------------------------------------------------------------------------
     boot.blacklistedKernelModules = [
       # Obscure networking protocols -- not used on a typical desktop
-      "dccp"      # Datagram Congestion Control Protocol
-      "sctp"      # Stream Control Transmission Protocol
-      "rds"       # Reliable Datagram Sockets
-      "tipc"      # Transparent Inter-Process Communication
-      "n-hdlc"    # High-level Data Link Control
-      "ax25"      # Amateur X.25
-      "netrom"    # NetRom
-      "x25"       # X.25
+      "dccp" # Datagram Congestion Control Protocol
+      "sctp" # Stream Control Transmission Protocol
+      "rds" # Reliable Datagram Sockets
+      "tipc" # Transparent Inter-Process Communication
+      "n-hdlc" # High-level Data Link Control
+      "ax25" # Amateur X.25
+      "netrom" # NetRom
+      "x25" # X.25
       "rose"
       "decnet"
       "econet"
       "af_802154" # IEEE 802.15.4
-      "ipx"       # Internetwork Packet Exchange
+      "ipx" # Internetwork Packet Exchange
       "appletalk"
-      "psnap"     # SubnetworkAccess Protocol
-      "p8023"     # Novell raw IEEE 802.3
-      "p8022"     # IEEE 802.3
+      "psnap" # SubnetworkAccess Protocol
+      "p8023" # Novell raw IEEE 802.3
+      "p8022" # IEEE 802.3
       "atm"
       # Rare/legacy filesystems
       "cramfs"
@@ -217,9 +236,9 @@ _: {
     # User groups for embedded development
     # -------------------------------------------------------------------------
     users.users.${username}.extraGroups = [
-      "dialout"   # serial ports (/dev/ttyUSB*, /dev/ttyACM*) for embedded tools
-      "uucp"      # alternative serial group
-      "plugdev"   # USB device access via udev rules
+      "dialout" # serial ports (/dev/ttyUSB*, /dev/ttyACM*) for embedded tools
+      "uucp" # alternative serial group
+      "plugdev" # USB device access via udev rules
     ];
   };
 }

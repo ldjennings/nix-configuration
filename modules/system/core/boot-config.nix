@@ -7,7 +7,7 @@ _: {
     boot = {
       # Suppress most kernel messages during boot
       consoleLogLevel = 3;
-      kernelParams = [ "quiet" ];
+      kernelParams = ["quiet"];
 
       # Plymouth boot splash
       plymouth.enable = true;

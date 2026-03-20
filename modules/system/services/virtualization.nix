@@ -2,7 +2,11 @@
 # Provides Podman, and libvirt/virt-manager configuration.
 # Note: Docker and Podman are mutually exclusive -- only enable one at a time.
 _: {
-  flake.nixosModules.virtualization = { config, pkgs, ... }: {
+  flake.nixosModules.virtualization = {
+    config,
+    pkgs,
+    ...
+  }: {
     virtualisation = {
       # libvirtd disabled -- pulls in ~1.4GB of virtualization infrastructure
       # (QEMU, OVMF, Xen, openvswitch etc.) which is overkill for occasional use.
@@ -34,7 +38,7 @@ _: {
 
     # User group membership for container and VM access
     users.users.${config.host.username}.extraGroups = [
-      "podman"    # access to Podman socket
+      "podman" # access to Podman socket
       # "libvirtd" # uncomment when libvirtd.enable = true
       # "kvm"      # uncomment for direct KVM device access
     ];

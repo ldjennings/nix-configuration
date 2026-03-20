@@ -1,6 +1,6 @@
 # newModules/home/kitty.nix
-{ self, ... }: {
-  flake.modules.homeManager.kitty = { pkgs, ... }: {
+_: {
+  flake.modules.homeManager.kitty = {pkgs, ...}: {
     programs.kitty = {
       enable = true;
       package = pkgs.kitty;

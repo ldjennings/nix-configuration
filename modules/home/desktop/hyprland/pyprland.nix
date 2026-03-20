@@ -1,7 +1,7 @@
 # newModules/home/desktop/hyprland/pyprland.nix
-{ self, ... }: {
-  flake.modules.homeManager.hyprland = { pkgs, ... }: {
-    home.packages = [ pkgs.pyprland ];
+_: {
+  flake.modules.homeManager.hyprland = {pkgs, ...}: {
+    home.packages = [pkgs.pyprland];
     home.file.".config/hypr/pyprland.toml".text = ''
       [pyprland]
       plugins = ["scratchpads"]

@@ -17,12 +17,10 @@
 #     hostname = "brick";
 #     flakeDirectory = "/home/liam/nix-configuration";
 #   };
-{ self, ... }: {
-  flake.nixosModules.hostConfig = { lib, ... }:
-  let
+{self, ...}: {
+  flake.nixosModules.hostConfig = {lib, ...}: let
     inherit (self.lib) requiredOption;
-  in
-  {
+  in {
     options.host = {
       username = requiredOption {
         name = "host.username";
@@ -67,7 +65,6 @@
         description = "Email address used for git commits.";
         example = "liam@example.com";
       };
-      
     };
   };
 }

@@ -5,17 +5,19 @@
     modulesPath,
     ...
   }: {
-    
     imports = [
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
     # kernel parameters
-    boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];    
-    boot.kernelParams = [ "resume_offset=63565824" "mem_sleep_default=deep" ]; # for hibernation
+    boot = {
+      initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
+      initrd.kernelModules = [];
+      kernelModules = ["kvm-intel"];
+      extraModulePackages = [];
+      kernelParams = ["resume_offset=63565824" "mem_sleep_default=deep"]; # for hibernation
+      resumeDevice = "/dev/disk/by-uuid/df06cd17-15d4-4959-8614-1fc9e854b4f2"; # swap/hibernation management
+    };
 
     # filesystem info
     fileSystems."/" = {
@@ -31,9 +33,6 @@
         "dmask=0077"
       ];
     };
-
-    # swap/hibernation management
-    boot.resumeDevice = "/dev/disk/by-uuid/df06cd17-15d4-4959-8614-1fc9e854b4f2";
 
     swapDevices = [
       {

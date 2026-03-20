@@ -1,5 +1,5 @@
 # newModules/home/desktop/hyprland/hypridle.nix
-{ self, ... }: {
+_: {
   flake.modules.homeManager.hyprland = _: {
     services.hypridle = {
       enable = true;

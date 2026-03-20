@@ -16,7 +16,7 @@ _: {
       # Hyprlock -- Hyprland screen locker, keeping during migration
       hyprlock.enable = true;
     };
-    
+
     services.xserver.enable = false;
   };
 }

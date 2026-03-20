@@ -3,7 +3,7 @@
 # just the base install with vi/vim aliases for muscle memory compatibility.
 # Primary editor is Helix (configured separately).
 _: {
-  flake.nixosModules.defaultEditor = { pkgs, ... }: {
+  flake.nixosModules.defaultEditor = {pkgs, ...}: {
     programs.neovim = {
       enable = true;
       # set as default editor for programs that invoke $EDITOR

@@ -1,86 +1,92 @@
 # newModules/home/zsh.nix
 _: {
-  flake.modules.homeManager.zsh = { lib, hostConfig, ... }: {
-    # fallback
-    programs.bash.enable = true; 
+  flake.modules.homeManager.zsh = {
+    lib,
+    hostConfig,
+    ...
+  }: {
+    programs = {
+      # fallback
+      bash.enable = true;
 
-
-    programs.zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-      options = [ "--cmd cd" ];
-    };
-
-    programs.zsh = {
-      enable = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting = {
+      # cd replacement
+      zoxide = {
         enable = true;
-        highlighters = [
-          "main"
-          "brackets"
-          "pattern"
-          "regexp"
-          "root"
-          "line"
-        ];
-      };
-      historySubstringSearch.enable = true;
-      history = {
-        ignoreDups = true;
-        save = 10000;
-        size = 10000;
+        enableZshIntegration = true;
+        options = ["--cmd cd"];
       };
 
-      oh-my-zsh = {
+      zsh = {
         enable = true;
-        theme = "robbyrussell";
-        plugins = [
-          "git"
-          "sudo"
-          "colored-man-pages"
-        ];
-      };
+        autosuggestion.enable = true;
+        syntaxHighlighting = {
+          enable = true;
+          highlighters = [
+            "main"
+            "brackets"
+            "pattern"
+            "regexp"
+            "root"
+            "line"
+          ];
+        };
+        historySubstringSearch.enable = true;
+        history = {
+          ignoreDups = true;
+          save = 10000;
+          size = 10000;
+        };
 
-      initContent = lib.mkOrder 1000 ''
-        # vim-style word navigation
-        bindkey "\eh" backward-word
-        bindkey "\ej" down-line-or-history
-        bindkey "\ek" up-line-or-history
-        bindkey "\el" forward-word
-      '';
+        oh-my-zsh = {
+          enable = true;
+          theme = "robbyrussell";
+          plugins = [
+            "git"
+            "sudo"
+            "colored-man-pages"
+          ];
+        };
 
-      shellAliases = {
-        # editors
-        v   = "hx";
-        sv  = "sudo hx";
+        initContent = lib.mkOrder 1000 ''
+          # vim-style word navigation
+          bindkey "\eh" backward-word
+          bindkey "\ej" down-line-or-history
+          bindkey "\ek" up-line-or-history
+          bindkey "\el" forward-word
+        '';
 
-        # nix
-        fr  = "nh os switch --hostname ${hostConfig.hostname}";
-        fu  = "nh os switch --hostname ${hostConfig.hostname} --update";
-        ft  = "nh os test --hostname ${hostConfig.hostname}";
-        ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
+        shellAliases = {
+          # editors
+          v = "hx";
+          sv = "sudo hx";
 
-        # replacements
-        cat  = "bat";
-        man  = "batman";
+          # nix
+          fr = "nh os switch --hostname ${hostConfig.hostname}";
+          fu = "nh os switch --hostname ${hostConfig.hostname} --update";
+          ft = "nh os test --hostname ${hostConfig.hostname}";
+          ncg = "nix-collect-garbage --delete-old && sudo nix-collect-garbage -d && sudo /run/current-system/bin/switch-to-configuration boot";
 
-        # eza
-        ls   = "eza --icons --group-directories-first -1";
-        ll   = "eza --icons -lh --group-directories-first -1 --no-user --long";
-        la   = "eza --icons -lah --group-directories-first -1";
-        tree = "eza --icons --tree --group-directories-first";
+          # replacements
+          cat = "bat";
+          man = "batman";
 
-        # git
-        gc  = "git commit";
-        gs  = "git status -sb";
-        gap = "git add -p";
-        gd  = "git diff";
-        gds = "git diff --staged";
-        gl  = "git log --oneline --decorate --graph";
+          # eza
+          ls = "eza --icons --group-directories-first -1";
+          ll = "eza --icons -lh --group-directories-first -1 --no-user --long";
+          la = "eza --icons -lah --group-directories-first -1";
+          tree = "eza --icons --tree --group-directories-first";
 
-        # misc
-        c = "clear";
+          # git
+          gc = "git commit";
+          gs = "git status -sb";
+          gap = "git add -p";
+          gd = "git diff";
+          gds = "git diff --staged";
+          gl = "git log --oneline --decorate --graph";
+
+          # misc
+          c = "clear";
+        };
       };
     };
   };

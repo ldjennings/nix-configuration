@@ -3,11 +3,9 @@
   self,
   ...
 }: {
-
   # systems = [ "x86_64-linux" ];
 
   flake.nixosConfigurations.brick = inputs.nixpkgs.lib.nixosSystem {
-
     system = "x86_64-linux";
     specialArgs = {
       inherit inputs;
@@ -17,14 +15,18 @@
     };
     modules = [
       # "${self}/profiles/intel"
-      self.nixosModules.hostConfig  # always first -- defines host.* options
+      self.nixosModules.hostConfig # always first -- defines host.* options
       self.nixosModules.hostBrick
       self.nixosModules.brickUser
-      inputs.nixos-hardware.nixosModules.framework-12th-gen-intel  
+      inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
     ];
   };
 
-  flake.nixosModules.hostBrick = {pkgs, config, ...}: {
+  flake.nixosModules.hostBrick = {
+    pkgs,
+    config,
+    ...
+  }: {
     imports = with self.nixosModules; [
       # core
       appImageSupport
@@ -71,10 +73,10 @@
     boot = {
       kernelPackages = pkgs.linuxPackages_zen;
       kernelModules = ["coretemp" "cpuid" "v4l2loopback"];
-      extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+      extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
     };
 
-    host ={
+    host = {
       username = "liam";
       flakeDirectory = "/home/liam/nix-configuration";
       hostname = "brick";
@@ -85,4 +87,3 @@
     system.stateVersion = "25.05"; # Do not change!
   };
 }
-

@@ -3,7 +3,7 @@
 # or direct hardware access. Purely userspace tools belong in
 # cli-utils.nix or home/programs/ instead.
 _: {
-  flake.nixosModules.sysUtils = { pkgs, ... }: {
+  flake.nixosModules.sysUtils = {pkgs, ...}: {
     programs = {
       # Needs setuid for raw socket access
       mtr.enable = true;
@@ -18,16 +18,16 @@ _: {
 
     environment.systemPackages = with pkgs; [
       # Hardware inspection
-      lm_sensors    # temperature monitoring
-      lshw          # hardware inventory
-      pciutils      # lspci
-      usbutils      # lsusb
+      lm_sensors # temperature monitoring
+      lshw # hardware inventory
+      pciutils # lspci
+      usbutils # lsusb
 
       # Display/GPU
-      brightnessctl   # needs udev rules
+      brightnessctl # needs udev rules
 
       # Kernel/driver utilities
-      v4l-utils     # video4linux for OBS virtual camera
+      v4l-utils # video4linux for OBS virtual camera
     ];
   };
 }

@@ -1,6 +1,6 @@
 # newModules/home/helix.nix
 _: {
-  flake.modules.homeManager.helix = { pkgs, ... }: {
+  flake.modules.homeManager.helix = {pkgs, ...}: {
     programs.helix = {
       enable = true;
       package = pkgs.helix;
@@ -28,9 +28,9 @@ _: {
           };
 
           statusline = {
-            left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];
-            center = [ "version-control" ];
-            right = [ "diagnostics" "selections" "position" "file-encoding" ];
+            left = ["mode" "spinner" "file-name" "file-modification-indicator"];
+            center = ["version-control"];
+            right = ["diagnostics" "selections" "position" "file-encoding"];
           };
 
           lsp = {
@@ -67,12 +67,12 @@ _: {
 
           bash-language-server = {
             command = "${pkgs.nodePackages.bash-language-server}/bin/bash-language-server";
-            args = [ "start" ];
+            args = ["start"];
           };
 
           marksman = {
             command = "${pkgs.marksman}/bin/marksman";
-            args = [ "server" ];
+            args = ["server"];
           };
         };
 
@@ -80,17 +80,17 @@ _: {
           {
             name = "nix";
             auto-format = true;
-            language-servers = [ "nixd" ];
+            language-servers = ["nixd"];
             formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
           }
           {
             name = "bash";
             auto-format = true;
-            language-servers = [ "bash-language-server" ];
+            language-servers = ["bash-language-server"];
           }
           {
             name = "markdown";
-            language-servers = [ "marksman" ];
+            language-servers = ["marksman"];
           }
         ];
       };

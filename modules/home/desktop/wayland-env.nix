@@ -31,7 +31,7 @@ _: {
 
       # Keep GTK and Qt scaling at 1x -- compositor handles scaling
       # Prevents double-scaling on HiDPI displays
-      GDK_SCALE     = "1";
+      GDK_SCALE = "1";
       QT_SCALE_FACTOR = "1";
     };
   };

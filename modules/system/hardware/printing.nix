@@ -9,7 +9,7 @@
 #     self.nixosModules.printing
 #   ];
 {
-  flake.nixosModules.printing = { pkgs, ... }: {
+  flake.nixosModules.printing = {pkgs, ...}: {
     services = {
       printing = {
         enable = true;
@@ -22,8 +22,8 @@
       # Avahi enables mDNS/DNS-SD for network printer auto-discovery
       avahi = {
         enable = true;
-        nssmdns4 = true;  # mDNS hostname resolution for IPv4
-        nssmdns6 = true;  # mDNS hostname resolution for IPv6
+        nssmdns4 = true; # mDNS hostname resolution for IPv4
+        nssmdns6 = true; # mDNS hostname resolution for IPv6
         openFirewall = true;
       };
 
@@ -52,11 +52,9 @@
     # SANE -- scanner support for all-in-one devices
     hardware.sane = {
       enable = true;
-      extraBackends = [ pkgs.sane-airscan ];
-      disabledDefaultBackends = [ "escl" ]; # cargo culted from zaneyos, not sure if needed
+      extraBackends = [pkgs.sane-airscan];
+      disabledDefaultBackends = ["escl"]; # cargo culted from zaneyos, not sure if needed
     };
-
-
 
     # Scanning/printing frontend
     environment.systemPackages = with pkgs; [

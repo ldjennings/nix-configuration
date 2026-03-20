@@ -3,11 +3,11 @@
 # API token for inv-query should be set via a secrets manager (agenix/sops-nix)
 # before deploying to a machine with a public config repo.
 _: {
-  flake.modules.homeManager.formula = { pkgs, ... }: {
+  flake.modules.homeManager.formula = {pkgs, ...}: {
     home.packages = [
       (pkgs.writeShellApplication {
         name = "inv-query";
-        runtimeInputs = [ pkgs.zsh pkgs.curl pkgs.jq pkgs.libnotify ];
+        runtimeInputs = [pkgs.zsh pkgs.curl pkgs.jq pkgs.libnotify];
         text = ''
           if [[ "''${1:-}" = "-r" ]]; then
             (
@@ -28,7 +28,7 @@ _: {
 
       (pkgs.writeShellApplication {
         name = "ki-open";
-        runtimeInputs = [ pkgs.tree pkgs.kicad ];
+        runtimeInputs = [pkgs.tree pkgs.kicad];
         text = ''
           PROJECT=$(tree ~/projects -fi \
             | grep .kicad_pro \

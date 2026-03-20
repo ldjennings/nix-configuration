@@ -3,32 +3,33 @@
 # and sets Colemak as the default keyboard layout via XKB.
 {
   flake.nixosModules.input = _: {
-    # Capslock remapping at the kernel level via keyd
-    services.keyd = {
-      enable = true;
-      keyboards.default = {
-        ids = [ "*" ];
-        settings = {
-          # Capslock acts as delete in normal use
-          main.capslock = "delete";
-          # Capslock+ctrl restores capslock behaviour
-          control.capslock = "capslock";
+    services = {
+      # Capslock remapping at the kernel level via keyd
+      keyd = {
+        enable = true;
+        keyboards.default = {
+          ids = ["*"];
+          settings = {
+            # Capslock acts as delete in normal use
+            main.capslock = "delete";
+            # Capslock+ctrl restores capslock behaviour
+            control.capslock = "capslock";
+          };
         };
       };
+
+      # Colemak layout via XKB -- applied at the Wayland/X11 level
+      # so fcitx5 and other input methods are aware of it
+      xserver.xkb = {
+        layout = "us";
+        variant = "colemak";
+      };
+
+      # # Colemak layout for TTY/console
+      # console.useXkbConfig = true;
+
+      # handles touchpad input
+      libinput.enable = true;
     };
-
-    # Colemak layout via XKB -- applied at the Wayland/X11 level
-    # so fcitx5 and other input methods are aware of it
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "colemak";
-    };
-
-    # # Colemak layout for TTY/console
-    # console.useXkbConfig = true; 
-
-    # throwing this in here because I'm lazy
-    # TODO: rename this file to mouse and keyboard input or something
-    services.libinput.enable = true;
   };
 }

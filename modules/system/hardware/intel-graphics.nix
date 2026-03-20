@@ -12,12 +12,14 @@
 #     vainfo          # should show iHD driver with encode/decode profiles
 #     vulkaninfo      # should show Intel GPU
 #     intel_gpu_top   # should show GPU activity when playing video/games
-
 # based on https://wiki.nixos.org/wiki/Intel_Graphics
 {
-  flake.nixosModules.intelGPU =
-  { config, lib, pkgs, ... }:
-  {
+  flake.nixosModules.intelGPU = {
+    config,
+    lib,
+    pkgs,
+    ...
+  }: {
     # Load modesetting driver and keep Xorg available for XWayland compatibility
     # services.xserver.videoDrivers = [ "modesetting" ];
 
@@ -29,15 +31,14 @@
       enable32Bit = true;
 
       extraPackages = with pkgs; [
-        intel-media-driver    # VA-API (iHD)
-        vpl-gpu-rt            # Quick Sync Video
+        intel-media-driver # VA-API (iHD)
+        vpl-gpu-rt # Quick Sync Video
         intel-compute-runtime # OpenCL
       ];
-};
-
+    };
 
     # Load i915 early in boot for smoother display initialisation
-    boot.initrd.kernelModules = [ "i915" ];
+    boot.initrd.kernelModules = ["i915"];
 
     boot.kernelParams = [
       # Panel self refresh -- reduces power consumption on laptop displays
@@ -56,8 +57,8 @@
     };
 
     environment.systemPackages = with pkgs; [
-      libva-utils     # vainfo -- verify VA-API is working
-      vulkan-tools    # vulkaninfo -- verify Vulkan is working
+      libva-utils # vainfo -- verify VA-API is working
+      vulkan-tools # vulkaninfo -- verify Vulkan is working
       intel-gpu-tools # intel_gpu_top -- monitor GPU usage
     ];
   };

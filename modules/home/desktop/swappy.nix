@@ -2,7 +2,7 @@
 # Screenshot annotation tool configuration.
 # Screenshots are saved to ~/Pictures/Screenshots.
 _: {
-  flake.modules.homeManager.swappy = { config, ... }: {
+  flake.modules.homeManager.swappy = {config, ...}: {
     home.file.".config/swappy/config".text = ''
       [Default]
       save_dir=/home/${config.home.username}/Pictures/Screenshots

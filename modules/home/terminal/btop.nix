@@ -1,6 +1,6 @@
 # newModules/home/btop.nix
 _: {
-  flake.modules.homeManager.btop = { pkgs, ... }: {
+  flake.modules.homeManager.btop = {pkgs, ...}: {
     programs.btop = {
       enable = true;
       package = pkgs.btop.override {

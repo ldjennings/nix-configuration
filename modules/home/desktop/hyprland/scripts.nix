@@ -1,10 +1,10 @@
 # newModules/home/desktop/hyprland/scripts.nix
 _: {
-  flake.modules.homeManager.hyprland = { pkgs, ... }: {
+  flake.modules.homeManager.hyprland = {pkgs, ...}: {
     home.packages = [
       (pkgs.writeShellApplication {
         name = "brightness-gamma";
-        runtimeInputs = [ pkgs.brightnessctl pkgs.hyprland ];
+        runtimeInputs = [pkgs.brightnessctl pkgs.hyprland];
         text = ''
           BRIGHTNESS_EXPONENT=2.2
           BRIGHTNESS_STEP=5
@@ -52,7 +52,7 @@ _: {
 
       (pkgs.writeShellApplication {
         name = "toggle-light-filter";
-        runtimeInputs = [ pkgs.hyprland pkgs.libnotify ];
+        runtimeInputs = [pkgs.hyprland pkgs.libnotify];
         text = ''
           BASE_TEMPERATURE=6000
           FILTER_TEMPERATURE=1500

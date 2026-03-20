@@ -8,8 +8,12 @@
 #   Requires host.flakeDirectory to be set in your host module:
 #
 #   host.flakeDirectory = "/home/liam/nix-configuration";
-{ inputs, ... }: {
-  flake.nixosModules.nixConfiguration = { config, lib, pkgs, ... }: {
+{inputs, ...}: {
+  flake.nixosModules.nixConfiguration = {
+    config,
+    pkgs,
+    ...
+  }: {
     imports = [
       # pre-built nix-index database -- avoids slow local generation
       inputs.nix-index-database.nixosModules.nix-index
@@ -38,47 +42,49 @@
         "flakes"
       ];
       # Hyprland binary cache -- avoids rebuilding Hyprland from source
-      substituters = [ "https://hyprland.cachix.org" ];
+      substituters = ["https://hyprland.cachix.org"];
       trusted-public-keys = [
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
 
     # nh -- convenient wrapper around nixos-rebuild with better output
-    programs.nh = {
-      enable = true;
-      clean = {
+    programs = {
+      nh = {
         enable = true;
-        # Keep store paths from the last 7 days and at least 5 generations
-        extraArgs = "--keep-since 7d --keep 5";
+        clean = {
+          enable = true;
+          # Keep store paths from the last 7 days and at least 5 generations
+          extraArgs = "--keep-since 7d --keep 5";
+        };
+        flake = config.host.flakeDirectory;
       };
-      flake = config.host.flakeDirectory;
-    };
 
-    # run unpatched dynamic binaries on NixOS
-    # useful for pre-built toolchains and embedded development
-    programs.nix-ld.enable = true;
+      # run unpatched dynamic binaries on NixOS
+      # useful for pre-built toolchains and embedded development
+      nix-ld.enable = true;
 
-    # comma -- run any nixpkgs binary without installing it
-    # e.g. `, cowsay hello` runs cowsay from nixpkgs
-    programs.nix-index-database.comma.enable = true;
+      # comma -- run any nixpkgs binary without installing it
+      # e.g. `, cowsay hello` runs cowsay from nixpkgs
+      nix-index-database.comma.enable = true;
 
-    # direnv -- auto-load nix shells when entering project directories
-    programs.direnv = {
-      enable = true;
-      silent = false;
-      loadInNixShell = true;
-      nix-direnv.enable = true;
+      # direnv -- auto-load nix shells when entering project directories
+      direnv = {
+        enable = true;
+        silent = false;
+        loadInNixShell = true;
+        nix-direnv.enable = true;
+      };
     };
 
     environment.systemPackages = with pkgs; [
       nix-output-monitor # prettier nix build output
-      nvd                # diff between NixOS generations
-      nixd               # Nix language server for editor support
-      statix             # Nix linter
-      alejandra          # Nix formatter
-      manix              # Nix documentation searcher
-      nix-inspect        # TUI for inspecting Nix store
+      nvd # diff between NixOS generations
+      nixd # Nix language server for editor support
+      statix # Nix linter
+      alejandra # Nix formatter
+      manix # Nix documentation searcher
+      nix-inspect # TUI for inspecting Nix store
     ];
   };
 }

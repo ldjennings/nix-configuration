@@ -8,7 +8,11 @@
 #
 #   host.hostname = "brick";
 _: {
-  flake.nixosModules.networking = { config, lib, pkgs, self, ... }: {
+  flake.nixosModules.networking = {
+    config,
+    pkgs,
+    ...
+  }: {
     # imports = [ self.nixosModules.hostConfig ];
     # imports = [ "${self}/custom-nix-code/host-config.nix" ];
 
@@ -22,9 +26,9 @@ _: {
         firewall = {
           enable = true;
           allowedTCPPorts = [
-            22    # SSH
-            80    # HTTP
-            443   # HTTPS
+            22 # SSH
+            80 # HTTP
+            443 # HTTPS
             # 59010 # Moonlight/Sunshine game streaming
             # 59011 # Moonlight/Sunshine game streaming
             # 8080  # HTTP alternate / dev servers
@@ -37,7 +41,7 @@ _: {
       };
 
       # NetworkManager system tray applet for managing connections via GUI
-      environment.systemPackages = with pkgs; [ networkmanagerapplet ];
+      environment.systemPackages = with pkgs; [networkmanagerapplet];
     };
   };
 }

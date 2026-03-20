@@ -1,10 +1,10 @@
 # newModules/home/shell/hm-find.nix
 _: {
-  flake.modules.homeManager.hmFind = { pkgs, ... }: {
+  flake.modules.homeManager.hmFind = {pkgs, ...}: {
     home.packages = [
       (pkgs.writeShellApplication {
         name = "hm-find";
-        runtimeInputs = [ pkgs.gawk ];
+        runtimeInputs = [pkgs.gawk];
         text = ''
           echo "==============================================="
           echo "            ⚠️  WARNING ⚠️             "

@@ -6,7 +6,7 @@
 #   Add self.nixosModules.gaming-mouse to your host's modules list.
 #   Then run `piper` to configure the mouse.
 {
-  flake.nixosModules.periphreals = { pkgs, ... }: {
+  flake.nixosModules.periphreals = {pkgs, ...}: {
     # ratbagd daemon -- communicates with gaming mice
     services.ratbagd.enable = true;
 
@@ -22,7 +22,7 @@
     # };
 
     environment.systemPackages = with pkgs; [
-      piper  # GUI for configuring gaming mice
+      piper # GUI for configuring gaming mice
     ];
   };
 }

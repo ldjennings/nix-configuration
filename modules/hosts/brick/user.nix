@@ -1,8 +1,16 @@
 # newModules/hosts/brick/user-configuration.nix
 # User account definition and home-manager wiring for brick.
-{ self, inputs, ... }: {
-  flake.nixosModules.brickUser = { pkgs, config, ... }: {
-    imports = [ inputs.home-manager.nixosModules.home-manager ];
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.brickUser = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [inputs.home-manager.nixosModules.home-manager];
 
     users.mutableUsers = true;
     users.users.${config.host.username} = {
@@ -21,22 +29,22 @@
       ignoreShellProgramCheck = true;
     };
 
-    nix.settings.allowed-users = [ config.host.username ];
+    nix.settings.allowed-users = [config.host.username];
 
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
       backupFileExtension = "backup";
 
-      extraSpecialArgs = { 
+      extraSpecialArgs = {
         inherit inputs;
         # needs to be passed in as a module argument
         hostConfig = config.host;
       };
 
       users."liam" = {
-        imports = [ 
-          self.modules.homeManager.brickHome 
+        imports = [
+          self.modules.homeManager.brickHome
         ];
         home = {
           username = "liam";
