@@ -32,17 +32,11 @@
         inherit inputs;
         # needs to be passed in as a module argument
         hostConfig = config.host;
-        # legacy args -- remove as you migrate each module
-        username = config.host.username;
-        host = config.host.hostname;
-        profile = "brick";
       };
 
       users."liam" = {
         imports = [ 
           self.modules.homeManager.brickHome 
-          # temporary, until I migrate everythin
-          ./../../../modules/home 
         ];
         home = {
           username = "liam";

@@ -36,8 +36,8 @@
       security
 
       # desktop
-      gamingMouse
-      layout
+      periphreals
+      input
       pinyinInput
 
       desktopPrograms

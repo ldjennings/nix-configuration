@@ -2,7 +2,7 @@
 # System-level program options required by the desktop environment.
 # Actual configuration lives in home/programs/.
 { ... }: {
-  flake.nixosModules.desktopPrograms = { pkgs, ... }: {
+  flake.nixosModules.desktopPrograms = { ... }: {
     programs = {
       # dconf needed for GTK app settings persistence
       dconf.enable = true;
@@ -16,13 +16,7 @@
       # Hyprlock -- Hyprland screen locker, keeping during migration
       hyprlock.enable = true;
     };
-
-    # TODO: change this to something else when I switch from hyprland 
+    
     services.xserver.enable = false;
-    # xdg.portal = {
-    #   enable = true;
-    #   extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-    #   configPackages = [ pkgs.hyprland ];
-    # };
   };
 }
