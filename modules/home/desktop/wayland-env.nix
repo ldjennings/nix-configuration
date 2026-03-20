@@ -2,8 +2,8 @@
 # Generic Wayland environment variables.
 # Works under both Hyprland and Niri -- compositor-specific variables
 # (XDG_CURRENT_DESKTOP etc.) are set by greetd at session start.
-{ ... }: {
-  flake.modules.homeManager.waylandEnv = { ... }: {
+_: {
+  flake.modules.homeManager.waylandEnv = _: {
     home.sessionVariables = {
       # Enable native Wayland rendering for Electron apps (VSCode, Discord, etc.)
       NIXOS_OZONE_WL = "1";

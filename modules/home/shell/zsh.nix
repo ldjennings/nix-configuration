@@ -1,5 +1,5 @@
 # newModules/home/zsh.nix
-{ ... }: {
+_: {
   flake.modules.homeManager.zsh = { lib, hostConfig, ... }: {
     # fallback
     programs.bash.enable = true; 

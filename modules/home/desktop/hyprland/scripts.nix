@@ -1,5 +1,5 @@
 # newModules/home/desktop/hyprland/scripts.nix
-{ ... }: {
+_: {
   flake.modules.homeManager.hyprland = { pkgs, ... }: {
     home.packages = [
       (pkgs.writeShellApplication {

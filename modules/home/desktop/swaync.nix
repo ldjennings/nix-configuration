@@ -1,5 +1,5 @@
 # newModules/home/desktop/swaync.nix
-{ ... }: {
+_: {
   flake.modules.homeManager.swaync = { config, ... }: {
     services.swaync = {
       enable = true;

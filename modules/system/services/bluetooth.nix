@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.nixosModules.bluetooth = { ... }: {
+_: {
+  flake.nixosModules.bluetooth = _: {
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;  # automatically power on bluetooth at boot

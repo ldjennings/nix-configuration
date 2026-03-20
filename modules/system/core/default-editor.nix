@@ -2,7 +2,7 @@
 # Neovim is kept as a minimal backup editor -- no custom configuration,
 # just the base install with vi/vim aliases for muscle memory compatibility.
 # Primary editor is Helix (configured separately).
-{ ... }: {
+_: {
   flake.nixosModules.defaultEditor = { pkgs, ... }: {
     programs.neovim = {
       enable = true;

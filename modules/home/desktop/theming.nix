@@ -1,5 +1,5 @@
 # newModules/home/theming.nix
-{ ... }: {
+_: {
   flake.modules.homeManager.theming = { pkgs, ... }: {
     # Icon theme -- only thing stylix doesn't manage
     gtk = {

@@ -1,6 +1,6 @@
 # newModules/home/yazi.nix
 # Terminal file manager with image previews, git integration, and fuzzy jumping.
-{ ... }:
+_:
 {
   flake.modules.homeManager.yazi =
     { pkgs, ... }:
@@ -92,10 +92,10 @@
         };
 
         plugins = {
-          lazygit = pkgs.yaziPlugins.lazygit;
-          full-border = pkgs.yaziPlugins.full-border;
-          git = pkgs.yaziPlugins.git;
-          smart-enter = pkgs.yaziPlugins.smart-enter;
+          inherit (pkgs.yaziPlugins) lazygit;
+          inherit (pkgs.yaziPlugins) full-border;
+          inherit (pkgs.yaziPlugins) git;
+          inherit (pkgs.yaziPlugins) smart-enter;
         };
 
         initLua = ''

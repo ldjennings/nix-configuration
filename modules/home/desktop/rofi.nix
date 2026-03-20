@@ -8,7 +8,7 @@
         enable = true;
         package = pkgs.rofi;
         plugins = with pkgs; [
-          (rofi-calc.override { rofi-unwrapped = rofi-unwrapped; })
+          (rofi-calc.override { inherit rofi-unwrapped; })
         ];
         extraConfig = {
           modi = "drun,calc,filebrowser,window,run";

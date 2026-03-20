@@ -3,7 +3,7 @@
 # Installed system-wide so they're available on any machine regardless
 # of whether home-manager is configured -- particularly useful over SSH
 # or on fresh installs before dotfiles are set up.
-{ ... }: {
+_: {
   flake.nixosModules.cliUtils = { pkgs, ... }: {
     programs.zsh.enable = true;
 

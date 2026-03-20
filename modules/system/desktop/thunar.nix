@@ -1,7 +1,7 @@
 # Flake-parts module for Thunar file manager.
 # Lightweight GTK file manager with archive and volume management plugins.
 # ffmpegthumbnailer provides video thumbnail previews in the file browser.
-{ ... }: {
+_: {
   flake.nixosModules.thunar = { pkgs, ... }: {
     programs.thunar = {
       enable = true;

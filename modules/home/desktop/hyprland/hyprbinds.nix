@@ -1,6 +1,6 @@
 # newModules/home/desktop/hyprland/binds.nix
 { self, ... }: {
-  flake.modules.homeManager.hyprland = { ... }: {
+  flake.modules.homeManager.hyprland = _: {
     wayland.windowManager.hyprland.settings = {
       "$modifier" = "SUPER";
 

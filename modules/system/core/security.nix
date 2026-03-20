@@ -14,7 +14,7 @@
 #   - SSH server disabled (no daemon = no attack surface)
 #   - hardened kernel skipped (breaks Flatpak, browsers, containers)
 #   - hardened_malloc skipped (breaks Firefox)
-{ ... }: {
+_: {
   flake.nixosModules.security = { config, lib, pkgs, username, ... }: {
 
     # -------------------------------------------------------------------------

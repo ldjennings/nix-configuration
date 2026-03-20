@@ -3,9 +3,7 @@
 # note that the previous device (analog stereo) should be at 100% before applying this change
 
 {
-  flake.nixosModules.hostBrick = {
-    ...
-  }: {
+  flake.nixosModules.hostBrick = _: {
 
     hardware.framework.laptop13.audioEnhancement = {
       enable = true;

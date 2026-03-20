@@ -1,7 +1,7 @@
 # flake/nfs.nix
 # NFS server support.
-{ ... }: {
-  flake.nixosModules.nfs = { ... }: {
+_: {
+  flake.nixosModules.nfs = _: {
     services = {
       rpcbind.enable = true;
       nfs.server.enable = true;

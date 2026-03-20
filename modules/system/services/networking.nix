@@ -7,7 +7,7 @@
 #   Requires host.hostname to be set in your host module:
 #
 #   host.hostname = "brick";
-{ ... }: {
+_: {
   flake.nixosModules.networking = { config, lib, pkgs, self, ... }: {
     # imports = [ self.nixosModules.hostConfig ];
     # imports = [ "${self}/custom-nix-code/host-config.nix" ];

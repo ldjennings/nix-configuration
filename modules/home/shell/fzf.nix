@@ -1,5 +1,5 @@
 # newModules/home/fzf.nix
-{ ... }: {
+_: {
   flake.modules.homeManager.fzf = { config, lib, ... }: {
     programs.fzf = {
       enable = true;

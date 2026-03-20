@@ -1,7 +1,7 @@
-{ ... }:
+_:
 {
   flake.modules.homeManager.gammastep =
-    { ... }:
+    _:
     {
       services.gammastep = {
         enable = true;

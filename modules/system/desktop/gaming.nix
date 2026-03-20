@@ -1,7 +1,7 @@
 # Flake-parts module for gaming support.
 # Includes Steam with Proton, Gamescope, GameMode, and various
 # launchers for GOG, Epic, and other game stores.
-{ ... }: {
+_: {
   flake.nixosModules.gaming = { pkgs, ... }: {
     programs = {
       # GameMode -- temporarily boosts performance when games are running

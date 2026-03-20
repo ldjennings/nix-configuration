@@ -1,6 +1,6 @@
 # newModules/home/eza.nix
-{ ... }: {
-  flake.modules.homeManager.eza = { ... }: {
+_: {
+  flake.modules.homeManager.eza = _: {
     programs.eza = {
       enable = true;
       icons = "auto";

@@ -1,6 +1,6 @@
 # newModules/home/desktop/hyprland/default.nix
 # Core Hyprland configuration -- input, layout, decorations, startup.
-{ ... }: {
+_: {
   flake.modules.homeManager.hyprland = { config, pkgs, ... }: {
     home.packages = with pkgs; [
       swww               # wallpaper daemon

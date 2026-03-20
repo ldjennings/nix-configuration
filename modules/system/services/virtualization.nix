@@ -1,7 +1,7 @@
 # Flake-parts module for containerisation and virtualisation support.
 # Provides Podman, and libvirt/virt-manager configuration.
 # Note: Docker and Podman are mutually exclusive -- only enable one at a time.
-{ ... }: {
+_: {
   flake.nixosModules.virtualization = { config, pkgs, ... }: {
     virtualisation = {
       # libvirtd disabled -- pulls in ~1.4GB of virtualization infrastructure

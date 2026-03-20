@@ -1,8 +1,8 @@
 # newModules/home/desktop/hyprland/animations.nix
 # Hyprland animations -- "Dynamic" preset.
 # Credit: https://github.com/mylinuxforwork/dotfiles
-{ ... }: {
-  flake.modules.homeManager.hyprland = { ... }: {
+_: {
+  flake.modules.homeManager.hyprland = _: {
     wayland.windowManager.hyprland.settings.animations = {
       enabled = true;
       bezier = [

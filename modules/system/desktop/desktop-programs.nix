@@ -1,8 +1,8 @@
 # system/desktop/desktop-programs.nix
 # System-level program options required by the desktop environment.
 # Actual configuration lives in home/programs/.
-{ ... }: {
-  flake.nixosModules.desktopPrograms = { ... }: {
+_: {
+  flake.nixosModules.desktopPrograms = _: {
     programs = {
       # dconf needed for GTK app settings persistence
       dconf.enable = true;

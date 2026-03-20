@@ -1,5 +1,5 @@
 # hosts/brick/home.nix or a shared newModules/home/xdg.nix
-{ ... }:
+_:
 {
   flake.modules.homeManager.xdg =
     { pkgs, ... }:

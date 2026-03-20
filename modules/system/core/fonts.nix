@@ -1,5 +1,5 @@
 # flake/fonts.nix
-{ ... }: {
+_: {
   flake.nixosModules.fonts = { pkgs, ... }: {
     fonts.packages = with pkgs; [
       noto-fonts

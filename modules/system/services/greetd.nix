@@ -5,7 +5,7 @@
 #   Requires host.username to be set in your host module:
 #
 #   host.username = "liam";
-{ ... }: {
+_: {
   flake.nixosModules.greetd = { config, lib, pkgs, ... }: {
     # imports = [ self.nixosModules.hostConfig ];
     # imports = [ "${self}/custom-nix-code/host-config.nix" ];

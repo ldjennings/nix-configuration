@@ -1,6 +1,6 @@
 # newModules/home/fastfetch.nix
-{ ... }: {
-  flake.modules.homeManager.fastfetch = { ... }: {
+_: {
+  flake.modules.homeManager.fastfetch = _: {
     programs.fastfetch = {
       enable = true;
       settings = {

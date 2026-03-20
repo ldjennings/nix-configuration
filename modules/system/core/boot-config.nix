@@ -2,8 +2,8 @@
 # Generic boot configuration suitable for most modern x86 EFI systems.
 # Host-specific settings (kernel, modules, hardware tweaks) belong in
 # the host's own module instead.
-{ ... }: {
-  flake.nixosModules.bootConfig = { ... }: {
+_: {
+  flake.nixosModules.bootConfig = _: {
     boot = {
       # Suppress most kernel messages during boot
       consoleLogLevel = 3;

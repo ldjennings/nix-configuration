@@ -2,7 +2,7 @@
 # FSAE team utilities -- inventory lookup and KiCad project opener.
 # API token for inv-query should be set via a secrets manager (agenix/sops-nix)
 # before deploying to a machine with a public config repo.
-{ ... }: {
+_: {
   flake.modules.homeManager.formula = { pkgs, ... }: {
     home.packages = [
       (pkgs.writeShellApplication {

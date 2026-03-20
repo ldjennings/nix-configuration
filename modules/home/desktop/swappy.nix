@@ -1,7 +1,7 @@
 # newModules/home/swappy.nix
 # Screenshot annotation tool configuration.
 # Screenshots are saved to ~/Pictures/Screenshots.
-{ ... }: {
+_: {
   flake.modules.homeManager.swappy = { config, ... }: {
     home.file.".config/swappy/config".text = ''
       [Default]

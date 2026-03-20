@@ -2,7 +2,7 @@
 # Programs and packages requiring elevated privileges, udev rules,
 # or direct hardware access. Purely userspace tools belong in
 # cli-utils.nix or home/programs/ instead.
-{ ... }: {
+_: {
   flake.nixosModules.sysUtils = { pkgs, ... }: {
     programs = {
       # Needs setuid for raw socket access

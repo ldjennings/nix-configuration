@@ -1,7 +1,7 @@
 # newModules/home/desktop/hyprland/windowrules.nix
 # Hyprland window rules -- tagging, floating, sizing, opacity.
-{ ... }: {
-  flake.modules.homeManager.hyprland = { ... }: {
+_: {
+  flake.modules.homeManager.hyprland = _: {
     wayland.windowManager.hyprland.settings.windowrulev2 = [
       # --- Tags ---
       "tag +file-manager, class:^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$"

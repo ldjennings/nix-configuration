@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.nixosModules.pipewire = { ... }: {    
+_: {
+  flake.nixosModules.pipewire = _: {    
     # requires pipewire to actually work
     services.pipewire = {
       enable = true;

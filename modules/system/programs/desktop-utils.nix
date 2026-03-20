@@ -2,7 +2,7 @@
 # Fundamental graphical utilities for any desktop system.
 # The GUI equivalent of cli-utils.nix -- tools useful on any Wayland
 # machine before home-manager is configured, or on minimal setups.
-{ ... }: {
+_: {
   flake.nixosModules.desktopUtils = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
       # Browser -- useful before a proper HM browser config is set up

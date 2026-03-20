@@ -2,8 +2,8 @@
 # Uses TLP for fine-grained CPU/battery control and thermald
 # for Intel thermal management.
 # Note: power-profiles-daemon conflicts with TLP -- do not enable both.
-{ ... }: {
-  flake.nixosModules.powerSave = { ... }: {
+_: {
+  flake.nixosModules.powerSave = _: {
     # Intel thermal management -- prevents throttling
     services.thermald.enable = true;
 

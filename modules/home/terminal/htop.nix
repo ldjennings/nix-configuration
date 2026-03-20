@@ -1,6 +1,6 @@
 # newModules/home/htop.nix
 # Interactive process viewer with custom layout and fields.
-{ ... }: {
+_: {
   flake.modules.homeManager.htop = { config, ... }: {
     programs.htop = {
       enable = true;
