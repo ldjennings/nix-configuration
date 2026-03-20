@@ -2,7 +2,6 @@
   flake.nixosModules.hostBrick = {
     config,
     lib,
-    pkgs,
     modulesPath,
     ...
   }: {
