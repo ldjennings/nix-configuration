@@ -1,6 +1,6 @@
 # Locale, timezone, and language settings for US English.
 {
-  flake.nixosModules.locale = _: {
+  flake.nixosModules.locale = {config, ...}: {
     time.timeZone = "America/Los_Angeles";
 
     i18n.defaultLocale = "en_US.UTF-8";
@@ -16,6 +16,8 @@
       LC_TIME = "en_US.UTF-8";
     };
 
-    console.keyMap = "colemak";
+    # localectl will show "VC Keymap: (unset)" if you run it, thats some
+    # quirk with how it expects it vs how nixos actually configures this.
+    console.keyMap = config.host.keyboard.variant;
   };
 }

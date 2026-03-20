@@ -2,6 +2,7 @@
 # Core Hyprland configuration -- input, layout, decorations, startup.
 _: {
   flake.modules.homeManager.hyprland = {
+    hostConfig,
     config,
     pkgs,
     ...
@@ -74,8 +75,9 @@ _: {
         ];
 
         input = {
-          kb_layout = "us";
-          kb_variant = "colemak";
+          kb_layout = hostConfig.keyboard.layout;
+          kb_variant = hostConfig.keyboard.variant;
+          kb_options = hostConfig.keyboard.options;
           numlock_by_default = true;
           repeat_delay = 300;
           follow_mouse = 1;

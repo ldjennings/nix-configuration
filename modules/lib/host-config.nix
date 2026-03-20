@@ -65,6 +65,33 @@
         description = "Email address used for git commits.";
         example = "liam@example.com";
       };
+      
+      keyboard = {
+        layout = requiredOption {
+          name        = "host.keyboard.layout";
+          type        = lib.types.str;
+          usedFor     = "XKB keyboard layout for system, hyprland, and niri";
+          suggestion  = "\"us\"";
+          description = "XKB keyboard layout.";
+          example     = "us";
+        };
+        variant = requiredOption {
+          name        = "host.keyboard.variant";
+          type        = lib.types.str;
+          usedFor     = "XKB keyboard variant for system, hyprland, and niri";
+          suggestion  = "\"colemak\"";
+          description = "XKB keyboard variant.";
+          example     = "colemak";
+        };
+        options = requiredOption {
+          name        = "host.keyboard.options";
+          type        = lib.types.str;
+          usedFor     = "XKB keyboard options for system, hyprland, and niri";
+          suggestion  = "\"caps:capslock\"";
+          description = "XKB keyboard options.";
+          example     = "caps:capslock";
+        };
+      };
     };
   };
 }

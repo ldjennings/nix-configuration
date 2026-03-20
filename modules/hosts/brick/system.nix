@@ -82,6 +82,11 @@
       hostname = "brick";
       gitUsername = "Liam Jennings";
       gitEmail = "72767491+ldjennings@users.noreply.github.com";
+      keyboard = {
+        layout  = "us";
+        variant = "colemak";
+        options = "caps:capslock";
+      };
     };
 
     system.stateVersion = "25.05"; # Do not change!

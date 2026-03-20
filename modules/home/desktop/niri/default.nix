@@ -1,6 +1,7 @@
 # newModules/home/desktop/niri/default.nix
 {inputs, ...}: {
   flake.modules.homeManager.niri = {
+    hostConfig,
     pkgs,
     config,
     ...
@@ -20,8 +21,9 @@
         input = {
           keyboard = {
             xkb = {
-              layout = "us";
-              variant = "colemak";
+              layout = hostConfig.keyboard.layout;
+              variant = hostConfig.keyboard.variant;
+              options = hostConfig.keyboard.options;
             };
             repeat-delay = 300;
             repeat-rate = 50;

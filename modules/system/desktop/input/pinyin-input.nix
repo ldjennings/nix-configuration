@@ -2,7 +2,7 @@
 # Requires XDG autostart to launch fcitx5 on login when
 # running a standalone Wayland compositor without a full DE.
 {
-  flake.nixosModules.pinyinInput = {pkgs, ...}: {
+  flake.nixosModules.pinyinInput = {pkgs, config, ...}: {
     i18n.inputMethod = {
       type = "fcitx5";
       enable = true;
@@ -18,7 +18,7 @@
           GroupOrder."0" = "Default";
           "Groups/0" = {
             Name = "Default";
-            "Default Layout" = "colemak"; # match XKB layout
+            "Default Layout" = config.host.keyboard.variant; # match XKB layout
             DefaultIM = "pinyin";
           };
           "Groups/0/Items/0".Name = "keyboard-us";
