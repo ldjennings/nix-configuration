@@ -21,17 +21,17 @@
     # ./git.nix
     # ./gtk.nix
     # ./htop.nix
-    ./hyprland
+    # ./hyprland
     # ./kitty.nix
     # ./lazygit.nix
     # ./nvf.nix
     # ./rofi
     # ./qt.nix
-    ./scripts
+    # ./scripts
     # ./starship.nix
     # ./stylix.nix
     # ./swappy.nix
-    ./swaync.nix
+    # ./swaync.nix
     # ./virtmanager.nix
     # waybarChoice
     # ../../modules/home/waybar/waybar-ddubs.nix
@@ -40,6 +40,6 @@
     # ./xdg.nix
     # ./yazi
     # ./zoxide.nix
-    # ./zshg
+    # ./zsh
   ];
 }

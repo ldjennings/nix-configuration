@@ -6,13 +6,13 @@ in
 {
   imports = [
     animChoice
-    ./binds.nix
-    ./binds-scripts.nix
-    ./env.nix
-    ./hypridle.nix
+    # ./binds.nix
+    # ./binds-scripts.nix
+    # ./env.nix
+    # ./hypridle.nix
     ./hyprland.nix
-    ./hyprlock.nix
-    ./pyprland.nix
+    # ./hyprlock.nix
+    # ./pyprland.nix
     ./windowrules.nix
   ];
 }

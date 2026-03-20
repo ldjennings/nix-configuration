@@ -23,12 +23,15 @@
         helix
         htop
         hyprland
+        hmFind
         kitty
         lsp
         rofi
         swappy
+        swaync
         tempPackages
         theming
+        waylandEnv
         wlogout
         xdg
         yazi

@@ -67,6 +67,7 @@
         description = "Email address used for git commits.";
         example = "liam@example.com";
       };
+      
     };
   };
 }
