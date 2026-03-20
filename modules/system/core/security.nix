@@ -17,7 +17,6 @@
 _: {
   flake.nixosModules.security = {
     config,
-    lib,
     pkgs,
     username,
     ...
@@ -226,11 +225,17 @@ _: {
     # Services
     # -------------------------------------------------------------------------
 
-    # Use dbus-broker -- more resilient to resource exhaustion attacks
-    services.dbus.implementation = "broker";
+    
+    services = {
+      # Use dbus-broker -- more resilient to resource exhaustion attacks
+      dbus.implementation = "broker";
+      
+      # Secret and credential storage -- used by many apps even outside GNOME
+      gnome.gnome-keyring.enable = true;
+    };
 
-    # Secret and credential storage -- used by many apps even outside GNOME
-    services.gnome.gnome-keyring.enable = true;
+    
+
 
     # -------------------------------------------------------------------------
     # User groups for embedded development

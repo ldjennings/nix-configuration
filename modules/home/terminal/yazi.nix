@@ -58,6 +58,11 @@ _: {
             run = "plugin smart-enter";
             desc = "Enter dir or open file";
           }
+          {
+            on = [ "y" "c" ];
+            run = "shell 'wl-copy < \"$0\"'";
+            desc = "Copy file contents to clipboard";
+          }
         ];
       };
 
@@ -89,7 +94,7 @@ _: {
       };
 
       plugins = {
-        inherit (pkgs.yaziPlugins) lazygit;
+        # inherit (pkgs.yaziPlugins) lazygit;
         inherit (pkgs.yaziPlugins) full-border;
         inherit (pkgs.yaziPlugins) git;
         inherit (pkgs.yaziPlugins) smart-enter;

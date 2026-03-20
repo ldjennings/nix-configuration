@@ -14,6 +14,11 @@ _: {
       # Shell session management -- keeps sessions alive over SSH disconnects
       tmux
 
+      # Per-directory shell command shortcut programs
+      gnumake
+      just
+
+
       # Filesystem navigation
       yazi # terminal file manager
       eza # better ls

@@ -13,7 +13,7 @@
             # Capslock acts as delete in normal use
             main.capslock = "delete";
             # Capslock+ctrl restores capslock behaviour
-            control.capslock = "capslock";
+            "alt+shift".capslock = "capslock";
           };
         };
       };

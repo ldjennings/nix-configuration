@@ -132,11 +132,6 @@ _: {
         "$modifier, mouse:272, movewindow"
         "$modifier, mouse:273, resizewindow"
       ];
-
-      bindle = [
-        ", mouse_down, workspace, e+1"
-        ", mouse_up, workspace, e-1"
-      ];
     };
   };
 }
