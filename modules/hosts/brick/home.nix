@@ -26,7 +26,7 @@
       rofi
       swappy
       swaync
-      tempPackages
+      desktopApps
       theming
       waylandEnv
       wlogout

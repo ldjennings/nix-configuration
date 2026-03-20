@@ -1,5 +1,5 @@
 _: {
-  flake.modules.homeManager.tempPackages = {pkgs, ...}: {
+  flake.modules.homeManager.desktopApps = {pkgs, ...}: {
     home.packages = with pkgs; [
       audacity
       calibre
