@@ -8,18 +8,23 @@
 _: {
   flake.nixosModules.greetd = {
     config,
-    lib,
     pkgs,
     ...
-  }: {
-    # imports = [ self.nixosModules.hostConfig ];
-    # imports = [ "${self}/custom-nix-code/host-config.nix" ];
-
+  }: let
+    hyprland-start = pkgs.writeShellScript "hyprland-start" ''
+      hyprland > /tmp/hyprland.log 2>&1
+      if [ $? -ne 0 ]; then
+        echo "Hyprland exited with error. Log:"
+        cat /tmp/hyprland.log
+        read -p "Press enter to continue..."
+      fi
+    '';
+  in {
     services.greetd = {
       enable = true;
       settings.default_session = {
         user = config.host.username;
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}";
       };
     };
   };
