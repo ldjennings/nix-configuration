@@ -15,8 +15,6 @@
 # based on https://wiki.nixos.org/wiki/Intel_Graphics
 {
   flake.nixosModules.intelGPU = {
-    config,
-    lib,
     pkgs,
     ...
   }: {

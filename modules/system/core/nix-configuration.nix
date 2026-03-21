@@ -62,7 +62,14 @@
 
       # run unpatched dynamic binaries on NixOS
       # useful for pre-built toolchains and embedded development
-      nix-ld.enable = true;
+      nix-ld = {
+        enable = true;
+        libraries = with pkgs; [
+          libgcc.lib # provides libstdc++.so.6, needed to get numpy on python working
+          libx11
+          libxext
+        ];
+      };
 
       # comma -- run any nixpkgs binary without installing it
       # e.g. `, cowsay hello` runs cowsay from nixpkgs

@@ -49,7 +49,7 @@ _: {
           "title"
           "mpris"
           # "volume"
-          "backlight"
+          # "backlight"
           "dnd"
           "notifications"
         ];

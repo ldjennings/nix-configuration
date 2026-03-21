@@ -29,6 +29,9 @@ _: {
         # Enables DNS resolution between containers on the same Podman network
         defaultNetwork.settings.dns_enabled = true;
       };
+      containers.policy = {
+        default = [{type = "insecureAcceptAnything";}];
+      };
     };
 
     programs = {
@@ -37,11 +40,27 @@ _: {
     };
 
     # User group membership for container and VM access
-    users.users.${config.host.username}.extraGroups = [
-      "podman" # access to Podman socket
-      # "libvirtd" # uncomment when libvirtd.enable = true
-      # "kvm"      # uncomment for direct KVM device access
-    ];
+    users.users.${config.host.username} = {
+      extraGroups = [
+        "podman" # access to Podman socket
+        # "libvirtd" # uncomment when libvirtd.enable = true
+        # "kvm"      # uncomment for direct KVM device access
+      ];
+      subUidRanges = [
+        {
+          startUid = 100000;
+          count = 65536;
+        }
+      ];
+      subGidRanges = [
+        {
+          startGid = 100000;
+          count = 65536;
+        }
+      ];
+    };
+
+
 
     environment.systemPackages = with pkgs; [
       # virt-viewer  # GUI for viewing/interacting with running VMs
