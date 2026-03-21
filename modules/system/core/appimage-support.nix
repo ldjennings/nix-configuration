@@ -14,7 +14,7 @@
 #   chmod +x myapp.AppImage
 #   ./myapp.AppImage
 {
-  flake.nixosModules.appImageSupport = {pkgs, ...}: {
+  flake.nixosModules.appimageSupport = {pkgs, ...}: {
     boot.binfmt.registrations.appimage = {
       wrapInterpreterInShell = false;
       interpreter = "${pkgs.appimage-run}/bin/appimage-run";

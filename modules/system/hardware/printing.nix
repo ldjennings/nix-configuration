@@ -39,7 +39,7 @@
           name = "Lexmark_E260d";
           location = "Home";
           deviceUri = "usb://Lexmark/E260d?serial=72L5HWM";
-          # Full PPD path from: lpinfo -m | grep -i lexmark
+          # Full PPD path from lpinfo -m | grep -i lexmark
           model = "postscript-lexmark/Lexmark-E260d-Postscript-Lexmark.ppd";
           ppdOptions = {
             PageSize = "Letter";

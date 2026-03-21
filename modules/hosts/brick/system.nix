@@ -29,9 +29,10 @@
   }: {
     imports = with self.nixosModules; [
       # core
-      appImageSupport
+      appimageSupport
       bootConfig
       defaultEditor
+      firmwareUpdates
       fonts
       locale
       nixConfiguration

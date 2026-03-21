@@ -17,7 +17,6 @@
 _: {
   flake.nixosModules.security = {
     config,
-    pkgs,
     username,
     ...
   }: {
@@ -66,19 +65,19 @@ _: {
           users = ["${username}"];
           commands = [
             {
-              command = "${pkgs.fw-ectool}/bin/ectool led power red";
+              command = "/run/current-system/sw/bin/ectool led power red";
               options = ["NOPASSWD"];
             }
             {
-              command = "${pkgs.fw-ectool}/bin/ectool led power white";
+              command = "/run/current-system/sw/bin/ectool led power white";
               options = ["NOPASSWD"];
             }
             {
-              command = "${pkgs.fw-ectool}/bin/ectool led power amber";
+              command = "/run/current-system/sw/bin/ectool led power amber";
               options = ["NOPASSWD"];
             }
             {
-              command = "${pkgs.fw-ectool}/bin/ectool led power off";
+              command = "/run/current-system/sw/bin/ectool led power off";
               options = ["NOPASSWD"];
             }
           ];
