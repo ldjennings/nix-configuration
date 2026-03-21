@@ -21,9 +21,9 @@
       # Colemak layout via XKB -- applied at the Wayland/X11 level
       # so fcitx5 and other input methods are aware of it
       xserver.xkb = {
-        layout = config.host.keyboard.layout;
-        variant = config.host.keyboard.variant;
-        options = config.host.keyboard.options;
+        inherit (config.host.keyboard) layout;
+        inherit (config.host.keyboard) variant;
+        inherit (config.host.keyboard) options;
       };
 
       # # Colemak layout for TTY/console

@@ -5,7 +5,7 @@
 #   fwupdmgr update
 # to update the firmware
 _: {
-  flake.nixosModules.firmwareUpdates = {...}: {
+  flake.nixosModules.firmwareUpdates = _: {
     services.fwupd.enable = true;
   };
 }

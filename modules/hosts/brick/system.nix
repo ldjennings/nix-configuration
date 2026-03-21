@@ -84,7 +84,7 @@
       gitUsername = "Liam Jennings";
       gitEmail = "72767491+ldjennings@users.noreply.github.com";
       keyboard = {
-        layout  = "us";
+        layout = "us";
         variant = "colemak";
         options = "caps:capslock";
       };

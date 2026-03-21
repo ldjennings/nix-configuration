@@ -224,17 +224,13 @@ _: {
     # Services
     # -------------------------------------------------------------------------
 
-    
     services = {
       # Use dbus-broker -- more resilient to resource exhaustion attacks
       dbus.implementation = "broker";
-      
+
       # Secret and credential storage -- used by many apps even outside GNOME
       gnome.gnome-keyring.enable = true;
     };
-
-    
-
 
     # -------------------------------------------------------------------------
     # User groups for embedded development

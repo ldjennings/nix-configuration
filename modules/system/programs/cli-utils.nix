@@ -18,7 +18,6 @@ _: {
       gnumake
       just
 
-
       # Filesystem navigation
       yazi # terminal file manager
       eza # better ls

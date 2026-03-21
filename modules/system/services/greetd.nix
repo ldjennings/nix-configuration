@@ -20,11 +20,15 @@ _: {
       fi
     '';
   in {
+    # boot.kernelParams = [ "video=2256x1504" ];
+
     services.greetd = {
       enable = true;
-      settings.default_session = {
-        user = config.host.username;
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}";
+      settings = {
+        default_session = {
+          user = config.host.username;
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}'";
+        };
       };
     };
   };

@@ -21,9 +21,9 @@
         input = {
           keyboard = {
             xkb = {
-              layout = hostConfig.keyboard.layout;
-              variant = hostConfig.keyboard.variant;
-              options = hostConfig.keyboard.options;
+              inherit (hostConfig.keyboard) layout;
+              inherit (hostConfig.keyboard) variant;
+              inherit (hostConfig.keyboard) options;
             };
             repeat-delay = 300;
             repeat-rate = 50;

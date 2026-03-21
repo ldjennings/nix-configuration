@@ -59,7 +59,7 @@ _: {
             desc = "Enter dir or open file";
           }
           {
-            on = [ "y" "c" ];
+            on = ["y" "c"];
             run = "shell 'wl-copy < \"$0\"'";
             desc = "Copy file contents to clipboard";
           }

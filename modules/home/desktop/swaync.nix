@@ -48,7 +48,7 @@ _: {
         widgets = [
           "title"
           "mpris"
-          "volume"
+          # "volume"
           "backlight"
           "dnd"
           "notifications"
