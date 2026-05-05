@@ -6,6 +6,7 @@ _: {
       legcord
       vscode-fhs
       firefox
+      gimp
       kicad
       hyprpicker
       nautilus
@@ -22,6 +23,7 @@ _: {
       tinymist
       typst
       zoom-us
+      zotero
     ];
   };
 }

@@ -79,6 +79,7 @@ _: {
           kb_variant = hostConfig.keyboard.variant;
           kb_options = hostConfig.keyboard.options;
           numlock_by_default = true;
+          repeat_rate = 10;
           repeat_delay = 300;
           follow_mouse = 1;
           float_switch_override_focus = 0;

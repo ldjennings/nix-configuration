@@ -23,6 +23,7 @@
       hmFind
       kitty
       lsp
+      personalPackages
       rofi
       swappy
       swaync

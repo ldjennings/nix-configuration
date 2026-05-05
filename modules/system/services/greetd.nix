@@ -6,30 +6,33 @@
 #
 #   host.username = "liam";
 _: {
-  flake.nixosModules.greetd = {
-    config,
-    pkgs,
-    ...
-  }: let
-    hyprland-start = pkgs.writeShellScript "hyprland-start" ''
-      hyprland > /tmp/hyprland.log 2>&1
-      if [ $? -ne 0 ]; then
-        echo "Hyprland exited with error. Log:"
-        cat /tmp/hyprland.log
-        read -p "Press enter to continue..."
-      fi
-    '';
-  in {
-    # boot.kernelParams = [ "video=2256x1504" ];
+  flake.nixosModules.greetd =
+    {
+      config,
+      pkgs,
+      ...
+    }:
+    let
+      hyprland-start = pkgs.writeShellScript "hyprland-start" ''
+        hyprland > /tmp/hyprland.log 2>&1
+        if [ $? -ne 0 ]; then
+          echo "Hyprland exited with error. Log:"
+          cat /tmp/hyprland.log
+          read -p "Press enter to continue..."
+        fi
+      '';
+    in
+    {
+      # boot.kernelParams = [ "video=2256x1504" ];
 
-    services.greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          user = config.host.username;
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}'";
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            user = config.host.username;
+            command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}";
+          };
         };
       };
     };
-  };
 }

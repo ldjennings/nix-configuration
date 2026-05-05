@@ -41,12 +41,12 @@ _: {
         ", Print, exec, toggle-light-filter"
 
         # Brightness
-        ", XF86MonBrightnessDown, exec, brightness-gamma down"
-        ", XF86MonBrightnessUp, exec, brightness-gamma up"
+        # ", XF86MonBrightnessDown, exec, brightness-gamma down"
+        # ", XF86MonBrightnessUp, exec, brightness-gamma up"
 
         # Volume
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        # ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        # ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
         # Media
@@ -126,6 +126,15 @@ _: {
         # Cycle windows
         "ALT, Tab, cyclenext"
         "ALT, Tab, bringactivetotop"
+      ];
+
+      # repeatable (press and hold) keybinds
+      binde = [
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+
+        ", XF86MonBrightnessDown, exec, brightness-gamma down"
+        ", XF86MonBrightnessUp, exec, brightness-gamma up"
       ];
 
       bindm = [

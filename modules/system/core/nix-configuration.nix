@@ -68,6 +68,7 @@
           libgcc.lib # provides libstdc++.so.6, needed to get numpy on python working
           libx11
           libxext
+          boost.dev
         ];
       };
 
