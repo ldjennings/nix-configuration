@@ -47,13 +47,25 @@ _: {
           ];
         };
 
-        initContent = lib.mkOrder 1000 ''
-          # vim-style word navigation
-          bindkey "\eh" backward-word
-          bindkey "\ej" down-line-or-history
-          bindkey "\ek" up-line-or-history
-          bindkey "\el" forward-word
-        '';
+        initContent = lib.mkMerge [
+          (lib.mkOrder 1000 ''
+            # vim-style word navigation
+            bindkey "\eh" backward-word
+            bindkey "\ej" down-line-or-history
+            bindkey "\ek" up-line-or-history
+            bindkey "\el" forward-word
+          '')
+          ''
+            _nix_shell_rprompt() {
+              if [[ -n "$IN_NIX_SHELL" ]]; then
+                RPROMPT="%F{cyan}[nix]%f"
+              else
+                RPROMPT=""
+              fi
+            }
+            add-zsh-hook precmd _nix_shell_rprompt
+          ''
+        ];
 
         shellAliases = {
           # editors
