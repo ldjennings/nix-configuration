@@ -66,7 +66,7 @@ _: {
           };
 
           bash-language-server = {
-            command = "${pkgs.nodePackages.bash-language-server}/bin/bash-language-server";
+            command = "${pkgs.bash-language-server}/bin/bash-language-server";
             args = ["start"];
           };
 
@@ -81,7 +81,7 @@ _: {
             name = "nix";
             auto-format = true;
             language-servers = ["nixd"];
-            formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+            formatter.command = "${pkgs.nixfmt}/bin/nixfmt";
           }
           {
             name = "bash";

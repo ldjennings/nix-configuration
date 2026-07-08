@@ -8,7 +8,7 @@
     imports = with self.modules.homeManager; [
       # shared HM modules will go here as you migrate them
       # e.g. hyprland, waybar, zsh, kitty, git, etc.
-      niri
+      # niri
       # gammastep
       bat
       btop

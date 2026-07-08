@@ -22,6 +22,11 @@ _: {
           CPU_MAX_PERF_ON_AC = 100;
           CPU_MIN_PERF_ON_BAT = 0;
           CPU_MAX_PERF_ON_BAT = 50;
+          # TLP's defaults write vm.laptop_mode, which the kernel deprecated
+          # (dmesg: "tlp: vm.laptop_mode is deprecated"); empty disables it.
+          # Only ever mattered for spinning disks, not NVMe.
+          DISK_IDLE_SECS_ON_AC = "";
+          DISK_IDLE_SECS_ON_BAT = "";
           # Charge thresholds -- improves long term battery health
           # starts charging at 40%, stops at 80%
           START_CHARGE_THRESH_BAT0 = 40;
@@ -37,9 +42,13 @@ _: {
       };
     };
 
-    systemd.sleep.extraConfig = ''
-      HibernateDelaySec=5m
-      SuspendState=mem
-    '';
+    # systemd.sleep.extraConfig = ''
+    #   HibernateDelaySec=5m
+    #   SuspendState=mem
+    # '';
+    systemd.sleep.settings.Sleep = {
+      HibernateDelaySec = "5m";
+      SuspendState = "mem";
+    };
   };
 }

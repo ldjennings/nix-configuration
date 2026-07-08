@@ -5,7 +5,7 @@ _: {
   flake.nixosModules.thunar = {pkgs, ...}: {
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin # right-click archive extraction and compression
         thunar-volman # automatic management of removable drives
       ];

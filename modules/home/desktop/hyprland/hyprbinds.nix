@@ -65,7 +65,8 @@ _: {
         "$modifier ALT, F, workspaceopt, allfloat"
         "$modifier SHIFT, C, exit"
         "$modifier, P, pseudo"
-        "$modifier SHIFT, I, togglesplit"
+        # togglesplit dispatcher was removed in Hyprland 0.54 in favor of layoutmsg
+        "$modifier SHIFT, I, layoutmsg, togglesplit"
 
         # Focus
         "$modifier, h, movefocus, l"

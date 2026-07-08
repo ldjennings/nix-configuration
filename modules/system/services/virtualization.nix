@@ -60,8 +60,6 @@ _: {
       ];
     };
 
-
-
     environment.systemPackages = with pkgs; [
       # virt-viewer  # GUI for viewing/interacting with running VMs
       # qemu # for running VMs without the full stack

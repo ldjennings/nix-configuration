@@ -7,6 +7,8 @@ _: {
       # Changes shell directory when you quit yazi -- lets you navigate
       # the filesystem in yazi and land in the right place in your shell
       enableZshIntegration = true;
+      # HM 26.05 default changed to "y"; keep the old wrapper name
+      shellWrapperName = "yy";
 
       settings = {
         mgr = {

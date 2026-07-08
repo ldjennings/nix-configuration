@@ -2,6 +2,7 @@
 _: {
   flake.modules.homeManager.zsh = {
     lib,
+    config,
     hostConfig,
     ...
   }: {
@@ -18,6 +19,8 @@ _: {
 
       zsh = {
         enable = true;
+        # zsh config and history live in ~/.config/zsh (new HM 26.05 default)
+        dotDir = "${config.xdg.configHome}/zsh";
         autosuggestion.enable = true;
         syntaxHighlighting = {
           enable = true;

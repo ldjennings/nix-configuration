@@ -45,7 +45,7 @@ _: {
         networkmanagerapplet
         samba
         cifs-utils
-        ];
+      ];
     };
   };
 }

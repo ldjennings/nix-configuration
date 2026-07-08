@@ -8,7 +8,7 @@ _: {
       # Needs setuid for raw socket access
       mtr.enable = true;
       # Needs udev rules and adbusers group
-      adb.enable = true;
+      # adb.enable = true;
       # GPG agent with SSH support
       gnupg.agent = {
         enable = true;

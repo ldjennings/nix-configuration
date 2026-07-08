@@ -14,10 +14,7 @@
 #     intel_gpu_top   # should show GPU activity when playing video/games
 # based on https://wiki.nixos.org/wiki/Intel_Graphics
 {
-  flake.nixosModules.intelGPU = {
-    pkgs,
-    ...
-  }: {
+  flake.nixosModules.intelGPU = {pkgs, ...}: {
     # Load modesetting driver and keep Xorg available for XWayland compatibility
     # services.xserver.videoDrivers = [ "modesetting" ];
 

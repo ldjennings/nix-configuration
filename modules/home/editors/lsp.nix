@@ -6,10 +6,10 @@ _: {
     home.packages = with pkgs; [
       # Nix
       nixd
-      nixfmt-rfc-style
+      nixfmt
 
       # Bash
-      nodePackages.bash-language-server
+      bash-language-server
       shellcheck
 
       # Markdown

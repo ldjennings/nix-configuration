@@ -9,6 +9,8 @@ _: {
       userDirs = {
         enable = true;
         createDirectories = true;
+        # apps read user-dirs.dirs directly; no need to export XDG_*_DIR vars
+        setSessionVariables = false;
       };
 
       portal = {

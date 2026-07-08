@@ -61,21 +61,21 @@
       # services
       bluetooth
       greetd
-      mullvad
+      # mullvad # disabled: lockdown_mode + no auto_connect blocked all traffic after 26.05 upgrade
       networking
       nfs
       pipewire
       powerSave
       virtualization
 
-      niri
+      # niri
     ];
 
     boot = {
       kernelPackages = pkgs.linuxPackages_zen;
       kernelModules = ["coretemp" "cpuid" "v4l2loopback"];
       extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
-      binfmt.emulatedSystems = [ "aarch64-linux" ];
+      binfmt.emulatedSystems = ["aarch64-linux"];
     };
 
     host = {

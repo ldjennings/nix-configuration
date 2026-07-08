@@ -8,7 +8,7 @@ _: {
     ...
   }: {
     home.packages = with pkgs; [
-      swww # wallpaper daemon
+      awww # wallpaper daemon
       grim # screenshot tool
       slurp # screen region selector
       wl-clipboard # Wayland clipboard
@@ -36,6 +36,9 @@ _: {
     wayland.windowManager.hyprland = {
       enable = true;
       package = pkgs.hyprland;
+      # Hyprland 0.55 deprecated hyprlang in favor of Lua; the settings below
+      # are hyprlang, so pin the config type until a full Lua migration
+      configType = "hyprlang";
       systemd = {
         enable = true;
         enableXdgAutostart = true;
@@ -57,12 +60,11 @@ _: {
           "systemctl --user start hyprpolkitagent"
 
           # Wallpaper daemon
-          "killall -q swww; sleep .5 && swww-daemon &"
-          "sleep 1.5 && swww img ~/Pictures/Wallpapers/astronaut_jellyfish.jpg"
+          "killall -q awww; sleep .5 && awww-daemon &"
+          "sleep 1.5 && awww img ~/Pictures/Wallpapers/astronaut_jellyfish.jpg"
 
-          # Status bar and notifications
+          # Status bar (swaync runs as a home-manager systemd user service)
           "killall -q waybar; sleep .5 && waybar"
-          "killall -q swaync; sleep .5 && swaync"
 
           # Network applet
           "nm-applet --indicator"
@@ -121,14 +123,14 @@ _: {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
           enable_swallow = false;
-          vfr = true; # variable frame rate -- saves power
+          # vfr was moved to debug:vfr in Hyprland 0.55 and defaults to on
           vrr = 2; # variable refresh rate -- set to 0 if screen flickers
           enable_anr_dialog = true;
           anr_missed_pings = 20;
         };
 
         dwindle = {
-          pseudotile = true;
+          # pseudotile option was removed in Hyprland 0.55 (was non-functional)
           preserve_split = true;
           force_split = 2;
         };

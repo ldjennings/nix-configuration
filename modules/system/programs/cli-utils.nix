@@ -50,6 +50,8 @@ _: {
 
       # File identification
       file # identify file types by magic bytes
+
+      android-tools
     ];
   };
 }
