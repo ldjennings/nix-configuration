@@ -41,7 +41,11 @@ _: {
       };
 
       # NetworkManager system tray applet for managing connections via GUI
-      environment.systemPackages = with pkgs; [networkmanagerapplet];
+      environment.systemPackages = with pkgs; [
+        networkmanagerapplet
+        samba
+        cifs-utils
+        ];
     };
   };
 }

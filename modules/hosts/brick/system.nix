@@ -75,6 +75,7 @@
       kernelPackages = pkgs.linuxPackages_zen;
       kernelModules = ["coretemp" "cpuid" "v4l2loopback"];
       extraModulePackages = [config.boot.kernelPackages.v4l2loopback];
+      binfmt.emulatedSystems = [ "aarch64-linux" ];
     };
 
     host = {

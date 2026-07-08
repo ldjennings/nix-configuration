@@ -5,6 +5,7 @@ _: {
       ltspice
       claude-code
       blender
+      xarchiver
     ];
   };
 }
