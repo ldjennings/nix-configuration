@@ -81,7 +81,11 @@ _: {
             name = "nix";
             auto-format = true;
             language-servers = ["nixd"];
-            formatter.command = "${pkgs.nixfmt}/bin/nixfmt";
+            # alejandra matches `just fmt` -- nixfmt output fails `just ci`
+            formatter = {
+              command = "${pkgs.alejandra}/bin/alejandra";
+              args = ["--quiet"];
+            };
           }
           {
             name = "bash";

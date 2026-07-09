@@ -18,8 +18,10 @@
       initialPassword = "nixos";
       description = config.host.gitUsername;
       extraGroups = [
-        "adbusers"
-        "libvirtd"
+        # adbusers removed: gone along with programs.adb in 26.05; systemd's
+        # uaccess rules grant the logged-in user access to adb devices
+        # libvirtd removed: virtualisation.libvirtd is disabled, so the group
+        # doesn't exist -- re-add alongside libvirtd.enable = true
         "lp"
         "networkmanager"
         "scanner"

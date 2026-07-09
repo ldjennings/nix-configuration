@@ -12,7 +12,9 @@ _: {
     ...
   }: let
     hyprland-start = pkgs.writeShellScript "hyprland-start" ''
-      hyprland > /tmp/hyprland.log 2>&1
+      # start-hyprland is Hyprland 0.55's watchdog wrapper; launching the raw
+      # binary triggers an on-screen warning and loses crash-recovery/safe mode
+      start-hyprland > /tmp/hyprland.log 2>&1
       if [ $? -ne 0 ]; then
         echo "Hyprland exited with error. Log:"
         cat /tmp/hyprland.log

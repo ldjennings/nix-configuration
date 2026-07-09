@@ -25,10 +25,9 @@ _: {
 
         firewall = {
           enable = true;
+          # No inbound services: sshd is disabled and nothing serves HTTP.
+          # Outbound connections are unaffected by these lists.
           allowedTCPPorts = [
-            22 # SSH
-            80 # HTTP
-            443 # HTTPS
             # 59010 # Moonlight/Sunshine game streaming
             # 59011 # Moonlight/Sunshine game streaming
             # 8080  # HTTP alternate / dev servers

@@ -6,7 +6,7 @@ _: {
     home.packages = with pkgs; [
       # Nix
       nixd
-      nixfmt
+      alejandra
 
       # Bash
       bash-language-server

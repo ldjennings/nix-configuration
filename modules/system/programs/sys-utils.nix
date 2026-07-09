@@ -7,8 +7,6 @@ _: {
     programs = {
       # Needs setuid for raw socket access
       mtr.enable = true;
-      # Needs udev rules and adbusers group
-      # adb.enable = true;
       # GPG agent with SSH support
       gnupg.agent = {
         enable = true;
@@ -28,6 +26,10 @@ _: {
 
       # Kernel/driver utilities
       v4l-utils # video4linux for OBS virtual camera
+
+      # Android debugging -- device access comes from systemd uaccess rules
+      # (programs.adb and the adbusers group were removed in 26.05)
+      android-tools
     ];
   };
 }

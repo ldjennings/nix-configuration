@@ -52,11 +52,8 @@ _: {
         '';
       };
 
-      # PAM authentication for screen locker
-      # update if switching away from swaylock
-      pam.services.swaylock = {
-        text = "auth include login";
-      };
+      # Screen locker PAM is handled by programs.hyprlock.enable
+      # in desktop-programs.nix -- no manual pam.services entry needed
 
       # Sudoers rules for Framework LED control without password prompt
       # allows scripting LED color changes for battery/status indication
@@ -238,7 +235,8 @@ _: {
     users.users.${username}.extraGroups = [
       "dialout" # serial ports (/dev/ttyUSB*, /dev/ttyACM*) for embedded tools
       "uucp" # alternative serial group
-      "plugdev" # USB device access via udev rules
+      # plugdev removed: NixOS never creates that group and no installed udev
+      # rules reference it -- modern rules use TAG+="uaccess" instead
     ];
   };
 }
