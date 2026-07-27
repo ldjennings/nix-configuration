@@ -1,19 +1,14 @@
 # system/desktop/niri.nix
-{inputs, ...}: {
-  flake.nixosModules.niri = _: {
-    # imports = [ inputs.niri.nixosModules.niri ];
+_: {
+  flake.nixosModules.niri = {pkgs, ...}: {
+    # nixpkgs module -- installs niri + niri-session and registers the
+    # wayland session file that greetd's session picker reads. The package
+    # comes from cache.nixos.org, so updates never build niri from source.
+    programs.niri.enable = true;
 
-    nixpkgs.overlays = [inputs.niri.overlays.niri];
-
-    # programs.niri = {
-    #   # enable = true;
-    #   package = pkgs.niri-stable;
-    # };
-
-    # xdg.portal = {
-    #   enable = true;
-    #   extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    #   configPackages = [ pkgs.niri-stable ];
-    # };
+    environment.systemPackages = [
+      # niri spawns this on demand to run X11 apps (Steam etc.)
+      pkgs.xwayland-satellite
+    ];
   };
 }

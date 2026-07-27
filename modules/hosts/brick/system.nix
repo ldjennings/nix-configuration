@@ -45,6 +45,7 @@
 
       desktopPrograms
       gaming
+      niri
       stylix
       thunar
 
@@ -66,8 +67,6 @@
       pipewire
       powerSave
       virtualization
-
-      # niri
     ];
 
     boot = {

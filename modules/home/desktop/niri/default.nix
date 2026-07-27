@@ -10,12 +10,39 @@
 
     programs.niri = {
       enable = true;
-      package = pkgs.niri-stable;
+      # nixpkgs build (binary-cached) -- niri-flake only supplies the
+      # settings DSL below, not the package
+      package = pkgs.niri;
 
       settings = {
         # --- General ---
         prefer-no-csd = true;
         screenshot-path = "~/Pictures/Screenshots/niri-%Y-%m-%d-%H-%M-%S.png";
+
+        # --- Outputs ---
+        # Framework built-in display, matching the Hyprland monitor config;
+        # external monitors fall back to niri's automatic settings
+        outputs."eDP-1" = {
+          mode = {
+            width = 2256;
+            height = 1504;
+            refresh = 59.999;
+          };
+          scale = 1.175;
+        };
+
+        # --- Startup ---
+        spawn-at-startup = [
+          # Noctalia shell: bar, notifications, launcher, lock screen,
+          # wallpaper, OSDs. Spawned here rather than as a systemd unit so
+          # it doesn't also start inside Hyprland sessions during migration.
+          {command = ["noctalia"];}
+          # polkit authentication agent -- draws the password prompt when
+          # apps request privileged actions (udisks2 mounts, fwupd, libvirt)
+          {command = ["${pkgs.soteria}/bin/soteria"];}
+          # network tray applet
+          {command = ["nm-applet" "--indicator"];}
+        ];
 
         # --- Input ---
         input = {
@@ -84,7 +111,31 @@
             "--new-window"
           ];
 
-          # App launcher
+          # Noctalia launcher: apps, calculator, /emo, /wall, /session, /win
+          "${mod}+D".action.spawn = [
+            "noctalia"
+            "msg"
+            "panel-toggle"
+            "launcher"
+          ];
+
+          # Noctalia clipboard history
+          "${mod}+V".action.spawn = [
+            "noctalia"
+            "msg"
+            "panel-toggle"
+            "clipboard"
+          ];
+
+          # Noctalia control center
+          "${mod}+Escape".action.spawn = [
+            "noctalia"
+            "msg"
+            "panel-toggle"
+            "control-center"
+          ];
+
+          # rofi kept as fallback launcher during migration
           "${mod}+Control+Return".action.spawn = [
             "rofi"
             "-show"

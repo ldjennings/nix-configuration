@@ -41,10 +41,18 @@
         "nix-command"
         "flakes"
       ];
-      # Hyprland binary cache -- avoids rebuilding Hyprland from source
-      substituters = ["https://hyprland.cachix.org"];
+      # Binary caches -- avoid rebuilding Hyprland/Noctalia from source.
+      # niri.cachix.org covers niri-flake's niri-stable/unstable packages,
+      # only used if we move off nixpkgs' niri build
+      substituters = [
+        "https://hyprland.cachix.org"
+        "https://noctalia.cachix.org"
+        "https://niri.cachix.org"
+      ];
       trusted-public-keys = [
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       ];
     };
 

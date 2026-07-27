@@ -20,6 +20,14 @@ _: {
       steam = {
         enable = true;
 
+        # Without this the Steam UI is a black window under
+        # niri/xwayland-satellite: Steam's CEF child window races satellite's
+        # window setup. Disabling CEF compositing avoids the race while
+        # keeping GPU-accelerated rendering.
+        package = pkgs.steam.override {
+          extraArgs = "-cef-disable-gpu-compositing";
+        };
+
         # Open firewall ports for Steam Remote Play
         # remotePlay.openFirewall = true;
 

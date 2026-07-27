@@ -8,6 +8,12 @@ _: {
     powerManagement.powertop.enable = true;
 
     services = {
+      # Battery/charge reporting over D-Bus (org.freedesktop.UPower).
+      # NixOS doesn't enable this by default; without it noctalia's bar and
+      # settings can't read the battery SOC, since it queries UPower's
+      # DisplayDevice rather than reading /sys/class/power_supply directly.
+      upower.enable = true;
+
       # Intel thermal management -- prevents throttling
       thermald.enable = true;
 

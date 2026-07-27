@@ -18,7 +18,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # niri.url = "github:sodiboo/niri-flake";
+    # niri package comes from nixpkgs (binary-cached); this flake is only
+    # used for its home-manager settings DSL
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # deliberately NOT following our nixpkgs -- keeping their lock means
+    # builds hit noctalia.cachix.org instead of compiling quickshell
+    noctalia.url = "github:noctalia-dev/noctalia";
 
     stylix.url = "github:danth/stylix/release-26.05";
     tinted-schemes = {

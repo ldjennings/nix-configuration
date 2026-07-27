@@ -11,16 +11,10 @@ _: {
     pkgs,
     ...
   }: let
-    hyprland-start = pkgs.writeShellScript "hyprland-start" ''
-      # start-hyprland is Hyprland 0.55's watchdog wrapper; launching the raw
-      # binary triggers an on-screen warning and loses crash-recovery/safe mode
-      start-hyprland > /tmp/hyprland.log 2>&1
-      if [ $? -ne 0 ]; then
-        echo "Hyprland exited with error. Log:"
-        cat /tmp/hyprland.log
-        read -p "Press enter to continue..."
-      fi
-    '';
+    # Session files registered by programs.niri / programs.hyprland.
+    # Both launch their proper session wrappers (niri-session and
+    # start-hyprland), so systemd targets and the watchdog are kept.
+    sessions = "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
   in {
     # boot.kernelParams = [ "video=2256x1504" ];
 
@@ -29,7 +23,9 @@ _: {
       settings = {
         default_session = {
           user = config.host.username;
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${hyprland-start}";
+          # niri is the default (plain Enter); F3 opens the session menu
+          # to fall back to Hyprland, and the last choice is remembered
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-user-session --sessions ${sessions} --cmd niri-session";
         };
       };
     };
