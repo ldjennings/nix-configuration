@@ -8,6 +8,11 @@
   }: {
     imports = [inputs.niri.homeModules.niri];
 
+    # playerctl backs the XF86Audio{Play,Next,Prev} binds below. It wasn't
+    # installed, so the media keys silently did nothing (wpctl and
+    # brightnessctl come from pipewire / sys-utils respectively).
+    home.packages = [pkgs.playerctl];
+
     programs.niri = {
       enable = true;
       # nixpkgs build (binary-cached) -- niri-flake only supplies the
@@ -42,6 +47,9 @@
           {command = ["${pkgs.soteria}/bin/soteria"];}
           # network tray applet
           {command = ["nm-applet" "--indicator"];}
+          # Notes app -- the window rule above sends it to the notes
+          # workspace, so Super+Space always has something to toggle to.
+          {command = ["obsidian"];}
         ];
 
         # --- Input ---
@@ -92,12 +100,47 @@
           "scratch_tty" = {};
         };
 
+        # --- Window rules ---
+        window-rules = [
+          # Keep Obsidian (the notes app) on the notes workspace so
+          # Super+Space always toggles to it -- replaces Hyprland's
+          # "[workspace special silent] obsidian".
+          {
+            matches = [{app-id = "^obsidian$";}];
+            open-on-workspace = "notes";
+          }
+          # Slight rounded corners on every window. clip-to-geometry makes the
+          # window surface itself follow the radius, not just the border.
+          {
+            geometry-corner-radius = {
+              top-left = 8.0;
+              top-right = 8.0;
+              bottom-right = 8.0;
+              bottom-left = 8.0;
+            };
+            clip-to-geometry = true;
+          }
+        ];
+
         # --- Animations ---
         animations.enable = true;
 
         # --- Binds ---
         binds = let
           mod = "Super";
+          # niri has no Hyprland-style scratchpad / special workspace. This
+          # script reproduces the "toggle special workspace" feel for the
+          # notes workspace: jump to it, and on a second press jump back to
+          # whichever workspace you came from (focus-workspace-previous).
+          notesToggle = pkgs.writeShellScript "niri-notes-toggle" ''
+            focused=$(${pkgs.niri}/bin/niri msg --json workspaces \
+              | ${pkgs.jq}/bin/jq -r '.[] | select(.is_focused) | .name')
+            if [ "$focused" = "notes" ]; then
+              ${pkgs.niri}/bin/niri msg action focus-workspace-previous
+            else
+              ${pkgs.niri}/bin/niri msg action focus-workspace notes
+            fi
+          '';
         in {
           # Terminal
           "${mod}+Return".action.spawn = "kitty";
@@ -112,7 +155,7 @@
           ];
 
           # Noctalia launcher: apps, calculator, /emo, /wall, /session, /win
-          "${mod}+D".action.spawn = [
+          "${mod}+Control+Return".action.spawn = [
             "noctalia"
             "msg"
             "panel-toggle"
@@ -136,7 +179,7 @@
           ];
 
           # rofi kept as fallback launcher during migration
-          "${mod}+Control+Return".action.spawn = [
+          "${mod}+D".action.spawn = [
             "rofi"
             "-show"
             "drun"
@@ -158,54 +201,106 @@
           };
           "${mod}+Alt+S".action.screenshot-window = {};
 
+          # Volume, media and brightness keys.
+          #
+          # allow-when-locked = true is what lets these fire while the
+          # noctalia lock screen is up. niri uses the ext-session-lock
+          # protocol and by default inhibits every spawn bind while locked so
+          # nobody at a locked screen can run commands. These hardware keys are
+          # safe to whitelist -- e.g. brighten the panel when it's suddenly
+          # sunny, or mute audio, all without typing the password.
+
           # Volume
-          "XF86AudioRaiseVolume".action.spawn = [
-            "wpctl"
-            "set-volume"
-            "@DEFAULT_AUDIO_SINK@"
-            "5%+"
-          ];
-          "XF86AudioLowerVolume".action.spawn = [
-            "wpctl"
-            "set-volume"
-            "@DEFAULT_AUDIO_SINK@"
-            "5%-"
-          ];
-          "XF86AudioMute".action.spawn = [
-            "wpctl"
-            "set-mute"
-            "@DEFAULT_AUDIO_SINK@"
-            "toggle"
-          ];
+          "XF86AudioRaiseVolume" = {
+            action.spawn = [
+              "wpctl"
+              "set-volume"
+              "@DEFAULT_AUDIO_SINK@"
+              "5%+"
+            ];
+            allow-when-locked = true;
+          };
+          "XF86AudioLowerVolume" = {
+            action.spawn = [
+              "wpctl"
+              "set-volume"
+              "@DEFAULT_AUDIO_SINK@"
+              "5%-"
+            ];
+            allow-when-locked = true;
+          };
+          "XF86AudioMute" = {
+            action.spawn = [
+              "wpctl"
+              "set-mute"
+              "@DEFAULT_AUDIO_SINK@"
+              "toggle"
+            ];
+            allow-when-locked = true;
+          };
 
           # Media
-          "XF86AudioPlay".action.spawn = [
-            "playerctl"
-            "play-pause"
-          ];
-          "XF86AudioNext".action.spawn = [
-            "playerctl"
-            "next"
-          ];
-          "XF86AudioPrev".action.spawn = [
-            "playerctl"
-            "previous"
-          ];
+          "XF86AudioPlay" = {
+            action.spawn = [
+              "playerctl"
+              "play-pause"
+            ];
+            allow-when-locked = true;
+          };
+          # Next/Prev seek within the current track by 10s; hold Shift to
+          # skip to the next/previous track instead. playerctl's "position
+          # N+/N-" is a relative seek in seconds.
+          "XF86AudioNext" = {
+            action.spawn = [
+              "playerctl"
+              "position"
+              "10+"
+            ];
+            allow-when-locked = true;
+          };
+          "XF86AudioPrev" = {
+            action.spawn = [
+              "playerctl"
+              "position"
+              "10-"
+            ];
+            allow-when-locked = true;
+          };
+          "Shift+XF86AudioNext" = {
+            action.spawn = [
+              "playerctl"
+              "next"
+            ];
+            allow-when-locked = true;
+          };
+          "Shift+XF86AudioPrev" = {
+            action.spawn = [
+              "playerctl"
+              "previous"
+            ];
+            allow-when-locked = true;
+          };
 
           # Brightness
-          "XF86MonBrightnessUp".action.spawn = [
-            "brightnessctl"
-            #"--exponent=${BRIGHTNESS_EXPONENT}"
-            "--exponent=2.2"
-            "set"
-            "5%+"
-          ];
-          "XF86MonBrightnessDown".action.spawn = [
-            "brightnessctl"
-            "--exponent=2.2"
-            "set"
-            "5%-"
-          ];
+          "XF86MonBrightnessUp" = {
+            action.spawn = [
+              "brightnessctl"
+              #"--exponent=${BRIGHTNESS_EXPONENT}"
+              "--exponent=2.2"
+              "set"
+              "5%+"
+            ];
+            allow-when-locked = true;
+          };
+          "XF86MonBrightnessDown" = {
+            action.spawn = [
+              "brightnessctl"
+              "--exponent=2.2"
+              "set"
+              "5%-"
+            ];
+            allow-when-locked = true;
+          };
 
           # Focus movement
           # "${mod}+h".action.focus-column-left = { };
@@ -253,7 +348,11 @@
           "${mod}+Control+Right".action.focus-workspace-down = {};
           "${mod}+Control+Left".action.focus-workspace-up = {};
 
-          "${mod}+Space".action.move-window-to-workspace = [
+          # Notes "scratchpad": Super+Space toggles the notes workspace;
+          # Super+Shift+Space sends the focused window there (mirrors the old
+          # Hyprland togglespecialworkspace / movetoworkspace-special binds).
+          "${mod}+Space".action.spawn = "${notesToggle}";
+          "${mod}+Shift+Space".action.move-window-to-workspace = [
             {focus = true;}
             "notes"
           ];

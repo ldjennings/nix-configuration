@@ -67,6 +67,9 @@ _: {
               fi
             }
             add-zsh-hook precmd _nix_shell_rprompt
+
+            # Fix ssh sessions through kitty not working completely on remote machines, see https://blog.rei.my.id/posts/7/how-to-fix-xterm-kitty-unknown-terminal-type-in-ssh/
+            [[ "$TERM" == "xterm-kitty" ]] && alias ssh="TERM=xterm-256color ssh"
           ''
         ];
 
