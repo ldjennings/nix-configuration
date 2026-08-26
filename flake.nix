@@ -34,6 +34,8 @@
       url = "github:tinted-theming/schemes";
       flake = false;
     };
+
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
