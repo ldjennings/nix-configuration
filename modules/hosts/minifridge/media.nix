@@ -41,8 +41,9 @@ _: {
       };
       # Single admin account. The password is read at service start from this
       # runtime path (never enters the Nix store) -- create it before first
-      # boot, readable by the copyparty user, e.g.:
-      #   install -Dm600 -o copyparty <(printf secret) /etc/copyparty/admin.pw
+      # boot, readable by the copyparty user, e.g. (pipe via stdin so it
+      # survives sudo closing inherited fds):
+      #   printf pw | sudo install -Dm600 -o copyparty /dev/stdin /etc/copyparty/admin.pw
       accounts.admin.passwordFile = "/etc/copyparty/admin.pw";
       volumes = {
         # rwmda = read/write/move/delete/admin -- full control for admin only.

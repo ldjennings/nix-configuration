@@ -42,6 +42,7 @@
       # services
       avahi # advertise minifridge.local over mDNS
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
+      minifridgePaperless # paperless-ngx document management on /srv
 
       # hardware -- QuickSync for Jellyfin/ffmpeg transcoding
       intelQuickSync

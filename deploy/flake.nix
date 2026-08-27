@@ -19,7 +19,8 @@
     deploy-rs,
   }: {
     deploy.nodes.minifridge = {
-      hostname = "192.168.1.106";
+      # mDNS name (avahi) instead of a DHCP-assigned IP, which isn't stable.
+      hostname = "minifridge.local";
       profiles.system = {
         user = "root";
         sshUser = "liam";
