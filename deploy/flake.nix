@@ -10,7 +10,15 @@
     # committed state of the parent repo (git+file only sees committed changes,
     # so run `nix flake update configs` here after committing config changes)
     configs.url = "git+file:..";
-    deploy-rs.follows = "configs/deploy-rs";
+
+    # deploy-rs lives here, not in the main flake (which only builds configs).
+    # Follow configs/nixpkgs so it builds against our cached 26.05 -- deploy-rs's
+    # own pinned nixpkgs is old enough that its Rust crate fetcher hits the dead
+    # crates.io download URL (403).
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "configs/nixpkgs";
+    };
   };
 
   outputs = {
@@ -35,5 +43,9 @@
       builtins.mapAttrs
       (system: deployLib: deployLib.deployChecks self.deploy)
       deploy-rs.lib;
+
+    # Re-export the pinned deploy-rs CLI so `nix run .#deploy-rs` uses the same
+    # version as the activate lib above -- no global `deploy` binary needed.
+    packages = deploy-rs.packages;
   };
 }

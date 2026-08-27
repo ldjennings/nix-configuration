@@ -43,7 +43,7 @@ fmt-check:
 # Deployment lives in ./deploy as its own flake; it reads the committed
 # state of this repo, so commit config changes before deploying.
 deploy node="minifridge":
-    cd deploy && nix flake update configs && deploy .#{{node}}
+    cd deploy && nix flake update configs && nix run .#deploy-rs -- .#{{node}}
 
 # Diff current vs last generation
 diff:
