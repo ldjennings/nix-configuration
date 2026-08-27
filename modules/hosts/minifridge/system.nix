@@ -66,6 +66,10 @@
       };
     };
 
+    # deploy-rs pushes the locally-built (unsigned) system closure over ssh as
+    # liam; only trusted users may add unsigned paths to the store.
+    nix.settings.trusted-users = ["root" "@wheel"];
+
     # Compressed RAM swap instead of a disk swap partition.
     zramSwap.enable = true;
 
