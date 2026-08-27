@@ -13,6 +13,7 @@
     };
     modules = [
       inputs.disko.nixosModules.disko
+      inputs.copyparty.nixosModules.default # provides services.copyparty
       inputs.nixos-hardware.nixosModules.common-cpu-intel # microcode + kvm-intel
       inputs.nixos-hardware.nixosModules.common-pc-ssd # periodic fstrim
 
@@ -40,6 +41,7 @@
 
       # services
       avahi # advertise minifridge.local over mDNS
+      minifridgeMedia # jellyfin + copyparty on the /srv media disk
 
       # hardware -- QuickSync for Jellyfin/ffmpeg transcoding
       intelQuickSync
@@ -65,16 +67,6 @@
 
     # Compressed RAM swap instead of a disk swap partition.
     zramSwap.enable = true;
-
-    # Shared media storage on the /srv btrfs disk. Service accounts (Jellyfin,
-    # *arr, etc.) get added to the "media" group; setgid (2775) makes new files
-    # inherit the group so downloads and library stay mutually accessible and
-    # hardlinkable within the one subvolume.
-    users.groups.media = {};
-    systemd.tmpfiles.rules = [
-      "d /srv/media 2775 root media - "
-      "d /srv/downloads 2775 root media - "
-    ];
 
     host = {
       username = "liam";

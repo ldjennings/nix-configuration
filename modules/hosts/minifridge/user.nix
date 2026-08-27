@@ -1,6 +1,6 @@
 # User account for minifridge. Headless server, so no home-manager/desktop --
 # just the liam login used for deploy-rs (ssh in as liam, sudo to root).
-{...}: {
+_: {
   flake.nixosModules.minifridgeUser = {
     pkgs,
     config,
