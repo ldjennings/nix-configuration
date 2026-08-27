@@ -39,6 +39,12 @@ fmt:
 fmt-check:
     alejandra --check .
 
+# Deploy a host with deploy-rs (defaults to minifridge)
+# Deployment lives in ./deploy as its own flake; it reads the committed
+# state of this repo, so commit config changes before deploying.
+deploy node="minifridge":
+    cd deploy && nix flake update configs && deploy .#{{node}}
+
 # Diff current vs last generation
 diff:
     nvd diff /run/current-system $(ls -d /nix/var/nix/profiles/system-*-link | sort -V | tail -1)
