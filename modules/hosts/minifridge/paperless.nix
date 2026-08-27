@@ -2,9 +2,11 @@
 # database live on the /srv data disk (see disko.nix) so the archive survives
 # OS reinstalls and doesn't fill the OS drive. Web UI on :28981.
 #
-# The admin password is read at service start from a runtime file (never enters
-# the Nix store); create it before first use, readable by the paperless user:
-#   printf pw | sudo install -Dm600 -o paperless /dev/stdin /etc/paperless/admin.pw
+# The admin password is loaded at service start via systemd LoadCredential,
+# which reads the file as root -- so it just needs to exist and be root-readable
+# (not owned by the paperless user). Create it before deploying, or the service
+# fails with status=243/CREDENTIALS and deploy-rs rolls back:
+#   printf pw | sudo install -Dm600 /dev/stdin /etc/paperless/admin.pw
 _: {
   flake.nixosModules.minifridgePaperless = _: {
     services.paperless = {
