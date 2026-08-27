@@ -15,10 +15,7 @@
 #     udevadm monitor --subsystem-match=power_supply # watch battery events
 #     sudo ectool led power red                      # manually test LED
 _: {
-  flake.nixosModules.hostBrick = {
-    pkgs,
-    ...
-  }: let
+  flake.nixosModules.hostBrick = {pkgs, ...}: let
     led-control = pkgs.writeShellApplication {
       name = "led-control";
       runtimeInputs = with pkgs; [

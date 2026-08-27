@@ -46,6 +46,6 @@
 
     # Re-export the pinned deploy-rs CLI so `nix run .#deploy-rs` uses the same
     # version as the activate lib above -- no global `deploy` binary needed.
-    packages = deploy-rs.packages;
+    inherit (deploy-rs) packages;
   };
 }

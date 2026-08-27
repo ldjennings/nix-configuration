@@ -3,7 +3,11 @@
 # Libraries live on the dedicated /srv media disk (see disko.nix); the host
 # must also provide intelQuickSync for hardware transcoding.
 _: {
-  flake.nixosModules.minifridgeMedia = {pkgs, ...}: let
+  flake.nixosModules.minifridgeMedia = {
+    pkgs,
+    lib,
+    ...
+  }: let
     mediaDir = "/srv/media";
     mediaGroup = "media";
   in {
@@ -63,6 +67,17 @@ _: {
           flags.scan = 60;
         };
       };
+    };
+
+    # The upstream copyparty module hardens the unit with RestrictSUIDSGID=true
+    # and UMask=0077. copyparty feeds chmod-d (2750, setgid) straight into
+    # os.mkdir, so creating any upload subfolder trips RestrictSUIDSGID and
+    # fails with EPERM -> HTTP 500 ("operation not permitted" on os.mkdir).
+    # UMask=0077 would also strip the group-read bit Jellyfin needs. Relax both
+    # just for this service so setgid dirs (group=media, group-readable) work.
+    systemd.services.copyparty.serviceConfig = {
+      RestrictSUIDSGID = lib.mkForce false;
+      UMask = lib.mkForce "0027";
     };
 
     networking.firewall.allowedTCPPorts = [3210];
