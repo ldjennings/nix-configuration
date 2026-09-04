@@ -20,8 +20,10 @@ _: {
       consumptionDirIsPublic = true;
       settings = {
         PAPERLESS_OCR_LANGUAGE = "eng";
-        # correct link generation + CSRF/allowed-host when reached by name
-        PAPERLESS_URL = "http://minifridge.local:28981";
+        # correct link generation + CSRF/allowed-host when reached by name.
+        # Fronted by Caddy (see caddy.nix), which passes this Host through, so
+        # it must match the proxied name.
+        PAPERLESS_URL = "http://paperless.minifridge.home";
       };
     };
 

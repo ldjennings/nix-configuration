@@ -43,6 +43,7 @@
       avahi # advertise minifridge.local over mDNS
       tailscale # mesh VPN: reach the box + its services from anywhere
       pihole # network-wide DNS ad/tracker blocking
+      caddy # reverse proxy: clean names instead of ports
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
       minifridgePaperless # paperless-ngx document management on /srv
 

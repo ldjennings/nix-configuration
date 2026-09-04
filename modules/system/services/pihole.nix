@@ -7,16 +7,17 @@
 #   covered automatically. Reachable over the tailnet too (see tailscale.nix),
 #   so it works as your DNS from anywhere you're connected to Tailscale.
 #
-#   Admin UI: http://<host>/admin  (set the password once with `pihole setpassword`).
+#   Admin UI: http://pihole.minifridge.home  (fronted by Caddy; set the
+#   password once with `pihole setpassword`).
 _: {
   flake.nixosModules.pihole = _: {
     services.pihole-ftl = {
       enable = true;
-      # Open DNS (53) for LAN + tailnet clients and the web UI ports (80/443).
+      # Open DNS (53) for LAN + tailnet clients. The web UI is NOT opened to the
+      # LAN -- Caddy (see caddy.nix) reverse-proxies it over localhost:8081.
       # Behind home-router NAT this is fine; do not expose port 53 to the
       # public internet (open resolvers get abused).
       openFirewallDNS = true;
-      openFirewallWebserver = true;
       settings = {
         dns = {
           # Upstream resolvers queries are forwarded to (Quad9 + Cloudflare).
@@ -26,6 +27,10 @@ _: {
           # tailnet (100.64.0.0/10), whose source IPs aren't on the LAN subnet.
           listeningMode = "ALL";
         };
+        # Wildcard local DNS so Caddy can host-route services by name:
+        # *.minifridge.home (and the bare name) resolve to the box. Points at
+        # the Tailscale IP, so it also works off-LAN for tailnet clients.
+        misc.dnsmasq_lines = ["address=/minifridge.home/100.76.67.107"];
       };
       # Blocklists auto-imported on startup.
       lists = [
@@ -40,7 +45,8 @@ _: {
 
     services.pihole-web = {
       enable = true;
-      ports = ["80" "443s"];
+      # Off :80 so Caddy can own it; reached via http://pihole.minifridge.home.
+      ports = ["8081"];
     };
   };
 }
