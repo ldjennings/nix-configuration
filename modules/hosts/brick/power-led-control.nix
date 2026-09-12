@@ -9,6 +9,13 @@
 # directly by the niri "Print" keybind after it toggles the night light, so
 # it reacts instantly with no polling overhead.
 #
+# On suspend/hibernate the LED is forced off and re-rendered on resume (via
+# powerManagement.powerDownCommands/resumeCommands below). Closing the lid
+# triggers
+# suspend-then-hibernate (services/power-saving.nix), so this is what turns
+# the LED off when the lid is shut -- once we pin a colour with `ectool`, the
+# EC holds it through sleep, so we have to explicitly clear it.
+#
 # The LED is driven through `sudo ectool`: EC access needs root, and the
 # exact colours (red / white / amber / off) are whitelisted NOPASSWD for the
 # user in core/security.nix. That lets the same script work both as root
@@ -92,13 +99,38 @@ _: {
       SUBSYSTEM=="backlight", RUN+="${led-control}/bin/led-control"
     '';
 
-    # Put led-control on PATH so the niri keybind can call it directly, and
-    # create the night-light state file owned by the primary user so that
-    # (unprivileged) keybind can write it. On tmpfs, so it resets to "off"
-    # each boot.
+    # Put led-control on PATH so the niri keybind can call it directly.
     environment.systemPackages = [led-control];
+
+    # Night-light state file owned by the primary user so the (unprivileged)
+    # niri keybind can write it. On tmpfs, so it resets to "off" each boot.
     systemd.tmpfiles.rules = [
       "f ${nightlightState} 0644 ${config.host.username} users - off"
     ];
+
+    # Force the LED off while asleep, restore it on resume. This hooks NixOS's
+    # sleep-actions unit, which fires on sleep.target -- pulled in by both
+    # suspend and hibernate -- with the correct StopWhenUnneeded semantics
+    # (powerDownCommands run before sleep, resumeCommands on resume). Root
+    # context, so ectool is called directly; the re-render just re-runs
+    # led-control for the current battery/brightness/night-light state.
+    #
+    # Earlier attempt (don't reintroduce): a hand-rolled oneshot with
+    # WantedBy=sleep.target but no StopWhenUnneeded. WantedBy only *starts* a
+    # unit, so the RemainAfterExit oneshot went active on the first suspend and
+    # never stopped -- subsequent suspends didn't re-run the off command, and
+    # the resume re-render fired late. The sleep-actions wrapper has
+    # StopWhenUnneeded=true, so it re-arms on every cycle.
+    #
+    # Known hardware flakiness (not a bug here): the Framework occasionally
+    # drops the lid-close event (ACPI/SW_LID), most often right after a resume
+    # or on a quick close. When that happens logind never logs "Lid closed", so
+    # no suspend, so the LED stays on. Verified via journalctl that whenever the
+    # event *is* delivered the whole chain works -- single suspend/resume and
+    # back-to-back suspend/resume/suspend both go off-then-restore correctly,
+    # while locked or unlocked. So an occasional LED-stayed-on after closing the
+    # lid is missed hardware events, not this module.
+    powerManagement.powerDownCommands = "/run/current-system/sw/bin/ectool led power off";
+    powerManagement.resumeCommands = "${led-control}/bin/led-control";
   };
 }
