@@ -6,11 +6,15 @@ _: {
   flake.nixosModules.minifridgeMedia = {
     pkgs,
     lib,
+    config,
     ...
   }: let
     mediaDir = "/srv/media";
     mediaGroup = "media";
   in {
+    # copyparty reads its admin password from this decrypted secret at start.
+    sops.secrets."copyparty-admin".owner = "copyparty";
+
     users.groups.${mediaGroup} = {
       members = ["jellyfin" "copyparty"];
     };
@@ -43,12 +47,10 @@ _: {
         chmod-f = "640";
         chmod-d = "2750";
       };
-      # Single admin account. The password is read at service start from this
-      # runtime path (never enters the Nix store) -- create it before first
-      # boot, readable by the copyparty user, e.g. (pipe via stdin so it
-      # survives sudo closing inherited fds):
-      #   printf pw | sudo install -Dm600 -o copyparty /dev/stdin /etc/copyparty/admin.pw
-      accounts.admin.passwordFile = "/etc/copyparty/admin.pw";
+      # Single admin account. Password comes from the sops secret, decrypted to
+      # /run/secrets at activation and owned by copyparty so the service can
+      # read it. Edit with: sops secrets/minifridge.yaml (key copyparty-admin).
+      accounts.admin.passwordFile = config.sops.secrets."copyparty-admin".path;
       volumes = {
         # rwmda = read/write/move/delete/admin -- full control for admin only.
         "/Music" = {

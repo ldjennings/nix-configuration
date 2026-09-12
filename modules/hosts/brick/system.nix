@@ -62,7 +62,6 @@
       # services
       bluetooth
       greetd
-      # mullvad # disabled: lockdown_mode + no auto_connect blocked all traffic after 26.05 upgrade
       networking
       pipewire
       powerSave

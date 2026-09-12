@@ -1,0 +1,20 @@
+# sops-nix recipients + creation rules.
+#
+# Two age keys can decrypt each secret:
+#   - admin_liam:      derived from ~/.ssh/id_ed25519 (identity at
+#                      ~/.config/sops/age/keys.txt) -- lets Liam edit secrets.
+#   - host_minifridge: derived from the box's SSH host key -- lets the machine
+#                      decrypt at activation with no extra key to provision.
+#
+# Edit secrets with:  sops secrets/minifridge.yaml
+# After adding a NEW recipient, re-encrypt:  sops updatekeys secrets/minifridge.yaml
+keys:
+  - &admin_liam age14agk5cevda45r5mvkz5kthduxxa8ejxfjx8wmazlx8l063k5uyeqtjt6fh
+  - &host_minifridge age109vwmg7zfz2ad82uxfkxjacva38kygl5qcct57ph5yw4sc35mu6sldn2gf
+
+creation_rules:
+  - path_regex: secrets/minifridge\.ya?ml$
+    key_groups:
+      - age:
+          - *admin_liam
+          - *host_minifridge

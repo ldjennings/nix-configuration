@@ -2,18 +2,19 @@
 # database live on the /srv data disk (see disko.nix) so the archive survives
 # OS reinstalls and doesn't fill the OS drive. Web UI on :28981.
 #
-# The admin password is loaded at service start via systemd LoadCredential,
-# which reads the file as root -- so it just needs to exist and be root-readable
-# (not owned by the paperless user). Create it before deploying, or the service
-# fails with status=243/CREDENTIALS and deploy-rs rolls back:
-#   printf pw | sudo install -Dm600 /dev/stdin /etc/paperless/admin.pw
+# The admin password comes from the sops secret, decrypted to /run/secrets at
+# activation. Paperless loads it via systemd LoadCredential, which reads the
+# file as root, so the default root-owned secret is fine. Edit with:
+#   sops secrets/minifridge.yaml   (key paperless-admin)
 _: {
-  flake.nixosModules.minifridgePaperless = _: {
+  flake.nixosModules.minifridgePaperless = {config, ...}: {
+    sops.secrets."paperless-admin" = {};
+
     services.paperless = {
       enable = true;
       # listen on the LAN, not just localhost
       address = "0.0.0.0";
-      passwordFile = "/etc/paperless/admin.pw";
+      passwordFile = config.sops.secrets."paperless-admin".path;
       # keep documents/index/db on the dedicated /srv data disk
       dataDir = "/srv/paperless";
       # let LAN users drop files into the consume directory for ingestion

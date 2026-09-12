@@ -38,10 +38,12 @@
       security
       defaultEditor
       cliUtils
+      sops # encrypted secrets (copyparty/paperless/mullvad creds)
 
       # services
       avahi # advertise minifridge.local over mDNS
       tailscale # mesh VPN: reach the box + its services from anywhere
+      mullvad # full-tunnel VPN (kill switch) w/ LAN + tailnet exempt
       pihole # network-wide DNS ad/tracker blocking
       caddy # reverse proxy: clean names instead of ports
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
