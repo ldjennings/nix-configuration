@@ -141,16 +141,12 @@
               ${pkgs.niri}/bin/niri msg action focus-workspace notes
             fi
           '';
-          # Print toggles noctalia's night light (the compositor tint, applied
-          # in-process via wlr-gamma-control -- there is no external gamma
-          # process). `led-control toggle` owns the on/off marker and re-renders
-          # the Framework LED immediately; see power-led-control.nix. Both are
-          # brick-only, so the "|| true" keeps this harmless elsewhere.
+          # Print force-toggles noctalia's night light (the compositor tint,
+          # applied in-process via wlr-gamma-control). On the brick, the
+          # nightlight-watch service tails noctalia's log and re-renders the
+          # Framework LED whenever the tint changes, so this bind just asks
+          # noctalia to toggle; see power-led-control.nix.
           noctalia = "${inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/noctalia";
-          nightlightToggle = pkgs.writeShellScript "niri-nightlight-toggle" ''
-            ${noctalia} msg nightlight-force-toggle
-            /run/current-system/sw/bin/led-control toggle || true
-          '';
         in {
           # Terminal
           "${mod}+Return".action.spawn = "kitty";
@@ -211,10 +207,13 @@
           };
           "${mod}+Alt+S".action.screenshot-window = {};
 
-          # Night light -- toggle noctalia's screen tint (mirrors the old
-          # Hyprland ", Print, exec, toggle-light-filter" bind). The wrapper
-          # also records the state for the Framework LED script.
-          "Print".action.spawn = "${nightlightToggle}";
+          # Night light -- force-toggle noctalia's screen tint (mirrors the old
+          # Hyprland ", Print, exec, toggle-light-filter" bind).
+          "Print".action.spawn = [
+            noctalia
+            "msg"
+            "nightlight-force-toggle"
+          ];
 
           # Volume, media and brightness keys.
           #

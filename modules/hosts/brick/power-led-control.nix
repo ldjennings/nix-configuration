@@ -5,9 +5,9 @@
 #   - Amber when the night light is on
 #   - White otherwise
 #
-# Triggered by udev events on battery and backlight changes, and called
-# directly by the niri "Print" keybind after it toggles the night light, so
-# it reacts instantly with no polling overhead.
+# Triggered by udev events on battery and backlight changes, and by the
+# nightlight-watch service whenever the screen tint changes, so it reacts
+# instantly with no polling overhead.
 #
 # On suspend/hibernate the LED is forced off and re-rendered on resume (via
 # powerManagement.powerDownCommands/resumeCommands below). Closing the lid
@@ -19,13 +19,14 @@
 # The LED is driven through `sudo ectool`: EC access needs root, and the
 # exact colours (red / white / amber / off) are whitelisted NOPASSWD for the
 # user in core/security.nix. That lets the same script work both as root
-# (udev) and as the user (the keybind).
+# (udev / resume hook) and as the user (the nightlight-watch service).
 #
-# Night light: niri has no external gamma process (noctalia applies the tint
-# in-process via wlr-gamma-control), so this script keeps an on/off marker in
-# /run/nightlight-state. `led-control toggle` (bound to Print in niri) flips
-# the marker and re-renders; argument-less runs (udev) just read it. See the
-# "Print" bind in modules/home/desktop/niri/default.nix.
+# Night light: noctalia applies the tint in-process via wlr-gamma-control and
+# exposes no way to query it, but it logs every applied colour temperature.
+# The nightlight-watch service (below) tails that log and mirrors the state
+# into /run/nightlight-state, which led-control reads. This tracks both the
+# geo schedule and the manual "Print" force-toggle (see the bind in
+# modules/home/desktop/niri/default.nix), since both change the logged temp.
 #
 # Usage:
 #   Automatically a part of the brick host, via sharing the module.
@@ -40,28 +41,26 @@ _: {
     config,
     ...
   }: let
-    # Shared with the niri "Print" keybind; kept on tmpfs so it resets to
-    # "off" every boot.
+    # On/off marker for the night light, written by the watcher below and read
+    # by led-control. Kept on tmpfs so it resets to "off" every boot.
     nightlightState = "/run/nightlight-state";
+    # Noctalia has no way to query the night-light state (no IPC getter, not in
+    # `msg status`, and the wlr-gamma tint is write-only), but it logs every
+    # applied colour temperature as "[gamma] target <N>K (... day=<D>K ...)".
+    # The watcher tails that log and mirrors the effective tint into the marker
+    # + LED, so both the geo schedule (auto) and manual force-toggles are
+    # tracked. "on" whenever the applied temp is below the configured day temp.
+    noctaliaLog = "/home/${config.host.username}/.cache/noctalia/noctalia.log";
     led-control = pkgs.writeShellApplication {
       name = "led-control";
       runtimeInputs = with pkgs; [
         brightnessctl
       ];
       text = ''
-        # EC access needs root; the niri keybind runs this as the user, so go
-        # through the NOPASSWD `ectool led power ...` rule from core/security.nix.
+        # EC access needs root; when run from a user context (the night-light
+        # watcher, resume hook as root is fine too) go through the NOPASSWD
+        # `ectool led power ...` rule from core/security.nix.
         ectool() { /run/wrappers/bin/sudo /run/current-system/sw/bin/ectool "$@"; }
-
-        # `led-control toggle` flips the night-light marker (bound to Print in
-        # niri); with no argument we just re-render for the current state.
-        if [ "''${1:-}" = "toggle" ]; then
-          if [ "$(cat ${nightlightState} 2>/dev/null || echo off)" = "on" ]; then
-            echo off > ${nightlightState}
-          else
-            echo on > ${nightlightState}
-          fi
-        fi
 
         battery=$(cat /sys/class/power_supply/BAT1/capacity)
         status=$(cat /sys/class/power_supply/BAT1/status)
@@ -93,20 +92,69 @@ _: {
         ectool led power white
       '';
     };
+    nightlight-watch = pkgs.writeShellApplication {
+      name = "nightlight-watch";
+      runtimeInputs = with pkgs; [coreutils gnugrep];
+      text = ''
+        # Mirror a "[gamma] target <N>K (... day=<D>K ...)" log line into the
+        # marker + LED. Night light counts as on whenever the applied temp is
+        # below the day temp (covers the full ramp, not just the exact night
+        # temp).
+        apply() {
+          target=$(printf '%s' "$1" | grep -oE 'target [0-9]+K' | grep -oE '[0-9]+')
+          day=$(printf '%s' "$1" | grep -oE 'day=[0-9]+K' | grep -oE '[0-9]+')
+          if [ -n "$target" ] && [ -n "$day" ] && [ "$target" -lt "$day" ]; then
+            echo on > ${nightlightState}
+          else
+            echo off > ${nightlightState}
+          fi
+          ${led-control}/bin/led-control
+        }
+
+        # Seed from the most recent target line -- the night light may already
+        # be on (e.g. the schedule engaged before we started).
+        last=$(grep -F '[gamma] target' ${noctaliaLog} 2>/dev/null | tail -n1 || true)
+        if [ -n "$last" ]; then apply "$last"; fi
+
+        # React to every subsequent change. -F retries if the log is missing or
+        # rotated (Noctalia not up yet, logrotate), so we don't need to depend
+        # on the session being ready.
+        tail -n0 -F ${noctaliaLog} 2>/dev/null | while IFS= read -r line; do
+          case "$line" in
+            *'[gamma] target'*) apply "$line" ;;
+          esac
+        done
+      '';
+    };
   in {
     services.udev.extraRules = ''
       SUBSYSTEM=="power_supply", ATTR{type}=="Battery", RUN+="${led-control}/bin/led-control"
       SUBSYSTEM=="backlight", RUN+="${led-control}/bin/led-control"
     '';
 
-    # Put led-control on PATH so the niri keybind can call it directly.
+    # led-control on PATH for manual testing; the watcher drives it in normal
+    # operation.
     environment.systemPackages = [led-control];
 
-    # Night-light state file owned by the primary user so the (unprivileged)
-    # niri keybind can write it. On tmpfs, so it resets to "off" each boot.
+    # Night-light marker, owned by the primary user so the watcher (which runs
+    # as that user) can write it. On tmpfs, so it resets to "off" each boot.
     systemd.tmpfiles.rules = [
       "f ${nightlightState} 0644 ${config.host.username} users - off"
     ];
+
+    # Long-running watcher that tails Noctalia's log and keeps the marker + LED
+    # in sync with the actual screen tint. Runs as the user (the log lives in
+    # their ~/.cache and led-control reaches ectool via the NOPASSWD sudo rule).
+    systemd.services.nightlight-watch = {
+      description = "Mirror Noctalia night-light state onto the Framework LED";
+      wantedBy = ["multi-user.target"];
+      serviceConfig = {
+        User = config.host.username;
+        ExecStart = "${nightlight-watch}/bin/nightlight-watch";
+        Restart = "always";
+        RestartSec = 2;
+      };
+    };
 
     # Force the LED off while asleep, restore it on resume. This hooks NixOS's
     # sleep-actions unit, which fires on sleep.target -- pulled in by both
