@@ -2,7 +2,7 @@ _: {
   flake.modules.homeManager.personalPackages = {pkgs, ...}: {
     home.packages = with pkgs; [
       typst
-      ltspice
+      #ltspice
       claude-code
       blender
       xarchiver

@@ -10,10 +10,11 @@ _: {
       kicad
       hyprpicker
       nautilus
-      # Electron 41 crashes Obsidian's renderer on WASM streaming compilation
-      # (window renders fully transparent); fixed in Electron >= 42.4.1.
-      # Drop the override once nixpkgs' default electron is >= 42.4.1.
-      (obsidian.override {electron = electron_42;})
+      # Obsidian needs Electron >= 42.4.1 (earlier versions render the window
+      # fully transparent -- a WASM streaming-compilation crash). nixpkgs'
+      # default electron is now 43.x, so plain obsidian is fine; the old
+      # `electron_42` override is gone because electron_42 is now EOL/insecure.
+      obsidian
       inkscape
       qucs-s
       freecad
