@@ -53,6 +53,7 @@
       caddy # reverse proxy: clean names instead of ports
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
       minifridgePaperless # paperless-ngx document management on /srv
+      homeAssistant # home automation, state on /srv
 
       # hardware -- QuickSync for Jellyfin/ffmpeg transcoding
       intelQuickSync

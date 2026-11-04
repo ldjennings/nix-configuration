@@ -15,6 +15,8 @@ _: {
         "http://jellyfin.minifridge.home".extraConfig = "reverse_proxy localhost:8096";
         "http://files.minifridge.home".extraConfig = "reverse_proxy localhost:3210";
         "http://paperless.minifridge.home".extraConfig = "reverse_proxy localhost:28981";
+        # Caddy proxies websockets transparently, which HA's frontend needs.
+        "http://home.minifridge.home".extraConfig = "reverse_proxy localhost:8123";
         "http://pihole.minifridge.home".extraConfig = ''
           redir / /admin
           reverse_proxy localhost:8081
