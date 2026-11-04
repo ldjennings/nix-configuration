@@ -2,7 +2,7 @@
 # Intel QuickSync) + copyparty (browser-based upload/file management).
 # Libraries live on the dedicated /srv media disk (see disko.nix); the host
 # must also provide intelQuickSync for hardware transcoding.
-_: {
+{inputs, ...}: {
   flake.nixosModules.minifridgeMedia = {
     pkgs,
     lib,
@@ -41,6 +41,11 @@ _: {
     services.copyparty = {
       enable = true;
       group = mediaGroup;
+      # Use the package from the same flake as the module, not the module's
+      # `pkgs.copyparty` default: nixpkgs' build sets withThumbnails, which
+      # propagates pillow-jpls 1.3.2, whose tests fail against Pillow 13 and
+      # so won't build. Upstream's pulls plain pillow -- thumbnails still work.
+      package = inputs.copyparty.packages.x86_64-linux.copyparty;
       settings = {
         i = "0.0.0.0";
         p = [3210];

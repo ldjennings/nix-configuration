@@ -43,7 +43,12 @@
       # services
       avahi # advertise minifridge.local over mDNS
       tailscale # mesh VPN: reach the box + its services from anywhere
-      mullvad # full-tunnel VPN (kill switch) w/ LAN + tailnet exempt
+      # mullvad # not imported yet: mullvad.nix still has placeholder peer
+      # pubkey/endpoint/addresses, and the mullvad-wg-key sops secret is a
+      # placeholder too, so wireguard-mullvad.service fails activation with
+      # "Invalid length key in key file". Fill all four in (mullvad.net ->
+      # WireGuard configuration) plus `sops secrets/minifridge.yaml`, then
+      # re-import. No traffic has ever used this tunnel.
       pihole # network-wide DNS ad/tracker blocking
       caddy # reverse proxy: clean names instead of ports
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
