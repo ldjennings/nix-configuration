@@ -34,6 +34,11 @@ _: {
         # plugged in; nothing to discover until then. Z-Wave would need the
         # separate services.zwave-js server, not just a component here.
         "zha"
+        # Zeroconf finds HomeKit devices on the LAN, so HA tries to load this
+        # integration on every start. Without it listed here its aiohomekit
+        # dependency isn't in the Python env and the flow dies with
+        # ModuleNotFoundError -- the "First start" case in the NixOS manual.
+        "homekit_controller"
       ];
 
       config = {
