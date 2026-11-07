@@ -23,8 +23,9 @@ _: {
         PAPERLESS_OCR_LANGUAGE = "eng";
         # correct link generation + CSRF/allowed-host when reached by name.
         # Fronted by Caddy (see caddy.nix), which passes this Host through, so
-        # it must match the proxied name.
-        PAPERLESS_URL = "http://paperless.minifridge.home";
+        # it must match the proxied name -- including the scheme, since Caddy
+        # now terminates TLS and Django builds absolute URLs from this.
+        PAPERLESS_URL = "https://paperless.jenningsliamd.me";
       };
     };
 

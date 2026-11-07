@@ -46,8 +46,14 @@ _: {
         # mobile_app, zeroconf, ssdp, usb, ...).
         default_config = {};
 
-        # Follow the system timezone instead of restating it.
-        homeassistant.time_zone = config.time.timeZone;
+        homeassistant = {
+          # Follow the system timezone instead of restating it.
+          time_zone = config.time.timeZone;
+          # The name Caddy serves, so HA builds correct absolute links
+          # (notifications, the companion app) instead of guessing from the
+          # proxied request.
+          internal_url = "https://home.jenningsliamd.me";
+        };
 
         http = {
           # Reachable only through Caddy, like the Pi-hole UI (see pihole.nix).

@@ -50,7 +50,8 @@
       # WireGuard configuration) plus `sops secrets/minifridge.yaml`, then
       # re-import. No traffic has ever used this tunnel.
       pihole # network-wide DNS ad/tracker blocking
-      caddy # reverse proxy: clean names instead of ports
+      acme # Let's Encrypt wildcard for *.jenningsliamd.me (DNS-01)
+      caddy # reverse proxy: clean HTTPS names instead of ports
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
       minifridgePaperless # paperless-ngx document management on /srv
       homeAssistant # home automation, state on /srv

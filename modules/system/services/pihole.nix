@@ -27,10 +27,26 @@ _: {
           # tailnet (100.64.0.0/10), whose source IPs aren't on the LAN subnet.
           listeningMode = "ALL";
         };
-        # Wildcard local DNS so Caddy can host-route services by name:
-        # *.minifridge.home (and the bare name) resolve to the box. Points at
-        # the Tailscale IP, so it also works off-LAN for tailnet clients.
-        misc.dnsmasq_lines = ["address=/minifridge.home/100.76.67.107"];
+        # Local DNS for the service names, so Caddy can host-route by name and
+        # the traffic never leaves the LAN/tailnet. Points at the Tailscale IP
+        # so the names also resolve off-LAN for tailnet clients.
+        #
+        # Deliberately one entry per service rather than a zone-wide
+        # address=/jenningsliamd.me/: dnsmasq's address= matches the given
+        # domain *and every subdomain*, so a zone-wide entry would also hijack
+        # the apex and www for every device using this box as DNS -- which
+        # would break the real domain if it ever serves a public site. These
+        # leaf names don't exist in Cloudflare at all; only the ACME
+        # _acme-challenge TXT records do.
+        misc.dnsmasq_lines =
+          map (name: "address=/${name}.jenningsliamd.me/100.76.67.107")
+          [
+            "jellyfin"
+            "files"
+            "paperless"
+            "pihole"
+            "home"
+          ];
       };
       # Blocklists auto-imported on startup.
       lists = [
