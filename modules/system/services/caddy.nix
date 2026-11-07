@@ -14,7 +14,8 @@
 # localhost, which is why they need no certificates of their own.
 _: {
   flake.nixosModules.caddy = {config, ...}: let
-    certDir = config.security.acme.certs."jenningsliamd.me".directory;
+    certName = "jenningsliamd.me";
+    certDir = config.security.acme.certs.${certName}.directory;
 
     # A name served over HTTPS with the wildcard cert, proxied to a local port.
     # Caddy forwards websockets transparently, which HA's frontend needs.
@@ -38,6 +39,24 @@ _: {
           reverse_proxy localhost:8081
         '';
       };
+    };
+
+    # Caddy refuses to load a config whose `tls` files don't exist, so it must
+    # not start before acme-${certName}.service has written them. That service
+    # drops a self-signed placeholder immediately (the real cert replaces it
+    # when lego finishes, via reloadServices in acme.nix), so this ordering is
+    # enough -- Caddy never has to wait on DNS-01 propagation.
+    #
+    # Learned the hard way: on the first activation switch-to-configuration
+    # reloaded Caddy one second *before* the placeholder existed, Caddy aborted
+    # with "open .../fullchain.pem: no such file or directory", and that failed
+    # the whole activation. Ordering doesn't govern reloads of an
+    # already-running unit, but the cert files persist in /var/lib/acme, so the
+    # race only exists on a machine that has never had them -- where this
+    # boot-time ordering is exactly what prevents it.
+    systemd.services.caddy = {
+      after = ["acme-${certName}.service"];
+      wants = ["acme-${certName}.service"];
     };
 
     networking.firewall.allowedTCPPorts = [80 443];
