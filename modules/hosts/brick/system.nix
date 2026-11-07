@@ -65,6 +65,7 @@
       networking
       pipewire
       powerSave
+      tailscale # reach minifridge's services from anywhere
       virtualization
     ];
 
