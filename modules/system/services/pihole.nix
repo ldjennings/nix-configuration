@@ -34,19 +34,28 @@ _: {
         # Deliberately one entry per service rather than a zone-wide
         # address=/jenningsliamd.me/: dnsmasq's address= matches the given
         # domain *and every subdomain*, so a zone-wide entry would also hijack
-        # the apex and www for every device using this box as DNS -- which
-        # would break the real domain if it ever serves a public site. These
-        # leaf names don't exist in Cloudflare at all; only the ACME
-        # _acme-challenge TXT records do.
-        misc.dnsmasq_lines =
-          map (name: "address=/${name}.jenningsliamd.me/100.76.67.107")
-          [
+        # the apex (a GitHub Pages site) and www for every device using this
+        # box as DNS.
+        #
+        # Each name needs BOTH lines. address= only synthesizes A records, so
+        # AAAA/CNAME/HTTPS queries used to be forwarded upstream, where the
+        # public wildcard CNAME (*.jenningsliamd.me -> pixie.porkbun.com)
+        # answered -- browsers query AAAA and HTTPS/SVCB alongside A, followed
+        # that chain, and landed on the apex site instead of the service.
+        # local= marks the name as served only from local data, so those types
+        # return NODATA rather than leaking to the upstream resolvers.
+        misc.dnsmasq_lines = let
+          names = [
             "jellyfin"
             "files"
             "paperless"
             "pihole"
             "home"
           ];
+          fqdn = name: "${name}.jenningsliamd.me";
+        in
+          map (name: "address=/${fqdn name}/100.76.67.107") names
+          ++ map (name: "local=/${fqdn name}/") names;
       };
       # Blocklists auto-imported on startup.
       lists = [
