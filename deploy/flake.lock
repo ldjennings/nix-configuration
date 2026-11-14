@@ -85,11 +85,11 @@
         "tinted-schemes": "tinted-schemes_2"
       },
       "locked": {
-        "lastModified": 1794034563,
-        "narHash": "sha256-0hoLe1WxkAfAlPXT2Xa1aWC/DBuMYX9okF89APGtwII=",
+        "lastModified": 1794636288,
+        "narHash": "sha256-jSSPp4UgauKVaxDWPGLJSv1xBdt8I7rKE94zZxy7D/s=",
         "ref": "refs/heads/main",
-        "rev": "8d54060ea7d123089f08bc9b73cce73bdcb7cbd6",
-        "revCount": 137,
+        "rev": "40467a5da4cd7cc1d03114ac881b44ed03d157aa",
+        "revCount": 138,
         "type": "git",
         "url": "file:.."
       },
