@@ -33,85 +33,35 @@ If position ends up inverted (slider at 0% showing open), flip `invert`:
 tuya_cover inverts by default because Tuya reports 0=closed/100=open, the
 opposite of the ZCL convention.
 
-The limit buttons below exist because this motor ships uncalibrated: with no
-travel limits it accepts a percentage target, acks it, and does nothing, since
-"50%" has no meaning yet. Relative open/close/stop work regardless, which is
-why those came up first. Confirmed by dp=3 only ever reporting 0, even after
-the blind had physically moved.
+Cross-checked against Zigbee2MQTT, which supports the _TZE210_m6lwazh9
+sibling (src/devices/tuya.ts, model TS0301_cover_1). Its datapoint table
+independently confirms the mapping above and fills in one more:
 
-dp=16 is taken from _TZE284_3mzb0sdz and is NOT confirmed for this device --
-the same source got the position DPs wrong. If the buttons do nothing, the
-motor's physical set button is the fallback.
+    [1,  "state",             coverAction]
+    [2,  "position",          coverPosition]
+    [3,  "position",          coverPosition]
+    [5,  "reverse_direction", forward=enum(0), back=enum(1)]
+    [13, "battery",           raw]
 
-To calibrate: drive the blind to fully open, press "Set upper limit"; drive it
-to fully closed, press "Set lower limit". The delete buttons start over.
+So motor direction is dp=5, not the dp=11 used by _TZE284_3mzb0sdz. Not mapped
+here because direction currently reads correctly; add it if that changes.
+
+Notably that definition exposes NO limit/border datapoint, while the very next
+device in the same file (_TZE210_xgzzuerd) does expose te.coverLimit(). Travel
+limits are therefore not settable over Zigbee on this motor -- an earlier
+attempt to map dp=16 from _TZE284_3mzb0sdz did make the motor react to enum
+values 0 and 2 (it echoed them back) but left it in a state where it stopped
+moving. Limits are set with the motor's own remote; the hardware is a Zemismart
+ZM25AZ01 (per Koenkk/zigbee2mqtt#31774), also sold as Trublockout
+TB25-DC-10/25Z. Do not add limit datapoints here.
 """
 
-import zigpy.types as t
-
-from zhaquirks.tuya import TUYA_CLUSTER_ID
 from zhaquirks.tuya.builder import TuyaQuirkBuilder
-
-
-class BorderSetting(t.enum8):
-    """Travel-limit commands for dp=16."""
-
-    Up = 0x00
-    Down = 0x01
-    Up_delete = 0x02
-    Down_delete = 0x03
-    Remove_top_bottom = 0x04
-
 
 (
     TuyaQuirkBuilder("_TZE284_m6lwazh9", "TS0601")
     .tuya_cover(control_dp=1, position_state_dp=3, position_control_dp=2)
     .tuya_battery(dp_id=13)
-    .tuya_dp_attribute(
-        dp_id=16,
-        attribute_name="border",
-        type=BorderSetting,
-    )
-    .write_attr_button(
-        attribute_name="border",
-        attribute_value=BorderSetting.Up,
-        cluster_id=TUYA_CLUSTER_ID,
-        unique_id_suffix="border_up",
-        translation_key="set_upper_limit",
-        fallback_name="Set upper limit",
-    )
-    .write_attr_button(
-        attribute_name="border",
-        attribute_value=BorderSetting.Down,
-        cluster_id=TUYA_CLUSTER_ID,
-        unique_id_suffix="border_down",
-        translation_key="set_lower_limit",
-        fallback_name="Set lower limit",
-    )
-    .write_attr_button(
-        attribute_name="border",
-        attribute_value=BorderSetting.Up_delete,
-        cluster_id=TUYA_CLUSTER_ID,
-        unique_id_suffix="border_up_delete",
-        translation_key="delete_upper_limit",
-        fallback_name="Delete upper limit",
-    )
-    .write_attr_button(
-        attribute_name="border",
-        attribute_value=BorderSetting.Down_delete,
-        cluster_id=TUYA_CLUSTER_ID,
-        unique_id_suffix="border_down_delete",
-        translation_key="delete_lower_limit",
-        fallback_name="Delete lower limit",
-    )
-    .write_attr_button(
-        attribute_name="border",
-        attribute_value=BorderSetting.Remove_top_bottom,
-        cluster_id=TUYA_CLUSTER_ID,
-        unique_id_suffix="border_remove_all",
-        translation_key="delete_all_limits",
-        fallback_name="Delete all limits",
-    )
     # Tuya devices generally reject standard ZCL binding/reporting setup.
     .skip_configuration()
     .add_to_registry()
