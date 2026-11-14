@@ -56,6 +56,7 @@ ZM25AZ01 (per Koenkk/zigbee2mqtt#31774), also sold as Trublockout
 TB25-DC-10/25Z. Do not add limit datapoints here.
 """
 
+from zigpy.zcl.clusters.general import BatterySize
 from zigpy.zdo.types import (
     DescriptorCapability,
     FrequencyBand,
@@ -108,7 +109,11 @@ _NODE_DESCRIPTOR = NodeDescriptor(
     TuyaQuirkBuilder("_TZE284_m6lwazh9", "TS0601")
     .node_descriptor(_NODE_DESCRIPTOR)
     .tuya_cover(control_dp=1, position_state_dp=3, position_control_dp=2)
-    .tuya_battery(dp_id=13)
+    # tuya_battery otherwise defaults to 2x AA, which it isn't -- this motor
+    # has a single built-in Type-C rechargeable cell. Cosmetic (the figures
+    # only show up as entity attributes) but there's no reason to state it
+    # wrongly.
+    .tuya_battery(dp_id=13, battery_type=BatterySize.Built_in, battery_qty=1)
     # Tuya devices generally reject standard ZCL binding/reporting setup.
     .skip_configuration()
     .add_to_registry()
