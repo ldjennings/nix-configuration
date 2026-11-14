@@ -14,7 +14,20 @@
 # 0755 root:root, so the hass user can traverse it; the directory itself is
 # created by users.users.hass.createHome in the upstream module.
 _: {
-  flake.nixosModules.homeAssistant = {config, ...}: {
+  flake.nixosModules.homeAssistant = {
+    config,
+    pkgs,
+    ...
+  }: let
+    # ZHA imports every .py in custom_quirks_path at startup, so this is a
+    # store directory holding just the one file. The filename intentionally
+    # doesn't match any module in zhaquirks (ts0601_cover.py) -- a colliding
+    # name would shadow the built-in one and drop support for every other
+    # device in it.
+    zhaQuirks =
+      pkgs.writeTextDir "ts0601_cover_m6lwazh9.py"
+      (builtins.readFile ./zha-quirks/ts0601_cover_m6lwazh9.py);
+  in {
     services.home-assistant = {
       enable = true;
 
@@ -65,6 +78,24 @@ _: {
           # both of these HA rejects proxied requests with a 400.
           use_x_forwarded_for = true;
           trusted_proxies = ["127.0.0.1" "::1"];
+        };
+
+        # The Zigbee radio itself stays a UI config entry (it holds the serial
+        # path and network key); only the quirk loading is declarative here.
+        zha = {
+          # Default is already true; stated so it's obvious the custom path
+          # below is actually consulted.
+          enable_quirks = true;
+          custom_quirks_path = "${zhaQuirks}";
+        };
+
+        # Temporary, to confirm the quirk loads and to read the device's real
+        # Tuya datapoints if the guessed ones are wrong. Chatty -- drop this
+        # once the blind works.
+        logger.logs = {
+          "homeassistant.components.zha" = "debug";
+          zigpy = "debug";
+          zhaquirks = "debug";
         };
 
         # Let the UI own automations/scenes/scripts while configuration.yaml
