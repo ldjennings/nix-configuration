@@ -358,7 +358,11 @@ _: {
               # It is a digest rather than the password, but it does land
               # world-readable in the Nix store -- move it to sops if that
               # matters.
-              Password_PBKDF2 = "@ByteArray(ffFPzkW73/pGpuFH1R++iQ==:2qfC9KmMzj6qUl7dCfiSOANxuLfAQYSfh/UBp39W64XXeNltN1ZvHhF10CC8VYsISmXcX39rBgsHe9KRmp0B4Q==)";
+              # TEMPORARY, known value: password is `sandbox-temp-7Qk2`.
+              # Verified by logging into qbittorrent-nox 5.2.2 with this exact
+              # digest before it was committed. Replace it with your own using
+              # the command above.
+              Password_PBKDF2 = "@ByteArray(tE5uL4af45vPXkkHus525A==:X10LLkdxc3qtgmwyg2tFGwwE9YrhQ98+t1RFV3svY+PZ9nTb8dlBd+4DXCdPjn6TUWqFpvIC2BTh+YL45TFt5Q==)";
               # Log and rate-limit by real client address rather than seeing
               # every request come from ${hostAddress}, trusting only Caddy to
               # have set X-Forwarded-For.
