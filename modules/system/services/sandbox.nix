@@ -10,9 +10,9 @@
 # Shape of the thing:
 #
 #   container "sandbox"                        host
-#     eth0 10.100.0.2 ──────veth──────── ve-sandbox 10.100.0.1
+#     eth0 10.100.0.2/32 ────veth──────── ve-sandbox 10.100.0.1
 #      │                                      │
-#      ├─ 10.100.0.0/24    connected          ├─ caddy :443  (ingress)
+#      ├─ 10.100.0.1       dev eth0           ├─ caddy :443  (ingress)
 #      ├─ <endpoint>/32    via host  ─────────┤  nat masquerade -> eno1
 #      ├─ default          dev mullvad        ├─ /srv/media/Downloads (bind)
 #      └─ blackhole default metric 1000       └─ /srv/qbittorrent     (bind)
@@ -26,9 +26,14 @@
 #
 # The blackhole default is the kill switch. `default dev mullvad` has metric 0
 # and wins while the tunnel is up; if wireguard stops, the kernel drops that
-# route and the metric-1000 blackhole takes over. The connected veth route
-# survives, so the sandbox keeps talking to this host's services even with the
-# tunnel down -- it just cannot reach the internet.
+# route and the metric-1000 blackhole takes over. The link-scope route to the
+# host survives, so the sandbox keeps talking to this host's services even with
+# the tunnel down -- it just cannot reach the internet.
+#
+# Verified live after the first deploy: the container's whole v4 routing table
+# is those four entries and nothing else, and name resolution works only
+# because 10.64.0.1 (Mullvad's internal resolver) is reachable through the
+# tunnel -- which is itself the proof that egress has nowhere else to go.
 _: {
   flake.nixosModules.sandbox = {
     config,
