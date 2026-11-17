@@ -92,11 +92,11 @@ _: {
         # Temporary, to confirm the quirk loads and to read the device's real
         # Tuya datapoints if the guessed ones are wrong. Chatty -- drop this
         # once the blind works.
-        logger.logs = {
-          "homeassistant.components.zha" = "debug";
-          zigpy = "debug";
-          zhaquirks = "debug";
-        };
+        # logger.logs = {
+        #   "homeassistant.components.zha" = "debug";
+        #   zigpy = "debug";
+        #   zhaquirks = "debug";
+        # };
 
         # Let the UI own automations/scenes/scripts while configuration.yaml
         # stays a read-only symlink into the store. The "<domain> ui" key is
