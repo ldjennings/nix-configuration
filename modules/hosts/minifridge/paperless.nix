@@ -2,10 +2,28 @@
 # database live on the /srv data disk (see disko.nix) so the archive survives
 # OS reinstalls and doesn't fill the OS drive. Web UI on :28981.
 #
-# The admin password comes from the sops secret, decrypted to /run/secrets at
-# activation. Paperless loads it via systemd LoadCredential, which reads the
-# file as root, so the default root-owned secret is fine. Edit with:
+# Log in as `admin` (PAPERLESS_ADMIN_USER's default). The password comes from
+# the sops secret, decrypted to /run/secrets at activation; paperless loads it
+# via systemd LoadCredential, which reads the file as root, so the default
+# root-owned secret is fine. Edit with:
 #   sops secrets/minifridge.yaml   (key paperless-admin)
+#
+# CAVEAT, learned the hard way: passwordFile only applies on FIRST CREATION.
+# Upstream's manage_superuser returns early ("a user admin already exists") if
+# the account is there, so it never updates a password. Worse, the NixOS module
+# records "$user:$password" in ${dataDir}/superuser-state and skips the command
+# entirely when that matches -- so after editing this secret, the state file
+# agrees with sops while the Django hash still holds the ORIGINAL password, and
+# nothing ever reconciles them. Changing the secret alone does nothing.
+#
+# To actually change it, edit the secret, deploy, then reset the hash to match:
+#   sudo cat /run/secrets/paperless-admin | paperless-manage shell -c '
+#   import sys
+#   from django.contrib.auth.models import User
+#   pw = sys.stdin.read()
+#   u = User.objects.get(username="admin")
+#   u.set_password(pw); u.save()'
+# Verify with u.check_password(pw) before and after -- it should flip to True.
 _: {
   flake.nixosModules.minifridgePaperless = {config, ...}: {
     sops.secrets."paperless-admin" = {};
