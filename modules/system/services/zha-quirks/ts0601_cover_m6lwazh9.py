@@ -46,14 +46,34 @@ independently confirms the mapping above and fills in one more:
 So motor direction is dp=5, not the dp=11 used by _TZE284_3mzb0sdz. Not mapped
 here because direction currently reads correctly; add it if that changes.
 
-Notably that definition exposes NO limit/border datapoint, while the very next
-device in the same file (_TZE210_xgzzuerd) does expose te.coverLimit(). Travel
-limits are therefore not settable over Zigbee on this motor -- an earlier
-attempt to map dp=16 from _TZE284_3mzb0sdz did make the motor react to enum
-values 0 and 2 (it echoed them back) but left it in a state where it stopped
-moving. Limits are set with the motor's own remote; the hardware is a Zemismart
-ZM25AZ01 (per Koenkk/zigbee2mqtt#31774), also sold as Trublockout
-TB25-DC-10/25Z. Do not add limit datapoints here.
+TRAVEL LIMITS -- unresolved, and the next thing to work on.
+
+The motor arrives uncalibrated. Until limits are set it accepts a percentage
+target, acks it, moves nothing, and reports dp=3 as 0 forever, so HA shows it
+permanently closed at 0%. Open/close/stop are unaffected, being relative "run
+until stopped" commands. Direction and `invert` cannot be judged until a real
+position is ever reported -- a constant 0 is not an inverted reading.
+
+dp=16 does something here. Mapped from _TZE284_3mzb0sdz, the motor echoed back
+enum values 0 and 2, ignored 1, 3 and 4, and afterwards stopped moving at all,
+which looks like a limit having been set to a degenerate value. So the device
+clearly implements dp=16 -- just not with that quirk's five-value BorderSetting
+semantics. Those buttons were removed because half of them did nothing and the
+other half could wedge the motor, not because the datapoint is meaningless.
+
+Do not read Zigbee2MQTT's silence as proof: its _TZE210_m6lwazh9 definition has
+no limit datapoint, and _TZE210_xgzzuerd right next to it does expose
+te.coverLimit() -- but its _TZE200_m6lwazh9 entry is explicitly marked
+"incomplete", so the table is not exhaustive for this family.
+
+Known hardware: TNCGLF/A-OK AM25, 433MHz remote plus Zigbee, same family as the
+Zemismart ZM25AZ01 (Koenkk/zigbee2mqtt#31774) and Trublockout TB25-DC-10/25Z.
+The remote is the supported way to calibrate and the thing to try first.
+
+When picking this up again: enum values 0 and 2 on dp=16 are the known-live
+ones, the Tuya IoT platform's product datapoint list would settle the real
+semantics, and anything tried here should be reversible before it goes near a
+limit the motor stores.
 """
 
 from zigpy.zcl.clusters.general import BatterySize
