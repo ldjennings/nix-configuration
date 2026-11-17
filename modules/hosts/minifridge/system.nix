@@ -55,6 +55,7 @@
       minifridgeMedia # jellyfin + copyparty on the /srv media disk
       minifridgePaperless # paperless-ngx document management on /srv
       homeAssistant # home automation, state on /srv
+      sandbox # VPN-only container, reachable through Caddy
 
       # hardware -- QuickSync for Jellyfin/ffmpeg transcoding
       intelQuickSync

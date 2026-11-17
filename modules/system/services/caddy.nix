@@ -17,14 +17,17 @@ _: {
     certName = "jenningsliamd.me";
     certDir = config.security.acme.certs.${certName}.directory;
 
-    # A name served over HTTPS with the wildcard cert, proxied to a local port.
+    # A name served over HTTPS with the wildcard cert, proxied to a backend.
     # Caddy forwards websockets transparently, which HA's frontend needs.
-    proxyTo = port: {
+    proxyToHost = host: port: {
       extraConfig = ''
         tls ${certDir}/fullchain.pem ${certDir}/key.pem
-        reverse_proxy localhost:${toString port}
+        reverse_proxy ${host}:${toString port}
       '';
     };
+
+    # Most backends are on this box, bound to localhost.
+    proxyTo = proxyToHost "localhost";
   in {
     services.caddy = {
       enable = true;
@@ -33,6 +36,12 @@ _: {
         "files.jenningsliamd.me" = proxyTo 3210;
         "paperless.jenningsliamd.me" = proxyTo 28981;
         "home.jenningsliamd.me" = proxyTo 8123;
+        # The VPN sandbox container, across its veth (see sandbox.nix -- the
+        # address and port are defined there). This is the container's only
+        # ingress: nothing is opened to the LAN for it. Returns 502 until a
+        # service is actually declared inside the container, which is a
+        # convenient way to prove the DNS/TLS/routing path works first.
+        "sandbox.jenningsliamd.me" = proxyToHost "10.100.0.2" 8080;
         "pihole.jenningsliamd.me".extraConfig = ''
           tls ${certDir}/fullchain.pem ${certDir}/key.pem
           redir / /admin

@@ -23,6 +23,13 @@
 #
 # Get the values below + the private key from mullvad.net -> WireGuard
 # configuration (or the `mullvad` CLI).
+#
+# NOTE: this module is NOT imported anywhere (see minifridge/system.nix) and no
+# traffic has ever used it. The VPN consumer that IS wired up is the sandbox
+# container in sandbox.nix, which carries its own copy of these four
+# parameters -- so fill them in THERE, not here. This module stays around only
+# for the case where the whole host should go through the tunnel, which needs
+# the fwmark/policy-routing dance below; a container namespace does not.
 _: {
   flake.nixosModules.mullvad = {
     pkgs,

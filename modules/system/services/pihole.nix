@@ -51,6 +51,7 @@ _: {
             "paperless"
             "pihole"
             "home"
+            "sandbox"
           ];
           fqdn = name: "${name}.jenningsliamd.me";
         in

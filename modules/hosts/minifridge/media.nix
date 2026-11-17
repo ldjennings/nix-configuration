@@ -17,6 +17,12 @@
 
     users.groups.${mediaGroup} = {
       members = ["jellyfin" "copyparty"];
+      # Pinned because the VPN sandbox container shares this group, and only
+      # the numeric GID crosses a bind mount -- names mean nothing on the
+      # other side (see sandbox.nix). 997 is the value NixOS had already
+      # auto-allocated here, so every existing file under /srv/media keeps its
+      # group; changing this number would orphan all of them.
+      gid = 997;
     };
 
     # Jellyfin's primary group is `media` (below); it also needs `render` for
