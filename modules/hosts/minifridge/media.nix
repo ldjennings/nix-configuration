@@ -29,11 +29,22 @@
     # /dev/dri access to do QuickSync hardware transcoding.
     users.users.jellyfin.extraGroups = ["render"];
 
+    # The three library directories are 2770, not the 2750 they used to be:
+    # group `media` needs WRITE access because the VPN sandbox container moves
+    # completed downloads straight into them (see the `categories` attrset in
+    # sandbox.nix, which bind-mounts these three and must agree on the paths).
+    # The setgid bit is what makes everything written there land in group
+    # `media` regardless of which service wrote it, so Jellyfin can read files
+    # copyparty or qBittorrent created.
+    #
+    # The widened access is the tradeoff for completed torrents filing
+    # themselves away: every member of `media` -- jellyfin, copyparty and the
+    # sandbox -- can now write and delete across all three.
     systemd.tmpfiles.rules = [
       "d ${mediaDir}          0750 root      ${mediaGroup} -"
-      "d ${mediaDir}/Music    2750 copyparty ${mediaGroup} -"
-      "d ${mediaDir}/Movies   2750 copyparty ${mediaGroup} -"
-      "d ${mediaDir}/TV       2750 copyparty ${mediaGroup} -"
+      "d ${mediaDir}/Music    2770 copyparty ${mediaGroup} -"
+      "d ${mediaDir}/Movies   2770 copyparty ${mediaGroup} -"
+      "d ${mediaDir}/TV       2770 copyparty ${mediaGroup} -"
     ];
 
     environment.systemPackages = [pkgs.jellyfin-ffmpeg];
