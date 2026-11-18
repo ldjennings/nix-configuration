@@ -43,12 +43,15 @@
       # services
       avahi # advertise minifridge.local over mDNS
       tailscale # mesh VPN: reach the box + its services from anywhere
-      # mullvad # not imported yet: mullvad.nix still has placeholder peer
-      # pubkey/endpoint/addresses, and the mullvad-wg-key sops secret is a
-      # placeholder too, so wireguard-mullvad.service fails activation with
-      # "Invalid length key in key file". Fill all four in (mullvad.net ->
-      # WireGuard configuration) plus `sops secrets/minifridge.yaml`, then
-      # re-import. No traffic has ever used this tunnel.
+      # mullvad # deliberately NOT imported. The VPN consumer is the sandbox
+      # container (see sandbox.nix), which carries its own copy of the peer
+      # parameters; this module is the alternative "route the whole host
+      # through the tunnel" design and nothing has ever used it. Its peer
+      # pubkey/endpoint/address are still placeholders, and its ip rules sit
+      # at priority 51810/51820 -- BELOW the kernel's own 32766
+      # "from all lookup main" -- so even with real values it would silently
+      # route nothing through the tunnel and provide no kill switch. Fix the
+      # priorities (wg-quick uses 32764/32765, under 32766) before trusting it.
       pihole # network-wide DNS ad/tracker blocking
       acme # Let's Encrypt wildcard for *.jenningsliamd.me (DNS-01)
       caddy # reverse proxy: clean HTTPS names instead of ports
