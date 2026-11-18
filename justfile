@@ -61,3 +61,12 @@ inspect:
 ci: check lint fmt-check
     @echo "All checks passed"
 
+# Generate a qBittorrent WebUI password digest for sandbox.nix (prompts twice).
+# The salt is random, so the same password gives a different digest every run.
+qbt-hash:
+    @nix shell nixpkgs#python3 --command python3 scripts/qbt-password.py
+
+# Check whether a password matches the digest currently in sandbox.nix
+qbt-check:
+    @nix shell nixpkgs#python3 --command python3 scripts/qbt-password.py --check
+
