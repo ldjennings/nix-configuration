@@ -91,7 +91,6 @@ A [dendritic](https://www.youtube.com/watch?v=-TRbzkw6Hjs) NixOS configuration b
 │   │   └── services/
 │   │       ├── bluetooth.nix
 │   │       ├── greetd.nix
-│   │       ├── mullvad.nix
 │   │       ├── networking.nix
 │   │       ├── nfs.nix
 │   │       ├── pipewire.nix

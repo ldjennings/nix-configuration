@@ -43,15 +43,6 @@
       # services
       avahi # advertise minifridge.local over mDNS
       tailscale # mesh VPN: reach the box + its services from anywhere
-      # mullvad # deliberately NOT imported. The VPN consumer is the sandbox
-      # container (see sandbox.nix), which carries its own copy of the peer
-      # parameters; this module is the alternative "route the whole host
-      # through the tunnel" design and nothing has ever used it. Its peer
-      # pubkey/endpoint/address are still placeholders, and its ip rules sit
-      # at priority 51810/51820 -- BELOW the kernel's own 32766
-      # "from all lookup main" -- so even with real values it would silently
-      # route nothing through the tunnel and provide no kill switch. Fix the
-      # priorities (wg-quick uses 32764/32765, under 32766) before trusting it.
       pihole # network-wide DNS ad/tracker blocking
       acme # Let's Encrypt wildcard for *.jenningsliamd.me (DNS-01)
       caddy # reverse proxy: clean HTTPS names instead of ports

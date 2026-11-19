@@ -75,10 +75,16 @@ _: {
     # -------------------------------------------------------------------------
 
     # The endpoint needs its own /32 via the host, so the outer WireGuard
-    # packets can escape before the tunnel they create exists. Splitting it out
-    # is why no fwmark/policy-routing is needed here, unlike mullvad.nix: the
-    # host-wide module has to exempt the handshake from a rule that catches all
-    # traffic, whereas one specific route is enough in a namespace this empty.
+    # packets can escape before the tunnel they create exists.
+    #
+    # Splitting it out as one specific route is what lets this module skip
+    # fwmark and policy routing entirely. Routing a whole HOST through a
+    # tunnel needs both, because there is already a working default route to
+    # exempt the handshake from -- and getting the `ip rule` priorities wrong
+    # there fails silently, since the kernel's own "from all lookup main" sits
+    # at 32766 and anything numbered above it never gets consulted. A
+    # namespace this empty has no competing default to begin with, so a plain
+    # route table is sufficient and there is nothing to get subtly wrong.
     endpointAddress = lib.head (lib.splitString ":" endpoint);
 
     hostAddress = "10.100.0.1";
