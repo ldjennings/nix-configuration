@@ -37,6 +37,17 @@
 # is those four entries and nothing else, and name resolution works only
 # because 10.64.0.1 (Mullvad's internal resolver) is reachable through the
 # tunnel -- which is itself the proof that egress has nowhere else to go.
+#
+# The kill switch has been tested, not just reasoned about. With
+# wireguard-mullvad stopped: the mullvad interface and its default route are
+# gone, `connect()` to an arbitrary internet address fails IMMEDIATELY with
+# EINVAL ("Invalid argument", which is specifically what a blackhole route
+# returns -- an `unreachable` route would give ENETUNREACH), DNS stops
+# resolving, and the veth route survives so the host's own services stay
+# reachable. The immediacy is the real signal: a hang would have meant packets
+# leaving the namespace and dying somewhere downstream, which is NOT the same
+# as never being routed. Starting the tunnel again restores everything, so
+# postSetup's `ip route add` does not trip over a stale route after a flap.
 _: {
   flake.nixosModules.sandbox = {
     config,
@@ -322,6 +333,21 @@ _: {
           # interface and its default route are still missing, and `requires`
           # takes it down with the wireguard unit rather than leaving it
           # running against a blackhole.
+          # `requires` below only propagates in one direction: the tunnel going
+          # down takes qBittorrent with it, but the tunnel coming back does
+          # NOT bring it back, and the upstream unit sets Restart=no. A relay
+          # hiccup that restarts the tunnel would therefore leave downloads
+          # dead silently until someone noticed -- which is exactly what
+          # happened during the kill-switch test.
+          #
+          # Upholds= continuously keeps the named unit started for as long as
+          # this one is active, closing the other direction without weakening
+          # the kill switch. Caveat: if qBittorrent is failing to start for its
+          # own reasons, this keeps retrying it rather than letting it stay
+          # failed, so check `systemctl status qbittorrent` inside the
+          # container rather than assuming the tunnel is at fault.
+          wireguard-mullvad.upholds = ["qbittorrent.service"];
+
           qbittorrent = {
             after = ["wireguard-mullvad.service"];
             requires = ["wireguard-mullvad.service"];
